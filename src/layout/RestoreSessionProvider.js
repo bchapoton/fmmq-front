@@ -13,15 +13,19 @@ function RestoreSessionProvider(props) {
     useEffect(() => {
         if (hasJWT()) {
             if (isJWTExpired()) {
-                refreshToken().then(() => {
-                    console.log(getUserDataFromJWT())
-                }).catch(e => console.log('error'))
+                refreshToken()
+                    .then(() => {
+                        console.log(getUserDataFromJWT())
+                    })
+                    .catch(e => console.log('error ' + e))
                     .then(() => setWaiting(false));
             } else {
                 const userData = getUserDataFromJWT();
                 dispatch(setUserData(userData));
                 setWaiting(false);
             }
+        } else {
+            setWaiting(false);
         }
     }, []);
 
