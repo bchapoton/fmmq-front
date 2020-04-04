@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import NetworkConfig from "../config/NetworkConfig";
+import {ROUTE_LOGIN} from "../router/routes";
 
 export function getRestClient(authenticated = true) {
     let headers = {};
@@ -9,7 +10,7 @@ export function getRestClient(authenticated = true) {
         const jwt = getJWT();
         if (!jwt) {
             clearAuthentication();
-            window.location = '/login'; // no JWT stored redirect to login page no need to request
+            window.location = ROUTE_LOGIN; // no JWT stored redirect to login page no need to request
             return;
         }
         headers = {
@@ -35,7 +36,7 @@ export function getRestClient(authenticated = true) {
             console.log('intercept response');
             if (response.status === 401) {
                 clearAuthentication();
-                window.location = '/login';
+                window.location = ROUTE_LOGIN;
                 return;
             }
             if (response && response.headers && response.headers['x-token']) {
@@ -92,7 +93,7 @@ console.log(decoded);
 export async function refreshToken() {
     if (!getRefreshToken()) {
         clearAuthentication();
-        window.location = '/login';
+        window.location = ROUTE_LOGIN;
         return null;
     }
     console.log('refresh token');

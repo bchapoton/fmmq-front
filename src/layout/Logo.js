@@ -3,6 +3,7 @@ import {makeStyles} from "@material-ui/styles";
 import {Slide} from "@material-ui/core";
 import {green, red} from "@material-ui/core/colors";
 import {Link} from "react-router-dom";
+import {ROUTE_HOME} from "../router/routes";
 
 const useStyles = makeStyles({
     logo: {
@@ -44,7 +45,7 @@ function Logo() {
     };
 
     return (
-        <Link to='/' onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classes.logo}>
+        <Link to={ROUTE_HOME} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classes.logo}>
             F{randomLogo}MMQ
         </Link>
     );

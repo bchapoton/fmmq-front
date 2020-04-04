@@ -11,6 +11,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import {teal} from "@material-ui/core/colors";
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import {clearUserData} from "../store/actions/context.action";
+import {ROUTE_LOGIN, ROUTE_SIGN_UP} from "../router/routes";
 
 const useStyles = makeStyles({
     buttonContainer: {
@@ -58,10 +59,10 @@ function UserToolbar() {
     } else {
         return (
             <div className={classes.buttonContainer}>
-                <IconButton className={classes.button} onClick={() => history.push('/login')}>
+                <IconButton className={classes.button} onClick={() => history.push(ROUTE_LOGIN)}>
                     <PersonIcon/>
                 </IconButton>
-                <IconButton className={classes.button} onClick={() => history.push('/sign-up')}>
+                <IconButton className={classes.button} onClick={() => history.push(ROUTE_SIGN_UP)}>
                     <AssignmentIcon/>
                 </IconButton>
             </div>

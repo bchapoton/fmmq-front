@@ -5,6 +5,31 @@ import SignUp from "../Pages/SignUp";
 import GameRoom from "../Pages/GameRoom";
 import Dashboard from "../Pages/Dashboard";
 import {ROLE_PLAYER} from "./roles";
+import Home from "../Pages/Home";
+
+export const ROUTE_HOME = '/';
+export const ROUTE_DASHBOARD = '/dashboard';
+export const ROUTE_LOGIN = '/login';
+export const ROUTE_CGU = '/cgu';
+export const ROUTE_SIGN_UP = '/sign-up';
+export const ROUTE_PLAY = '/play/:categoryId';
+
+export const generateRoute = (path, params) => {
+    let generatedPath = path;
+    if(Array.isArray(params)) {
+        params.forEach(param => generatedPath = replaceParameter(generatedPath, param));
+    } else {
+        generatedPath = replaceParameter(generatedPath, params);
+    }
+    return generatedPath;
+};
+
+const replaceParameter = (path, param) => {
+    if (path && param && param.name && param.value) {
+        return path.replace(param.name, param.value);
+    }
+    return path;
+}
 
 
 /**
@@ -18,24 +43,28 @@ import {ROLE_PLAYER} from "./roles";
 
 export const routes = [
     {
-        path: '/',
+        path: ROUTE_HOME,
+        children: (<Home/>)
+    },
+    {
+        path: ROUTE_DASHBOARD,
         role: ROLE_PLAYER,
         children: (<Dashboard/>)
     },
     {
-        path: '/login',
+        path: ROUTE_LOGIN,
         children: (<Login/>)
     },
     {
-        path: '/cgu',
+        path: ROUTE_CGU,
         children: (<CGU/>)
     },
     {
-        path: '/sign-up',
+        path: ROUTE_SIGN_UP,
         children: (<SignUp/>)
     },
     {
-        path: '/play/:categoryId',
+        path: ROUTE_PLAY,
         role: ROLE_PLAYER,
         children: (<GameRoom/>)
     }

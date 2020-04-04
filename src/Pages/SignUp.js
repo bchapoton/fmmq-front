@@ -12,6 +12,7 @@ import ButtonRouter from "../layout/ButtonRouter";
 import Typography from "@material-ui/core/Typography";
 import Checkbox from "@material-ui/core/Checkbox";
 import {cyan} from "@material-ui/core/colors";
+import {ROUTE_CGU, ROUTE_DASHBOARD, ROUTE_LOGIN} from "../router/routes";
 
 const useStyles = makeStyles({
     root: {
@@ -48,7 +49,7 @@ function SignUp() {
 
     const loggedIn = useSelector(({context}) => context.loggedIN);
     if (loggedIn) {
-        return (<Redirect to='/dashboard'/>)
+        return (<Redirect to={ROUTE_DASHBOARD} />)
     }
 
     const onSubmit = async (data) => {
@@ -79,7 +80,7 @@ function SignUp() {
                         Tu peux dès à présent te connecter et venir jouer !
                     </Typography>
                     <CardActions className={classes.registeredAction}>
-                        <ButtonRouter to='/login' color='primary' variant='contained'>Se connecter</ButtonRouter>
+                        <ButtonRouter to={ROUTE_LOGIN} color='primary' variant='contained'>Se connecter</ButtonRouter>
                     </CardActions>
                 </Card>
             </div>
@@ -175,7 +176,7 @@ function SignUp() {
                                         color="primary"
                                     />
                                 )}
-                                label={(<span>Accepter les <Link className={classes.cguLink} target='_blank' to='./cgu'>conditions générales d'utilisation</Link></span>)}
+                                label={(<span>Accepter les <Link className={classes.cguLink} target='_blank' to={ROUTE_CGU}>conditions générales d'utilisation</Link></span>)}
                             />
                         </Grid>
                         <Grid item>

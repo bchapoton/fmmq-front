@@ -11,8 +11,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {hideLoader, showLoader} from "../store/actions/loader.action";
 import {Alert, AlertTitle} from '@material-ui/lab';
 import ButtonRouter from "../layout/ButtonRouter";
-import {storeJWT, storeRefreshToken} from "../services/NetworkUtils";
+import {getUserDataFromJWT, storeJWT, storeRefreshToken} from "../services/NetworkUtils";
 import {setUserData} from "../store/actions/context.action";
+import {ROUTE_DASHBOARD, ROUTE_SIGN_UP} from "../router/routes";
 
 const useStyles = makeStyles({
     root: {
@@ -50,7 +51,7 @@ function Login() {
 
     const loggedIn = useSelector(({context}) => context.loggedIN);
     if (loggedIn) {
-        return (<Redirect to='/dashboard'/>)
+        return (<Redirect to={ROUTE_DASHBOARD} />)
     }
 
     const onSubmit = async (data) => {
@@ -62,7 +63,7 @@ function Login() {
                 (response) => {
                     storeJWT(response.data.token);
                     storeRefreshToken(response.data.refreshToken);
-                    dispatch(setUserData(response.data.user));
+                    dispatch(setUserData(getUserDataFromJWT()));
                 },
                 error => {
                     setLoginError(true);
@@ -124,7 +125,7 @@ function Login() {
                         <ButtonRouter
                             color='secondary'
                             size='small'
-                            to='/sign-up'
+                            to={ROUTE_SIGN_UP}
                         >Pas encore de compte ?</ButtonRouter>
                     </Grid>
                 </form>

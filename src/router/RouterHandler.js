@@ -1,25 +1,15 @@
 import React from 'react'
 import {Redirect, Route, Switch} from "react-router-dom";
 import NotFound from "../Pages/NotFound";
-import {routes} from './routes';
+import {ROUTE_HOME, routes} from './routes';
+import {rolesHierarchy} from './roles';
 import {useSelector} from "react-redux";
 
 function RouterHandler() {
-    const context = useSelector(({context}) => context.user);
-    const currentUserRole = context && context.user && context.user.role ? context.user.role : null;
-    const renderRoute = (route) => {
-        if (route.role) {
-            if (route.role !== currentUserRole) {
-                return (<Redirect to='/login'/>)
-            }
-        }
-        return route.children;
-    };
-
     const renderedRoutes = routes.map(route => {
         return (
             <Route path={route.path} exact={!route.notExact} key={route.path}>
-                <SecureChildrenRender role={route.role}>
+                <SecureChildrenRender route={route}>
                     {route.children}
                 </SecureChildrenRender>
             </Route>
@@ -37,14 +27,28 @@ function RouterHandler() {
 }
 
 function SecureChildrenRender(props) {
-    const {children, role} = props;
-    const context = useSelector(({context}) => context.user);
-    const currentUserRole = context && context.user && context.user.role ? context.user.role : null;
-    if (role && role !== currentUserRole) {
-        return (<Redirect to='/login'/>)
+    const {children, route} = props;
+    const userContext = useSelector(({context}) => context.user);
+    const currentUserRole = userContext && userContext.role ? userContext.role : null;
+    if (!hasRole(route.role, currentUserRole)) {
+        return (<Redirect to={ROUTE_HOME}/>)
     }
     return children;
 }
 
+function hasRole(routeRole, userRole) {
+    if (!routeRole) { // no role on the route display it
+        return true;
+    }
+    if (!userRole) { // route has a role but not the user, no need to go further
+        return false;
+    }
+    const allSuitableRole = [];
+    allSuitableRole.push(routeRole);
+    if (rolesHierarchy[routeRole].length > 0) {
+        allSuitableRole.push(rolesHierarchy[routeRole]);
+    }
+    return allSuitableRole.includes(userRole);
+}
 
 export default RouterHandler;
