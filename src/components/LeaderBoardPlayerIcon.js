@@ -56,7 +56,7 @@ export function PlayerIconBothFound() {
     );
 }
 
-function PlayerIconTrophy(props) {
+export function PlayerIconTrophy(props) {
     const {position} = props;
 
     return (

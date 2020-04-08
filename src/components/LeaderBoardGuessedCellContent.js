@@ -33,7 +33,7 @@ function LeaderBoardGuessedCellContent(props) {
 }
 
 LeaderBoardGuessedCellContent.propTypes = {
-    playerId: PropTypes.number.isRequired,
+    playerId: PropTypes.string.isRequired,
     leaderBoardGuessed: PropTypes.array
 };
 

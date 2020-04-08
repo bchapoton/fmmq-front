@@ -6,6 +6,7 @@ import GameRoom from "../Pages/GameRoom";
 import Dashboard from "../Pages/Dashboard";
 import {ROLE_PLAYER} from "./roles";
 import Home from "../Pages/Home";
+import TipeeePage from "../Pages/TipeeePage";
 
 export const ROUTE_HOME = '/';
 export const ROUTE_DASHBOARD = '/dashboard';
@@ -13,6 +14,7 @@ export const ROUTE_LOGIN = '/login';
 export const ROUTE_CGU = '/cgu';
 export const ROUTE_SIGN_UP = '/sign-up';
 export const ROUTE_PLAY = '/play/:categoryId';
+export const ROUTE_TIPEEE = '/tipeee';
 
 export const generateRoute = (path, params) => {
     let generatedPath = path;
@@ -67,5 +69,9 @@ export const routes = [
         path: ROUTE_PLAY,
         role: ROLE_PLAYER,
         children: (<GameRoom/>)
+    },
+    {
+        path: ROUTE_TIPEEE,
+        children: (<TipeeePage/>)
     }
 ];

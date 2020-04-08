@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch} from "react-redux";
 import {getUserDataFromJWT, hasJWT, isJWTExpired, refreshToken} from "../services/NetworkUtils";
-import {CircularProgress} from "@material-ui/core";
 import {setUserData} from "../store/actions/context.action";
 import LocalLoader from "./LocalLoader";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyle = makeStyles({
-   root: {
-       width: '100%',
-       height: '100vh'
-   }
+    root: {
+        width: '100%',
+        height: '100vh'
+    }
 });
 
 function RestoreSessionProvider(props) {
@@ -25,7 +24,7 @@ function RestoreSessionProvider(props) {
             if (isJWTExpired()) {
                 refreshToken()
                     .then(() => {
-                        console.log(getUserDataFromJWT())
+                        dispatch(setUserData(getUserDataFromJWT()));
                     })
                     .catch(e => console.log('error ' + e))
                     .then(() => setWaiting(false));

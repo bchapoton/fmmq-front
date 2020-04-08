@@ -22,13 +22,15 @@ import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import HelpIcon from '@material-ui/icons/Help';
 import LeaderBoardIcon from "../components/LeaderBoardIcon";
 import StarIcon from '@material-ui/icons/Star';
-import {getPlayersInRoom, sortPayersInRoom} from '../services/GameService'
+import {sortPayersInRoom} from '../services/GameService'
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import {debugEnter, debugFailed, debugGuessed, debugLeave} from "../services/EventsService";
 import LeaderBoardGuessedCellContent from "../components/LeaderBoardGuessedCellContent";
+import {joinRoom} from "../services/DashboardService";
+import LocalLoader from "../layout/LocalLoader";
 
 
 const useStyles = makeStyles({
@@ -60,6 +62,36 @@ function GameRoom() {
     const classes = useStyles();
     const {categoryId} = useParams();
     const {register, handleSubmit, reset} = useForm();
+    const [roomInfo, setRoomInfo] = useState();
+
+
+    const [currentArtist, setCurrentArtist] = useState();
+    const [currentTitle, setCurrentTitle] = useState();
+
+    const [leaderBoardGuessed, setLeaderBoardGuessed] = useState([]);
+    const [gamePlayers, setGamePlayers] = useState([]);
+    const [leaderBoard, setLeaderBoard] = useState([]);
+    const [leaderBoardSummary, setLeaderBoardSummary] = useState({
+        none: 0,
+        artist: 0,
+        title: 0,
+        both: 0
+    });
+
+    const [loadingEnterRoom, setLoadingEnterRoom] = useState(true);
+
+    useEffect(() => {
+        joinRoom(categoryId, (response) => {
+            const roomInfoData = response.data;
+            setRoomInfo(roomInfoData);
+            setGamePlayers(roomInfoData.leaderBoard);
+            setLeaderBoardSummary(Object.assign({}, leaderBoardSummary, {none: roomInfoData.leaderBoard.length}))
+
+            setLoadingEnterRoom(false);
+        });
+    }, []);
+
+    // DEBUG
     const [gameHistory, setGameHistory] = useState([
         {
             artist: 'Kmaro',
@@ -79,25 +111,6 @@ function GameRoom() {
         },
     ]);
 
-    const [currentArtist, setCurrentArtist] = useState();
-    const [currentTitle, setCurrentTitle] = useState();
-
-    const [leaderBoardGuessed, setLeaderBoardGuessed] = useState([]);
-    const [gamePlayers, setGamePlayers] = useState([]);
-    const [leaderBoard, setLeaderBoard] = useState([]);
-    const [leaderBoardSummary, setLeaderBoardSummary] = useState({
-        none: 0,
-        artist: 0,
-        title: 0,
-        both: 0
-    });
-
-    useEffect(() => {
-        const gamePlayersInitial = getPlayersInRoom(categoryId);
-        setGamePlayers(gamePlayersInitial);
-        setLeaderBoardSummary(Object.assign(leaderBoardSummary, {none: gamePlayersInitial.length}))
-    }, []);
-
     useEffect(() => {
         setLeaderBoard(sortPayersInRoom(gamePlayers));
     }, [gamePlayers]);
@@ -108,6 +121,12 @@ function GameRoom() {
             reset();
         }
     };
+    // DEBUG
+
+
+    if(loadingEnterRoom) {
+        return (<LocalLoader/>);
+    }
 
     return (
         <div className={classes.root}>
@@ -118,10 +137,10 @@ function GameRoom() {
                     <Grid item xs={8}>
                         <Grid container direction='column' spacing={1}>
                             <Grid item xs={12}>
-                                <Typography>Extrait 9/15</Typography>
+                                <Typography>Extrait {roomInfo.currentMusicIndex}/{roomInfo.musicsLength}</Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                Années 2000
+                                {roomInfo.category.label}
                             </Grid>
                             <Grid item xs={12}>
                                 <form onSubmit={handleSubmit(onSubmit)}>

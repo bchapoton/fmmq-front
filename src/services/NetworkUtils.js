@@ -25,11 +25,12 @@ export function getRestClient(authenticated = true) {
     });
 
     if (authenticated) {
-        instance.interceptors.request.use(async (request) => {
+        instance.interceptors.request.use(async (config) => {
             if (isJWTExpired()) {
                 const newToken = refreshToken();
-                request.headers.authorization = newToken;
+                config.headers.authorization = newToken;
             }
+            return config;
         });
 
         instance.interceptors.response.use((response) => {
@@ -40,8 +41,10 @@ export function getRestClient(authenticated = true) {
                 return;
             }
             if (response && response.headers && response.headers['x-token']) {
+                console.log('store new one' + response.headers['x-token'])
                 storeJWT(response.headers['x-token']);
             }
+            return response;
         });
     }
     return instance;
@@ -86,8 +89,7 @@ export function isExpired(jwt) {
     } catch (e) {
         return true;
     }
-console.log(decoded);
-    return decoded.expire > (new Date()).getTime();
+    return decoded.expire < (new Date()).getTime();
 }
 
 export async function refreshToken() {
@@ -98,20 +100,22 @@ export async function refreshToken() {
     }
     console.log('refresh token');
     // token expired refresh it
-    const refreshed = await axios.create({
+    const response = await axios.create({
         baseURL: NetworkConfig.ApiUrl,
         timeout: 0
     }).post('auth/refresh', {refreshToken: getRefreshToken(), token: getJWT()});
+    if(response && response.status !== 200) {
+        throw "can't refresh the token";
+    }
+    storeJWT(response.data.token);
+    storeRefreshToken(response.data.refreshToken);
 
-    storeJWT(refreshed.token);
-    storeRefreshToken(refreshed.refreshToken);
-
-    return refreshed.token;
+    return response.data.token;
 }
 
 export function getUserDataFromJWT() {
     const jwt = getJWT();
-    if(jwt) {
+    if (jwt) {
         const decoded = jwtDecode(jwt);
         return decoded;
     }

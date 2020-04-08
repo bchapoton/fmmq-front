@@ -1,25 +1,5 @@
 import React from 'react';
 
-export const getPlayersInRoom = (categoryId) => {
-    return [
-        {
-            id: 1,
-            nickname: 'Player 1',
-            score: 20
-        },
-        {
-            id: 2,
-            nickname: 'Player 2',
-            score: 3
-        },
-        {
-            id: 3,
-            nickname: 'Player 3',
-            score: 16
-        }
-    ];
-};
-
 export const sortPayersInRoom = (playersInRoom) => {
     if (!playersInRoom || playersInRoom.length === 0) {
         return playersInRoom;
