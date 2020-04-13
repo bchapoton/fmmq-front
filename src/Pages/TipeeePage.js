@@ -1,9 +1,8 @@
 import React from 'react'
 import {makeStyles} from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
-import DashboardIcon from "@material-ui/icons/Dashboard";
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import {blue, red} from "@material-ui/core/colors";
+import {blue} from "@material-ui/core/colors";
 import history from "../layout/utils/history";
 import {ROUTE_DASHBOARD} from "../router/routes";
 
@@ -27,7 +26,7 @@ function TipeeePage() {
 
     return (
         <div className={classes.root}>
-            <img src='assets/img/thanks.jfif'/>
+            <img alt="thanks you" src='assets/img/thanks.jfif'/>
             <IconButton
                 className={classes.backButton}
                 onClick={e => history.push(ROUTE_DASHBOARD)}

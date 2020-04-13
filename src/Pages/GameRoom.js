@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from "@material-ui/styles";
 import {useParams} from 'react-router-dom'
 import Grid from "@material-ui/core/Grid";
@@ -7,10 +7,10 @@ import PersonIcon from '@material-ui/icons/Person';
 import Button from "@material-ui/core/Button";
 import {useForm} from "react-hook-form";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-import {cyan, grey, lightBlue, lightGreen, yellow} from "@material-ui/core/colors";
+import {cyan, grey, indigo, lightBlue, lightGreen, yellow} from "@material-ui/core/colors";
 import Typography from "@material-ui/core/Typography";
 import MusicElement from "../components/MusicElement";
-import {Card, CircularProgress, TableCell} from "@material-ui/core";
+import {Card, TableCell} from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import List from "@material-ui/core/List";
@@ -32,16 +32,17 @@ import LeaderBoardGuessedCellContent from "../components/LeaderBoardGuessedCellC
 import {joinRoom} from "../services/DashboardService";
 import LocalLoader from "../layout/LocalLoader";
 import {getSocket} from "../services/SocketUtils";
-import {useSelector} from "react-redux";
 import EventMessageFeedback from "../components/EventMessageFeedback";
 import MusicProgress from "../components/MusicProgress";
 import GameRoomNextTitleLoader from "../components/GameRoomNextTitleLoader";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles({
-    root: {
-    },
+    root: {},
     container: {},
     gameContainer: {
+        backgroundImage: "url('/assets/img/IehB7.png')",
+        backgroundRepeat: 'repeat',
         backgroundColor: cyan[300],
         padding: '10px',
         marginBottom: '10px'
@@ -61,10 +62,29 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'space-around'
     },
+    roomTitleContainer: {
+        display: 'flex',
+        alignItems: 'center'
+    },
     roomLabel: {
+        fontFamily: 'ChunkFiveRegular',
         color: yellow[900],
-        fontSize: '3rem',
-        fontWeight: 'bold'
+        fontSize: '2rem',
+    },
+    roomPLayersNumber: {
+        color: grey[400],
+        marginLeft: '5px'
+    },
+    roomPLayersNumberIcon: {
+        color: grey[400],
+        marginLeft: '10px'
+    },
+    musicElementContainer: {
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+    feedbackContainer: {
+        minHeight: '40px'
     }
 });
 
@@ -94,21 +114,16 @@ function GameRoom() {
         both: 0
     });
 
-    const sendMessage = (payload) => {
-        setFeedback(payload);
-    };
-
     const [loadingEnterRoom, setLoadingEnterRoom] = useState(true);
-    const context = useSelector(({context}) => context);
 
     useEffect(() => {
         let socket;
         joinRoom(categoryId, (response) => {
             const roomInfoData = response.data;
-            setPlayerId(context.user._id)
+            setPlayerId(roomInfoData.playerId);
             setRoomInfo(roomInfoData);
             setGamePlayers(roomInfoData.leaderBoard);
-            setLeaderBoardSummary(Object.assign({}, leaderBoardSummary, {none: roomInfoData.leaderBoard.length}))
+            setLeaderBoardSummary(Object.assign({}, leaderBoardSummary, {none: roomInfoData.leaderBoard.length}));
             setPlayerToken(roomInfoData.playerToken);
             socket = getSocket(roomInfoData.socketNamespace);
             setSocket(socket);
@@ -135,14 +150,14 @@ function GameRoom() {
             });
 
             socket.off('FAILED').on('FAILED', payload => {
-                onFailed(playerId, sendMessage, payload);
+                onFailed(playerId, setFeedback, payload);
             });
 
             socket.off('GUESSED').on('GUESSED', payload => {
                 const gamePlayersNew = [...gamePlayers];
                 const leaderBoardGuessedNew = [...leaderBoardGuessed];
                 const leaderBoardSummaryNew = Object.assign({}, leaderBoardSummary);
-                onGuessed(playerId, gamePlayersNew, leaderBoardSummaryNew, leaderBoardGuessedNew, sendMessage, payload);
+                onGuessed(playerId, gamePlayersNew, leaderBoardSummaryNew, leaderBoardGuessedNew, setFeedback, payload);
                 setGamePlayers(gamePlayersNew);
                 setLeaderBoardGuessed(leaderBoardGuessedNew);
                 setLeaderBoardSummary(leaderBoardSummaryNew);
@@ -152,8 +167,7 @@ function GameRoom() {
         gamePlayers,
         leaderBoardGuessed,
         leaderBoardSummary,
-        playerId,
-        sendMessage]);
+        playerId]);
 
     useEffect(() => {
         setLeaderBoard(sortPayersInRoom(gamePlayers));
@@ -184,12 +198,24 @@ function GameRoom() {
                     <Grid item xs={8}>
                         <Grid container direction='column' spacing={1}>
                             <Grid item xs={12}>
-                                <Typography className={classes.roomLabel}>{roomInfo.category.label}</Typography>
-
+                                <div className={classes.roomTitleContainer}>
+                                    <Typography className={classes.roomLabel}>{roomInfo.category.label}</Typography>
+                                    <AccountCircleIcon className={classes.roomPLayersNumberIcon}/>
+                                    <span className={classes.roomPLayersNumber}>{gamePlayers.length} joueurs</span>
+                                </div>
                             </Grid>
                             <Grid item xs={12}>
-                                <MusicProgress started={musicInProgress} animationEnded={animationEnded}/>
-                                <Typography>Extrait {roomInfo.currentMusicIndex}/{roomInfo.musicsLength}</Typography>
+                                <MusicProgress
+                                    started={musicInProgress}
+                                    animationEnded={animationEnded}
+                                    text={(<React.Fragment>Extrait {roomInfo.currentMusicIndex}/{roomInfo.musicsLength}</React.Fragment>)}
+                                />
+                                <div className={classes.musicElementContainer}>
+                                    <MusicElement value={currentArtist} label='Artiste' icon={(<PersonIcon/>)}
+                                                  color={yellow}/>
+                                    <MusicElement value={currentTitle} label='Titre' icon={(<MicIcon/>)}
+                                                  color={lightBlue}/>
+                                </div>
                             </Grid>
                             <Grid item xs={12}>
                                 <Button onClick={(e) => setMusicInProgress(!musicInProgress)}>test</Button>
@@ -211,15 +237,8 @@ function GameRoom() {
                                     />
                                 </form>
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid className={classes.feedbackContainer} item xs={12}>
                                 <EventMessageFeedback payload={feedback}/>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <MusicElement value={currentArtist} label='Artiste' icon={(<PersonIcon/>)}
-                                              color={yellow}/>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <MusicElement value={currentTitle} label='Titre' icon={(<MicIcon/>)} color={lightBlue}/>
                             </Grid>
                         </Grid>
                     </Grid>

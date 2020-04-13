@@ -5,22 +5,18 @@ const initialState = {
 };
 
 const loader = function (state = initialState, action) {
-    switch ( action.type )
-    {
-        case HIDE_LOADER:
-        {
+    switch (action.type) {
+        case HIDE_LOADER: {
             return {
                 load: false
             }
         }
-        case SHOW_LOADER:
-        {
+        case SHOW_LOADER: {
             return {
                 load: true
             }
         }
-        default:
-        {
+        default: {
             return state;
         }
     }

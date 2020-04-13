@@ -36,7 +36,7 @@ function RestoreSessionProvider(props) {
         } else {
             setWaiting(false);
         }
-    }, []);
+    }, [dispatch]);
 
     return (
         <div className={classes.root}>

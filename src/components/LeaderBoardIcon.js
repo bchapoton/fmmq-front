@@ -2,10 +2,7 @@ import React from 'react';
 import {makeStyles} from "@material-ui/styles";
 import {Paper, Tooltip} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import clsx from 'clsx'
 import PropTypes from "prop-types";
-import {blueGrey} from "@material-ui/core/colors";
-import HelpIcon from "@material-ui/icons/Help";
 
 function LeaderBoardIcon(props) {
     const {value, icon, color, helperText} = props;

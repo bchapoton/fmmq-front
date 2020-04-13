@@ -1,19 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {makeStyles} from "@material-ui/styles";
-import {blueGrey} from "@material-ui/core/colors";
 import {LinearProgress} from "@material-ui/core";
 import PropTypes from "prop-types";
-
-const useStyles = makeStyles({
-    root: {},
-    container: {},
-    gameContainer: {
-        backgroundColor: blueGrey[500],
-        padding: '10px'
-    }
-});
+import {makeStyles} from "@material-ui/core/styles";
+import {indigo} from "@material-ui/core/colors";
 
 const animationStepDuration = 250; // each step take 250ms for fluid animation
+
+const useStyle = makeStyles({
+    container: {
+        height: '55px'
+    },
+    text: {
+        color: indigo[500],
+        fontWeight: 'bold',
+        margin: '5px 0',
+    },
+});
 
 /**
  *
@@ -22,13 +24,11 @@ const animationStepDuration = 250; // each step take 250ms for fluid animation
  * @constructor
  */
 function MusicProgress(props) {
-    const {duration, started, animationEnded} = props;
-    const classes = useStyles();
+    const {duration, started, animationEnded, text} = props;
     const [startedInternal, setStartedInternal] = useState(started);
     const [completed, setCompleted] = useState(0);
     const maxCompleted = Math.round(duration / animationStepDuration);
-    console.log("rerender " + started);
-    console.log("rerender " + startedInternal);
+    const classes = useStyle();
 
     useEffect(() => {
         setStartedInternal(started);
@@ -39,7 +39,6 @@ function MusicProgress(props) {
         let timer;
 
         function progress() {
-            console.log('onprogress');
             setCompleted(oldCompleted => {
                 console.log(oldCompleted);
                 console.log(maxCompleted);
@@ -50,7 +49,7 @@ function MusicProgress(props) {
                         clearInterval(timer);
                         setCompleted(0);
                         setStartedInternal(false);
-                        if(animationEnded) {
+                        if (animationEnded) {
                             animationEnded();
                         }
                     }
@@ -58,35 +57,44 @@ function MusicProgress(props) {
             });
         }
 
-        if(startedInternal)
+        if (startedInternal)
             timer = setInterval(progress, animationStepDuration);
 
         return () => {
             if (timer)
                 clearInterval(timer);
         };
-    }, [startedInternal, setStartedInternal, animationStepDuration, setCompleted]);
+    }, [startedInternal,
+        setStartedInternal,
+        setCompleted,
+        animationEnded,
+        maxCompleted]);
 
     const normalise = value => (value) * 100 / maxCompleted; // scale the completed value on range 0-100, 100 is the completion status
 
-    if(!startedInternal) {
-        return null;
+    if (!startedInternal) {
+        return <div className={classes.container}>&nbsp;</div>;
     }
 
     return (
-        <LinearProgress variant="determinate" value={normalise(completed)}/>
+        <div className={classes.container}>
+            <LinearProgress variant="determinate" value={normalise(completed)}/>
+            <div className={classes.text}>{text}</div>
+        </div>
     );
 }
 
 
 MusicProgress.propTypes = {
     started: PropTypes.bool.isRequired,
+    text: PropTypes.string,
     duration: PropTypes.number,
     animationEnded: PropTypes.func
 };
 
 MusicProgress.defaultProps = {
-    duration: 30000
+    duration: 30000,
+    text: ''
 };
 
 export default MusicProgress;

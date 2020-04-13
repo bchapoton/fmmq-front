@@ -1,4 +1,3 @@
-import React from 'react';
 import forge from "node-forge";
 
 export const sortPayersInRoom = (playersInRoom) => {

@@ -57,7 +57,8 @@ function Tipeee() {
         <Paper className={classes.root}>
             <Typography variant='h6'>Soutenez le projet</Typography>
             <Typography variant='body2'>
-                Vous pouvez soutenir l’équipe bénévole de FMMQ via <Link to={ROUTE_TIPEEE} className={classes.link}>tipeee.com/FMMQ</Link>
+                Vous pouvez soutenir l’équipe bénévole de FMMQ via <Link to={ROUTE_TIPEEE}
+                                                                         className={classes.link}>tipeee.com/FMMQ</Link>
             </Typography>
             <div className={classes.tipeeContainer}>
                 <span

@@ -23,8 +23,7 @@ const useStyles = makeStyles({
     container: {
         padding: '0'
     },
-    logoContainer: {
-    },
+    logoContainer: {},
     toolIconsMenu: {
         flexGrow: 1
     }
@@ -32,7 +31,7 @@ const useStyles = makeStyles({
 
 function App() {
     const classes = useStyles();
-console.log(theme);
+    console.log(theme);
     return (
         <MuiThemeProvider theme={theme}>
             <MyStoreProvider>

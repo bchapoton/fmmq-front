@@ -49,7 +49,7 @@ function SignUp() {
 
     const loggedIn = useSelector(({context}) => context.loggedIN);
     if (loggedIn) {
-        return (<Redirect to={ROUTE_DASHBOARD} />)
+        return (<Redirect to={ROUTE_DASHBOARD}/>)
     }
 
     const onSubmit = async (data) => {
@@ -176,7 +176,8 @@ function SignUp() {
                                         color="primary"
                                     />
                                 )}
-                                label={(<span>Accepter les <Link className={classes.cguLink} target='_blank' to={ROUTE_CGU}>conditions générales d'utilisation</Link></span>)}
+                                label={(
+                                    <span>Accepter les <Link className={classes.cguLink} target='_blank' to={ROUTE_CGU}>conditions générales d'utilisation</Link></span>)}
                             />
                         </Grid>
                         <Grid item>

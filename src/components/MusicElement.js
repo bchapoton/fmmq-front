@@ -13,9 +13,12 @@ function MusicElement(props) {
             display: 'flex',
             alignItems: 'center',
             padding: '5px',
-            maxWidth: '300px',
+            minWidth: '300px',
             backgroundColor: blueGrey[800],
-            color: blueGrey[400]
+            color: blueGrey[400],
+            borderWidth: '1px',
+            borderColor: blueGrey[800],
+            borderStyle: 'solid'
         },
         iconContainer: {
             margin: '5px'

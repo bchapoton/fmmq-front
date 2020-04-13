@@ -10,7 +10,7 @@ import Badge from "@material-ui/core/Badge";
 
 
 function LeaderBoardPlayerIcon(props) {
-    const {value, icon, color, helperText} = props;
+    const {icon, color} = props;
     const useStyles = makeStyles({
         iconContainer: {
             display: 'flex',

@@ -17,7 +17,7 @@ function CurrentGamePreviousMusic(props) {
     const {values} = props;
     const classes = useStyles();
 
-    if(!values || values.length === 0) {
+    if (!values || values.length === 0) {
         return null;
     }
 
@@ -26,15 +26,15 @@ function CurrentGamePreviousMusic(props) {
             {values.map((item, i) => {
                 return (<div key={`${i}-${item.artist}`}>
                     <Tooltip
-                    title={(<React.Fragment>
-                        <Typography>{item.artist}</Typography>
-                        <Typography>{item.title}</Typography>
-                    </React.Fragment>)}
-                >
-                    <Paper>
-                        <AlbumIcon/>
-                    </Paper>
-                </Tooltip>
+                        title={(<React.Fragment>
+                            <Typography>{item.artist}</Typography>
+                            <Typography>{item.title}</Typography>
+                        </React.Fragment>)}
+                    >
+                        <Paper>
+                            <AlbumIcon/>
+                        </Paper>
+                    </Tooltip>
                 </div>)
             })}
         </div>

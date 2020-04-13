@@ -1,6 +1,5 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/styles";
-import Button from "@material-ui/core/Button";
 import history from './utils/history'
 import {useDispatch, useSelector} from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
@@ -40,12 +39,12 @@ function UserToolbar() {
     if (context.loggedIN) {
         return (
             <React.Fragment>
-            <div className={classes.userContainer}>
-                <Avatar className={classes.avatar}>
-                    {context.user.nickname ? context.user.nickname.substring(0, 1).toUpperCase() : 'U'}
-                </Avatar>
-                <Typography>{context.user.nickname}</Typography>
-            </div>
+                <div className={classes.userContainer}>
+                    <Avatar className={classes.avatar}>
+                        {context.user.nickname ? context.user.nickname.substring(0, 1).toUpperCase() : 'U'}
+                    </Avatar>
+                    <Typography>{context.user.nickname}</Typography>
+                </div>
                 <IconButton
                     className={classes.button}
                     onClick={(e) => {

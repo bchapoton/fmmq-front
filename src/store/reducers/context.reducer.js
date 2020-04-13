@@ -6,10 +6,8 @@ const initialState = {
 };
 
 const context = function (state = initialState, action) {
-    switch ( action.type )
-    {
-        case LOGGED_IN:
-        {
+    switch (action.type) {
+        case LOGGED_IN: {
             return Object.assign(
                 state,
                 {
@@ -17,23 +15,19 @@ const context = function (state = initialState, action) {
                 }
             );
         }
-        case LOGGED_OUT:
-        {
+        case LOGGED_OUT: {
             return Object.assign({}, initialState);
         }
-        case SET_USER_DATA:
-        {
+        case SET_USER_DATA: {
             return {
                 loggedIN: true,
                 user: action.payload
             };
         }
-        case CLEAR_USER_DATA:
-        {
+        case CLEAR_USER_DATA: {
             return Object.assign({}, initialState);
         }
-        default:
-        {
+        default: {
             return state;
         }
     }

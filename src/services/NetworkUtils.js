@@ -1,8 +1,8 @@
-import React from 'react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import NetworkConfig from "../config/NetworkConfig";
 import {ROUTE_LOGIN} from "../router/routes";
+import {Exception} from "../exceptions/Exception";
 
 export function getRestClient(authenticated = true) {
     let headers = {};
@@ -104,8 +104,8 @@ export async function refreshToken() {
         baseURL: NetworkConfig.ApiUrl,
         timeout: 0
     }).post('auth/refresh', {refreshToken: getRefreshToken(), token: getJWT()});
-    if(response && response.status !== 200) {
-        throw "can't refresh the token";
+    if (response && response.status !== 200) {
+        throw new Exception("can't refresh the token", 'REFRESH-TOKEN-FAILED');
     }
     storeJWT(response.data.token);
     storeRefreshToken(response.data.refreshToken);

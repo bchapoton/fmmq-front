@@ -51,7 +51,7 @@ function Login() {
 
     const loggedIn = useSelector(({context}) => context.loggedIN);
     if (loggedIn) {
-        return (<Redirect to={ROUTE_DASHBOARD} />)
+        return (<Redirect to={ROUTE_DASHBOARD}/>)
     }
 
     const onSubmit = async (data) => {
@@ -86,7 +86,7 @@ function Login() {
                                 type='text'
                                 label='Email'
                                 variant='outlined'
-                                error={loginError || errors && errors.email ? true : false}
+                                error={loginError || ( errors && errors.email ) ? true : false}
                                 helperText={errors && errors.email ? errors.email.message : ''}
                                 fullWidth
                                 inputRef={register({required: 'Le mail est obligatoire'})}
@@ -101,7 +101,7 @@ function Login() {
                                 label='Mot de passe'
                                 fullWidth
                                 inputRef={register({required: 'Le mot de passe est obligatoire'})}
-                                error={loginError || errors && errors.password ? true : false}
+                                error={loginError || ( errors && errors.password ) ? true : false}
                                 helperText={errors && errors.password ? errors.password.message : ''}
                             />
                         </Grid>

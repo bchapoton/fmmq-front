@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import {
-    PlayerIconArtistFound, PlayerIconBothFound,
+    PlayerIconArtistFound,
+    PlayerIconBothFound,
     PlayerIconFirstFound,
     PlayerIconSecondFound,
-    PlayerIconThirdFound, PlayerIconTitleFound
+    PlayerIconThirdFound,
+    PlayerIconTitleFound
 } from "./LeaderBoardPlayerIcon";
 
 function LeaderBoardGuessedCellContent(props) {

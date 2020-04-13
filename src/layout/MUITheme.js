@@ -13,7 +13,7 @@ const theme = createMuiTheme({
     },
     overrides: {
         'MuiInputBase-root': {
-                color: grey[400]
+            color: grey[400]
         }
     }
 });
