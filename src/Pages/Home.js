@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {makeStyles} from "@material-ui/styles";
 import {Link} from "react-router-dom";
 
+import forge from 'node-forge';
 const useStyles = makeStyles({
     root: {},
     container: {}
@@ -10,7 +11,7 @@ const useStyles = makeStyles({
 function Home() {
     const classes = useStyles();
 
-    useEffect(() => {
+    //useEffect(() => {
         /*
         let audioElement = document.getElementById('test');
         audioElement.play();
@@ -20,6 +21,7 @@ function Home() {
 
          */
 
+        /**
         HTMLAudioElement.prototype.stop = function () {
             this.pause();
             this.currentTime = 0.0;
@@ -37,6 +39,7 @@ function Home() {
         }, 10000);
 
     }, []);
+         */
 
     return (
         <div className={classes.root}>

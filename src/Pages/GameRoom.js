@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {makeStyles} from "@material-ui/styles";
 import {useParams} from 'react-router-dom'
 import Grid from "@material-ui/core/Grid";
@@ -10,7 +10,7 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import {cyan, grey, lightBlue, lightGreen, yellow} from "@material-ui/core/colors";
 import Typography from "@material-ui/core/Typography";
 import MusicElement from "../components/MusicElement";
-import {Card, TableCell} from "@material-ui/core";
+import {Card, CircularProgress, TableCell} from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import List from "@material-ui/core/List";
@@ -27,14 +27,19 @@ import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
-import {debugEnter, debugFailed, debugGuessed, debugLeave} from "../services/EventsService";
+import {onEnter, onFailed, onGuessed, sendGuessEvent} from "../services/EventsService";
 import LeaderBoardGuessedCellContent from "../components/LeaderBoardGuessedCellContent";
 import {joinRoom} from "../services/DashboardService";
 import LocalLoader from "../layout/LocalLoader";
-
+import {getSocket} from "../services/SocketUtils";
+import {useSelector} from "react-redux";
+import EventMessageFeedback from "../components/EventMessageFeedback";
+import MusicProgress from "../components/MusicProgress";
+import GameRoomNextTitleLoader from "../components/GameRoomNextTitleLoader";
 
 const useStyles = makeStyles({
-    root: {},
+    root: {
+    },
     container: {},
     gameContainer: {
         backgroundColor: cyan[300],
@@ -55,6 +60,11 @@ const useStyles = makeStyles({
     leaderBoardIconsContainer: {
         display: 'flex',
         justifyContent: 'space-around'
+    },
+    roomLabel: {
+        color: yellow[900],
+        fontSize: '3rem',
+        fontWeight: 'bold'
     }
 });
 
@@ -63,11 +73,17 @@ function GameRoom() {
     const {categoryId} = useParams();
     const {register, handleSubmit, reset} = useForm();
     const [roomInfo, setRoomInfo] = useState();
+    const [socket, setSocket] = useState();
+    const [playerToken, setPlayerToken] = useState();
+    const [playerCipher, setPlayerCipher] = useState();
+    const [playerId, setPlayerId] = useState();
 
-
+    const [feedback, setFeedback] = useState({});
+    const [musicInProgress, setMusicInProgress] = useState(false);
     const [currentArtist, setCurrentArtist] = useState();
     const [currentTitle, setCurrentTitle] = useState();
 
+    const [gameHistory, setGameHistory] = useState([]);
     const [leaderBoardGuessed, setLeaderBoardGuessed] = useState([]);
     const [gamePlayers, setGamePlayers] = useState([]);
     const [leaderBoard, setLeaderBoard] = useState([]);
@@ -78,38 +94,66 @@ function GameRoom() {
         both: 0
     });
 
+    const sendMessage = (payload) => {
+        setFeedback(payload);
+    };
+
     const [loadingEnterRoom, setLoadingEnterRoom] = useState(true);
+    const context = useSelector(({context}) => context);
 
     useEffect(() => {
+        let socket;
         joinRoom(categoryId, (response) => {
             const roomInfoData = response.data;
+            setPlayerId(context.user._id)
             setRoomInfo(roomInfoData);
             setGamePlayers(roomInfoData.leaderBoard);
             setLeaderBoardSummary(Object.assign({}, leaderBoardSummary, {none: roomInfoData.leaderBoard.length}))
-
+            setPlayerToken(roomInfoData.playerToken);
+            socket = getSocket(roomInfoData.socketNamespace);
+            setSocket(socket);
+            setPlayerCipher(roomInfoData.playerCipher);
             setLoadingEnterRoom(false);
         });
+
+        return () => {
+            if (socket) {
+                console.log('disconnect the socket');
+                socket.disconnect();
+            }
+        }
     }, []);
 
-    // DEBUG
-    const [gameHistory, setGameHistory] = useState([
-        {
-            artist: 'Kmaro',
-            title: 'Femme like you'
-        },
-        {
-            artist: 'Kenza fara',
-            title: 'hahahaha'
-        },
-        {
-            artist: 'Vitaa',
-            title: 'un titre de merde'
-        },
-        {
-            artist: 'tragedy',
-            title: 'hey ho'
-        },
-    ]);
+    useEffect(() => {
+        if (socket) {
+            socket.off('ENTER').on('ENTER', payload => {
+                const gamePlayersCopy = [...gamePlayers];
+                const leaderBoardSummaryCopy = Object.assign({}, leaderBoardSummary);
+                onEnter(gamePlayersCopy, leaderBoardSummaryCopy, payload);
+                setGamePlayers(gamePlayersCopy);
+                setLeaderBoardSummary(leaderBoardSummaryCopy);
+            });
+
+            socket.off('FAILED').on('FAILED', payload => {
+                onFailed(playerId, sendMessage, payload);
+            });
+
+            socket.off('GUESSED').on('GUESSED', payload => {
+                const gamePlayersNew = [...gamePlayers];
+                const leaderBoardGuessedNew = [...leaderBoardGuessed];
+                const leaderBoardSummaryNew = Object.assign({}, leaderBoardSummary);
+                onGuessed(playerId, gamePlayersNew, leaderBoardSummaryNew, leaderBoardGuessedNew, sendMessage, payload);
+                setGamePlayers(gamePlayersNew);
+                setLeaderBoardGuessed(leaderBoardGuessedNew);
+                setLeaderBoardSummary(leaderBoardSummaryNew);
+            });
+        }
+    }, [socket,
+        gamePlayers,
+        leaderBoardGuessed,
+        leaderBoardSummary,
+        playerId,
+        sendMessage]);
 
     useEffect(() => {
         setLeaderBoard(sortPayersInRoom(gamePlayers));
@@ -117,14 +161,16 @@ function GameRoom() {
 
     const onSubmit = (data) => {
         if (data && data.guessField) {
-            console.log(data.guessField);
+            sendGuessEvent(socket, playerId, playerToken, data.guessField);
             reset();
         }
     };
-    // DEBUG
 
+    const animationEnded = () => {
+        setMusicInProgress(false);
+    };
 
-    if(loadingEnterRoom) {
+    if (loadingEnterRoom) {
         return (<LocalLoader/>);
     }
 
@@ -133,14 +179,20 @@ function GameRoom() {
             <div className={classes.gameContainer}>
                 <Grid container spacing={2}>
                     <Grid item xs={2}>
+                        <GameRoomNextTitleLoader displayed={!musicInProgress}/>
                     </Grid>
                     <Grid item xs={8}>
                         <Grid container direction='column' spacing={1}>
                             <Grid item xs={12}>
+                                <Typography className={classes.roomLabel}>{roomInfo.category.label}</Typography>
+
+                            </Grid>
+                            <Grid item xs={12}>
+                                <MusicProgress started={musicInProgress} animationEnded={animationEnded}/>
                                 <Typography>Extrait {roomInfo.currentMusicIndex}/{roomInfo.musicsLength}</Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                {roomInfo.category.label}
+                                <Button onClick={(e) => setMusicInProgress(!musicInProgress)}>test</Button>
                             </Grid>
                             <Grid item xs={12}>
                                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -160,6 +212,9 @@ function GameRoom() {
                                 </form>
                             </Grid>
                             <Grid item xs={12}>
+                                <EventMessageFeedback payload={feedback}/>
+                            </Grid>
+                            <Grid item xs={12}>
                                 <MusicElement value={currentArtist} label='Artiste' icon={(<PersonIcon/>)}
                                               color={yellow}/>
                             </Grid>
@@ -170,7 +225,7 @@ function GameRoom() {
                     </Grid>
                 </Grid>
             </div>
-            <Grid container spacing={5}>
+            <Grid container spacing={2}>
                 <Grid item xs={4}>
                     <Card>
                         <CardHeader
@@ -204,7 +259,8 @@ function GameRoom() {
                         />
                         <CardContent>
                             <div className={classes.leaderBoardIconsContainer}>
-                                <LeaderBoardIcon value={leaderBoardSummary.none} icon={(<HelpIcon/>)} color={grey[400]}
+                                <LeaderBoardIcon value={leaderBoardSummary.none} icon={(<HelpIcon/>)}
+                                                 color={grey[400]}
                                                  helperText="n'ont rien trouvé"/>
                                 <LeaderBoardIcon value={leaderBoardSummary.artist} icon={(<PersonIcon/>)}
                                                  color={lightGreen['A700']} helperText="ont trouvé l'artiste"/>
@@ -221,7 +277,8 @@ function GameRoom() {
                                                 <TableRow key={item.id}>
                                                     <TableCell>{i + 1}.</TableCell>
                                                     <TableCell>{item.nickname}</TableCell>
-                                                    <TableCell style={{display: 'flex', justifyContent: 'flex-end'}}>
+                                                    <TableCell
+                                                        style={{display: 'flex', justifyContent: 'flex-end'}}>
                                                         <LeaderBoardGuessedCellContent
                                                             leaderBoardGuessed={leaderBoardGuessed}
                                                             playerId={item.id}
@@ -237,53 +294,11 @@ function GameRoom() {
                         </CardContent>
                     </Card>
                 </Grid>
+                <Grid item xs={4}>
+                </Grid>
             </Grid>
-            Game room {categoryId} !
-            <Button onClick={(e) => {
-                setCurrentArtist('Britney Spears');
-            }}>find artist</Button>
-            <Button onClick={(e) => {
-                setCurrentTitle('Oops I di it again');
-            }}>find title</Button>
-            <Button onClick={(e) => {
-                setGameHistory([...gameHistory, {artist: 'Britney Spears', title: 'Oops I did it again'}]);
-            }}>add game history</Button>
-
-            <Button onClick={(e) => {
-                console.log('Guessed : ' + JSON.stringify(leaderBoardGuessed));
-                const {gamePlayersNew, leaderBoardSummaryNew, leaderBoardGuessedNew, message} = debugEnter('', gamePlayers, leaderBoardSummary, leaderBoardGuessed);
-                setGamePlayers(gamePlayersNew);
-                setLeaderBoardSummary(leaderBoardSummaryNew);
-                console.log('New Guessed : ' + JSON.stringify(leaderBoardGuessedNew));
-                setLeaderBoardGuessed(leaderBoardGuessedNew);
-            }}>Enter</Button>
-
-            <Button onClick={(e) => {
-                const {gamePlayersNew, leaderBoardSummaryNew, leaderBoardGuessedNew, message} = debugLeave(3, gamePlayers, leaderBoardSummary, leaderBoardGuessed);
-                setGamePlayers(gamePlayersNew);
-                setLeaderBoardSummary(leaderBoardSummaryNew);
-                setLeaderBoardGuessed(leaderBoardGuessedNew);
-            }}>Leave</Button>
-
-            <Button onClick={(e) => {
-                const {gamePlayersNew, leaderBoardSummaryNew, leaderBoardGuessedNew, message} = debugGuessed(2, gamePlayers, leaderBoardSummary, leaderBoardGuessed);
-                setGamePlayers(gamePlayersNew);
-                setLeaderBoardSummary(leaderBoardSummaryNew);
-                setLeaderBoardGuessed(leaderBoardGuessedNew);
-            }}>GUESSED</Button>
-
-            <Button onClick={(e) => {
-                const {gamePlayersNew, leaderBoardSummaryNew, leaderBoardGuessedNew, message} = debugFailed(2, gamePlayers, leaderBoardSummary, leaderBoardGuessed);
-                setGamePlayers(gamePlayersNew);
-                setLeaderBoardSummary(leaderBoardSummaryNew);
-                setLeaderBoardGuessed(leaderBoardGuessedNew);
-            }}>FAILED</Button>
         </div>
     );
 }
-
-const dispatchEvent = (event) => {
-
-};
 
 export default GameRoom;

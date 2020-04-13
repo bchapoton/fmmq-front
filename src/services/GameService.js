@@ -1,8 +1,9 @@
 import React from 'react';
+import forge from "node-forge";
 
 export const sortPayersInRoom = (playersInRoom) => {
     if (!playersInRoom || playersInRoom.length === 0) {
-        return playersInRoom;
+        return [];
     }
 
     return playersInRoom.slice().sort((item1, item2) => {
@@ -12,6 +13,10 @@ export const sortPayersInRoom = (playersInRoom) => {
     });
 };
 
-export const buildLeaderBoardGuessedKey = (playerId) => {
-    return 'guess' + playerId;
+export const decrypt = (data, key, iv) => {
+    const cipher = forge.rc2.createDecryptionCipher(key);
+    cipher.start(iv);
+    cipher.update(data);
+    cipher.finish();
+    return cipher.output.toString();
 };

@@ -18,7 +18,7 @@ export const ROUTE_TIPEEE = '/tipeee';
 
 export const generateRoute = (path, params) => {
     let generatedPath = path;
-    if(Array.isArray(params)) {
+    if (Array.isArray(params)) {
         params.forEach(param => generatedPath = replaceParameter(generatedPath, param));
     } else {
         generatedPath = replaceParameter(generatedPath, params);
