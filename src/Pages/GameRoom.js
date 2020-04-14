@@ -41,9 +41,9 @@ const useStyles = makeStyles({
     root: {},
     container: {},
     gameContainer: {
-        backgroundImage: "url('/assets/img/IehB7.png')",
-        backgroundRepeat: 'repeat',
-        backgroundColor: cyan[300],
+        // backgroundImage: "url('/assets/img/IehB7.png')",
+        // backgroundRepeat: 'repeat',
+        backgroundColor: cyan[600],
         padding: '10px',
         marginBottom: '10px'
     },
@@ -68,15 +68,15 @@ const useStyles = makeStyles({
     },
     roomLabel: {
         fontFamily: 'ChunkFiveRegular',
-        color: yellow[900],
+        color: cyan[50],
         fontSize: '2rem',
     },
     roomPLayersNumber: {
-        color: grey[400],
+        color: cyan[50],
         marginLeft: '5px'
     },
     roomPLayersNumberIcon: {
-        color: grey[400],
+        color: cyan[50],
         marginLeft: '10px'
     },
     musicElementContainer: {
@@ -221,7 +221,7 @@ function GameRoom() {
                                 <Button onClick={(e) => setMusicInProgress(!musicInProgress)}>test</Button>
                             </Grid>
                             <Grid item xs={12}>
-                                <form onSubmit={handleSubmit(onSubmit)}>
+                                <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                                     <OutlinedInput
                                         className={classes.guessField}
                                         id="guessField"
@@ -230,7 +230,7 @@ function GameRoom() {
                                         placeholder="Trouve le titre et l'artiste"
                                         fullWidth
                                         inputRef={register()}
-                                        autoComplete='false'
+                                        autoComplete="new-password"
                                         endAdornment={(
                                             <Button type='submit' variant='contained' color='primary'>Ok</Button>
                                         )}
