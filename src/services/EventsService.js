@@ -69,7 +69,7 @@ export const onFailed = (playerId, sendMessage, payload) => {
     }
 };
 
-export const onGuessed = (localPLayerId, gamePlayers, leaderBoardSummary, leaderBoardGuessed, sendMessage, payload) => {
+export const onGuessed = (localPLayerId, gamePlayers, leaderBoardSummary, leaderBoardGuessed, currentMusicPodium, sendMessage, payload) => {
     // update player score
     const playerId = payload.playerId;
     const playerObjectIndex = gamePlayers.findIndex(
@@ -109,6 +109,16 @@ export const onGuessed = (localPLayerId, gamePlayers, leaderBoardSummary, leader
     leaderBoardGuessed[leaderBoardGuessedIndex].found = payload.found;
     if (payload.trophy) {
         leaderBoardGuessed[leaderBoardGuessedIndex].trophy = payload.trophy;
+        let podiumKey;
+        if (payload.trophy === 1) {
+            podiumKey = "first"
+        } else if (payload.trophy === 2) {
+            podiumKey = "second"
+        } else if (payload.trophy === 3) {
+            podiumKey = "third"
+        }
+        if (podiumKey)
+            currentMusicPodium[podiumKey] = gamePlayers[playerObjectIndex]['nickname'];
     }
     // IHM feedback for the concerned user
     if (playerId === localPLayerId) {

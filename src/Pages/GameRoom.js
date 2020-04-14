@@ -36,6 +36,7 @@ import EventMessageFeedback from "../components/EventMessageFeedback";
 import MusicProgress from "../components/MusicProgress";
 import GameRoomNextTitleLoader from "../components/GameRoomNextTitleLoader";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import CurrentMusicPodium from "../components/CurrentMusicPodium";
 
 const useStyles = makeStyles({
     root: {},
@@ -103,6 +104,7 @@ function GameRoom() {
     const [currentArtist, setCurrentArtist] = useState();
     const [currentTitle, setCurrentTitle] = useState();
 
+    const [currentMusicPodium, setCurrentMusicPodium] = useState({});
     const [gameHistory, setGameHistory] = useState([]);
     const [leaderBoardGuessed, setLeaderBoardGuessed] = useState([]);
     const [gamePlayers, setGamePlayers] = useState([]);
@@ -154,19 +156,22 @@ function GameRoom() {
             });
 
             socket.off('GUESSED').on('GUESSED', payload => {
-                const gamePlayersNew = [...gamePlayers];
-                const leaderBoardGuessedNew = [...leaderBoardGuessed];
-                const leaderBoardSummaryNew = Object.assign({}, leaderBoardSummary);
-                onGuessed(playerId, gamePlayersNew, leaderBoardSummaryNew, leaderBoardGuessedNew, setFeedback, payload);
-                setGamePlayers(gamePlayersNew);
-                setLeaderBoardGuessed(leaderBoardGuessedNew);
-                setLeaderBoardSummary(leaderBoardSummaryNew);
+                const gamePlayersCopy = [...gamePlayers];
+                const leaderBoardGuessedCopy = [...leaderBoardGuessed];
+                const leaderBoardSummaryCopy = Object.assign({}, leaderBoardSummary);
+                const currentMusicPodiumCopy = Object.assign({}, currentMusicPodium);
+                onGuessed(playerId, gamePlayersCopy, leaderBoardSummaryCopy, leaderBoardGuessedCopy, currentMusicPodiumCopy, setFeedback, payload);
+                setGamePlayers(gamePlayersCopy);
+                setLeaderBoardGuessed(leaderBoardGuessedCopy);
+                setLeaderBoardSummary(leaderBoardSummaryCopy);
+                setCurrentMusicPodium(currentMusicPodiumCopy);
             });
         }
     }, [socket,
         gamePlayers,
         leaderBoardGuessed,
         leaderBoardSummary,
+        currentMusicPodium,
         playerId]);
 
     useEffect(() => {
@@ -241,6 +246,12 @@ function GameRoom() {
                                 <EventMessageFeedback payload={feedback}/>
                             </Grid>
                         </Grid>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <CurrentMusicPodium
+                            displayed={musicInProgress}
+                            currentMusicPodium={currentMusicPodium}
+                        />
                     </Grid>
                 </Grid>
             </div>
