@@ -160,7 +160,15 @@ function GameRoom() {
                 const leaderBoardGuessedCopy = [...leaderBoardGuessed];
                 const leaderBoardSummaryCopy = Object.assign({}, leaderBoardSummary);
                 const currentMusicPodiumCopy = Object.assign({}, currentMusicPodium);
-                onGuessed(playerId, gamePlayersCopy, leaderBoardSummaryCopy, leaderBoardGuessedCopy, currentMusicPodiumCopy, setFeedback, payload);
+                onGuessed(playerId,
+                    gamePlayersCopy,
+                    leaderBoardSummaryCopy,
+                    leaderBoardGuessedCopy,
+                    currentMusicPodiumCopy,
+                    setFeedback,
+                    setCurrentArtist,
+                    setCurrentTitle,
+                    payload);
                 setGamePlayers(gamePlayersCopy);
                 setLeaderBoardGuessed(leaderBoardGuessedCopy);
                 setLeaderBoardSummary(leaderBoardSummaryCopy);
