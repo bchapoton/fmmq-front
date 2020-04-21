@@ -36,6 +36,8 @@
 }
 */
 
+import {decrypt} from "./GameService";
+
 export const sendGuessEvent = (socket, playerId, playerToken, value) => {
     console.log('emit');
     socket.emit('GUESS', {
@@ -55,7 +57,7 @@ export const onEnter = (gamePlayers, leaderBoardSummary, payload) => {
 
 export const onFailed = (playerId, sendMessage, payload) => {
     if (playerId === payload.playerId) {
-        if (payload.accuracy > 0.7) {
+        if (payload.accuracy >= 0.5) {
             sendMessage({
                 level: 'not-bad',
                 message: "C'est presque ça, continue sur cette voie"
@@ -80,12 +82,12 @@ export const onGuessed = (localPLayerId, gamePlayers, leaderBoardSummary, leader
     gamePlayers[playerObjectIndex]['score'] = gamePlayers[playerObjectIndex]['score'] + payload.points;
 
     // leader board summary update
-    if (payload.found === 'ARTIST') {
+    if (payload.found === 'BOTH' || payload.foundEveryThing) {
+        leaderBoardSummary['both'] = leaderBoardSummary['both'] + 1;
+    } else if (payload.found === 'ARTIST') {
         leaderBoardSummary['artist'] = leaderBoardSummary['artist'] + 1;
     } else if (payload.found === 'TITLE') {
         leaderBoardSummary['title'] = leaderBoardSummary['title'] + 1;
-    } else if (payload.found === 'BOTH') {
-        leaderBoardSummary['both'] = leaderBoardSummary['both'] + 1;
     }
 
     if (payload.alreadyFound === 'ARTIST') {
@@ -121,18 +123,18 @@ export const onGuessed = (localPLayerId, gamePlayers, leaderBoardSummary, leader
             currentMusicPodium[podiumKey] = gamePlayers[playerObjectIndex]['nickname'];
     }
 
-    // Update IHM with music found values
-    if(payload.music) {
-        if(payload.music.artist) {
-            setArtist(payload.music.artist);
-        }
-        if(payload.music.title) {
-           setTitle(payload.music.title);
-        }
-    }
-
     // IHM feedback for the concerned user
     if (playerId === localPLayerId) {
+        // Update IHM with music found values
+        if (payload.music) {
+            if (payload.music.artist) {
+                setArtist(payload.music.artist);
+            }
+            if (payload.music.title) {
+                setTitle(payload.music.title);
+            }
+        }
+
         sendMessage({
             level: 'nice',
             message: "Bien ouej pelo, le 69 la trik t'habite !"

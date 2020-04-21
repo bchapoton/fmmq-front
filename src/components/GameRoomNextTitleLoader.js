@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from "prop-types";
 import {CircularProgress} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import {cyan, indigo} from "@material-ui/core/colors";
+import {indigo} from "@material-ui/core/colors";
 
 
 const useStyle = makeStyles({
-    root: {
-    },
+    root: {},
     textWrapper: {
         margin: '80px 0 20px 0',
         textAlign: 'center',
@@ -20,7 +19,7 @@ const useStyle = makeStyles({
 });
 
 function GameRoomNextTitleLoader(props) {
-    const {displayed} = props;
+    const {displayed, musicUrl} = props;
     const classes = useStyle();
 
     if (!displayed)

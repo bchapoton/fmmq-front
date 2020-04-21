@@ -7,7 +7,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import Button from "@material-ui/core/Button";
 import {useForm} from "react-hook-form";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-import {cyan, grey, indigo, lightBlue, lightGreen, yellow} from "@material-ui/core/colors";
+import {cyan, grey, lightBlue, lightGreen, yellow} from "@material-ui/core/colors";
 import Typography from "@material-ui/core/Typography";
 import MusicElement from "../components/MusicElement";
 import {Card, TableCell} from "@material-ui/core";
@@ -22,7 +22,7 @@ import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import HelpIcon from '@material-ui/icons/Help';
 import LeaderBoardIcon from "../components/LeaderBoardIcon";
 import StarIcon from '@material-ui/icons/Star';
-import {sortPayersInRoom} from '../services/GameService'
+import {decodeBase64, sortPayersInRoom} from '../services/GameService'
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -89,18 +89,26 @@ const useStyles = makeStyles({
     }
 });
 
+const leaderBoardSummaryInitiaState = {
+    none: 0,
+    artist: 0,
+    title: 0,
+    both: 0
+}
+
 function GameRoom() {
     const classes = useStyles();
     const {categoryId} = useParams();
     const {register, handleSubmit, reset} = useForm();
     const [roomInfo, setRoomInfo] = useState();
+    const [currentMusicIndexDisplayed, setCurrentMusicIndexDisplayed] = useState(0);
     const [socket, setSocket] = useState();
     const [playerToken, setPlayerToken] = useState();
-    const [playerCipher, setPlayerCipher] = useState();
     const [playerId, setPlayerId] = useState();
 
     const [feedback, setFeedback] = useState({});
     const [musicInProgress, setMusicInProgress] = useState(false);
+    const [musicInProgressUrl, setMusicInProgressUrl] = useState("false");
     const [currentArtist, setCurrentArtist] = useState();
     const [currentTitle, setCurrentTitle] = useState();
 
@@ -109,12 +117,7 @@ function GameRoom() {
     const [leaderBoardGuessed, setLeaderBoardGuessed] = useState([]);
     const [gamePlayers, setGamePlayers] = useState([]);
     const [leaderBoard, setLeaderBoard] = useState([]);
-    const [leaderBoardSummary, setLeaderBoardSummary] = useState({
-        none: 0,
-        artist: 0,
-        title: 0,
-        both: 0
-    });
+    const [leaderBoardSummary, setLeaderBoardSummary] = useState(leaderBoardSummaryInitiaState);
 
     const [loadingEnterRoom, setLoadingEnterRoom] = useState(true);
 
@@ -123,13 +126,13 @@ function GameRoom() {
         joinRoom(categoryId, (response) => {
             const roomInfoData = response.data;
             setPlayerId(roomInfoData.playerId);
+            setCurrentMusicIndexDisplayed(roomInfoData.currentMusicIndex);
             setRoomInfo(roomInfoData);
             setGamePlayers(roomInfoData.leaderBoard);
             setLeaderBoardSummary(Object.assign({}, leaderBoardSummary, {none: roomInfoData.leaderBoard.length}));
             setPlayerToken(roomInfoData.playerToken);
             socket = getSocket(roomInfoData.socketNamespace);
             setSocket(socket);
-            setPlayerCipher(roomInfoData.playerCipher);
             setLoadingEnterRoom(false);
         });
 
@@ -173,6 +176,35 @@ function GameRoom() {
                 setLeaderBoardGuessed(leaderBoardGuessedCopy);
                 setLeaderBoardSummary(leaderBoardSummaryCopy);
                 setCurrentMusicPodium(currentMusicPodiumCopy);
+            });
+
+            socket.off('ROUND_STARTS').on('ROUND_STARTS', payload => {
+                setMusicInProgressUrl(payload.fileUrl);
+                setCurrentMusicIndexDisplayed(payload.currentMusicIndexDisplayed);
+                setMusicInProgress(true);
+                setLeaderBoardGuessed([]);
+                setCurrentMusicPodium({});
+            });
+
+            socket.off('ROUND_ENDS').on('ROUND_ENDS', payload => {
+                setMusicInProgress(false);
+                setLeaderBoardGuessed([]);
+                setCurrentMusicPodium({});
+                setLeaderBoardSummary(Object.assign({}, leaderBoardSummaryInitiaState, {none: gamePlayers.length}));
+                setCurrentArtist(null);
+                setCurrentTitle(null);
+                if (payload.music) {
+                    const updatedGameHistory = [...gameHistory];
+                    updatedGameHistory.push(payload.music);
+                    setGameHistory(updatedGameHistory);
+                }
+            });
+
+            socket.off('ALREADY_FOUND_EVERYTHING').on('ALREADY_FOUND_EVERYTHING', payload => {
+                setFeedback({
+                    level: 'nice',
+                    message: "Calmate t'as déjà tout trouvé !"
+                });
             });
         }
     }, [socket,
@@ -220,8 +252,9 @@ function GameRoom() {
                             <Grid item xs={12}>
                                 <MusicProgress
                                     started={musicInProgress}
+                                    musicUrl={musicInProgressUrl}
                                     animationEnded={animationEnded}
-                                    text={(<React.Fragment>Extrait {roomInfo.currentMusicIndex}/{roomInfo.musicsLength}</React.Fragment>)}
+                                    text={'Extrait ' + currentMusicIndexDisplayed + '/' + roomInfo.musicsLength}
                                 />
                                 <div className={classes.musicElementContainer}>
                                     <MusicElement value={currentArtist} label='Artiste' icon={(<PersonIcon/>)}
@@ -229,9 +262,6 @@ function GameRoom() {
                                     <MusicElement value={currentTitle} label='Titre' icon={(<MicIcon/>)}
                                                   color={lightBlue}/>
                                 </div>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Button onClick={(e) => setMusicInProgress(!musicInProgress)}>test</Button>
                             </Grid>
                             <Grid item xs={12}>
                                 <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
