@@ -19,7 +19,7 @@ const useStyle = makeStyles({
 });
 
 function GameRoomNextTitleLoader(props) {
-    const {displayed, musicUrl} = props;
+    const {displayed} = props;
     const classes = useStyle();
 
     if (!displayed)

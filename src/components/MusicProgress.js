@@ -56,7 +56,7 @@ function MusicProgress(props) {
                 audioObject.src = config.MusicServerBaseUrl + musicUrl;
             }
         }
-    }, [musicUrl]);
+    }, [musicUrl, audioObject]);
 
     useEffect(() => {
         if (audioObject) {
@@ -68,7 +68,7 @@ function MusicProgress(props) {
         }
         setStartedInternal(started);
         setCompleted(0);
-    }, [started]);
+    }, [started, audioObject]);
 
     useEffect(() => {
         let timer;

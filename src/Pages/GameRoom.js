@@ -13,16 +13,10 @@ import MusicElement from "../components/MusicElement";
 import {Card, TableCell} from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
-import ListItemText from "@material-ui/core/ListItemText";
-import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import HelpIcon from '@material-ui/icons/Help';
 import LeaderBoardIcon from "../components/LeaderBoardIcon";
 import StarIcon from '@material-ui/icons/Star';
-import {decodeBase64, sortPayersInRoom} from '../services/GameService'
+import {sortPayersInRoom} from '../services/GameService'
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -37,6 +31,9 @@ import MusicProgress from "../components/MusicProgress";
 import GameRoomNextTitleLoader from "../components/GameRoomNextTitleLoader";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CurrentMusicPodium from "../components/CurrentMusicPodium";
+import history from "../layout/utils/history";
+import {generateRoute, ROUTE_END_GAME} from "../router/routes";
+import MusicSchemeHistory from "../components/MusicSchemeHistory";
 
 const useStyles = makeStyles({
     root: {},
@@ -54,10 +51,6 @@ const useStyles = makeStyles({
     },
     guessField: {
         backgroundColor: 'white'
-    },
-    gameHistoryList: {
-        display: 'flex',
-        flexDirection: 'column-reverse'
     },
     leaderBoardIconsContainer: {
         display: 'flex',
@@ -201,10 +194,16 @@ function GameRoom() {
             });
 
             socket.off('ALREADY_FOUND_EVERYTHING').on('ALREADY_FOUND_EVERYTHING', payload => {
-                setFeedback({
-                    level: 'nice',
-                    message: "Calmate t'as déjà tout trouvé !"
-                });
+                if(payload.playerId === playerId) {
+                    setFeedback({
+                        level: 'nice',
+                        message: "Calmate t'as déjà tout trouvé !"
+                    });
+                }
+            });
+
+            socket.off('GAME_ENDS').on('GAME_ENDS', payload => {
+                history.push(generateRoute(ROUTE_END_GAME, {name: ':gameId', value: payload.gameId}));
             });
         }
     }, [socket,
@@ -300,23 +299,7 @@ function GameRoom() {
                             title='Partie en cours'
                         />
                         <CardContent>
-                            <List className={classes.gameHistoryList}>
-                                {gameHistory.map((item, i) => {
-                                    return (
-                                        <ListItem key={`${i}-${item.artist}`}>
-                                            <ListItemAvatar>
-                                                <Avatar>
-                                                    <AudiotrackIcon/>
-                                                </Avatar>
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary={item.artist}
-                                                secondary={item.title}
-                                            />
-                                        </ListItem>
-                                    );
-                                })}
-                            </List>
+                            <MusicSchemeHistory values={gameHistory} reverse={true} />
                         </CardContent>
                     </Card>
                 </Grid>

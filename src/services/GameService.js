@@ -1,4 +1,5 @@
 import forge from "node-forge";
+import {getRestClient} from "./NetworkUtils";
 
 export const sortPayersInRoom = (playersInRoom) => {
     if (!playersInRoom || playersInRoom.length === 0) {
@@ -18,4 +19,17 @@ export const decrypt = (data, key, iv) => {
     cipher.update(data);
     cipher.finish();
     return cipher.output.toString();
+};
+
+export const getGame = (gameId, onSuccess, onError) => {
+    return getRestClient()
+        .get(`games/over/${gameId}`)
+        .then(onSuccess)
+        .catch(onError);
+};
+
+export const listGames = (limit, onSuccess) => {
+    return getRestClient(true, {pager: limit})
+        .get('games/podiums')
+        .then(onSuccess);
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import {Card} from "@material-ui/core";
@@ -12,6 +12,10 @@ import {PlayerIconTrophy} from "../components/LeaderBoardPlayerIcon";
 import Moment from "react-moment";
 import Tipeee from "../components/Tipeee";
 import Rooms from "../components/Rooms";
+import {listGames} from "../services/GameService";
+import ButtonRouter from "../layout/ButtonRouter";
+import {generateRoute, ROUTE_GAME_HISTORY} from "../router/routes";
+import CardActions from "@material-ui/core/CardActions";
 
 const useStyles = makeStyles({
     root: {
@@ -25,42 +29,15 @@ const useStyles = makeStyles({
 
 function Dashboard() {
     const classes = useStyles();
+    const [lastGames, setLastGames] = useState([]);
 
-    const lastGameValues = [
-        {
-            date: 1585976202,
-            category: {
-                label: 'Tout'
-            },
-            leaderBoard: [
-                {user: 'benjyyyyy', score: 67},
-                {user: 'ours grincheux', score: 20},
-                {user: 'val', score: 5}
-            ]
-        },
-        {
-            date: 1585966202,
-            category: {
-                label: 'Tout'
-            },
-            leaderBoard: [
-                {user: 'benjyyyyy', score: 67},
-                {user: 'ours grincheux', score: 20},
-                {user: 'val', score: 5}
-            ]
-        },
-        {
-            date: 1585965202,
-            category: {
-                label: 'Tout'
-            },
-            leaderBoard: [
-                {user: 'benjyyyyy', score: 67},
-                {user: 'ours grincheux', score: 20},
-                {user: 'val', score: 5}
-            ]
-        },
-    ];
+    useEffect(() => {
+        listGames(3,
+            response => {
+                setLastGames(response.data);
+            }
+        );
+    }, []);
 
     return (
         <div className={classes.root}>
@@ -76,30 +53,41 @@ function Dashboard() {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={5}>
+                    <h4 hidden={lastGames.length === 0}>Dernières parties</h4>
                     <Grid container spacing={1} direction="column">
-                        {lastGameValues.map((game) => (
-                            <Grid item key={`${game.date}-${game.category.label}`}>
+                        {lastGames.map((game) => (
+                            <Grid item key={`${game.date}-${game.category}`}>
                                 <Card elevation={2}>
                                     <CardHeader
-                                        title={game.category.label}
+                                        title={game.category}
                                         subheader={(<span>le <Moment format='DD/MM/YYYY à H:mm'
                                                                      unix>{game.date}</Moment></span>)}
                                     />
                                     <CardContent>
                                         <Table className={classes.table} size='small'>
                                             <TableBody>
-                                                {game.leaderBoard.map((row, index) => (
-                                                    <TableRow key={`${game.date}-${game.category.label}-${row.user}`}>
+                                                {game.podium.map((row, index) => (
+                                                    <TableRow key={`${game.date}-${game.category}-${row.nickname}`}>
                                                         <TableCell component="th" scope="row">
                                                             <PlayerIconTrophy position={index + 1}/>
                                                         </TableCell>
-                                                        <TableCell align="center">{row.user}</TableCell>
+                                                        <TableCell align="center">{row.nickname}</TableCell>
                                                         <TableCell align="right">{row.score}</TableCell>
                                                     </TableRow>
                                                 ))}
                                             </TableBody>
                                         </Table>
                                     </CardContent>
+                                    <CardActions>
+                                        <ButtonRouter
+                                            to={generateRoute(ROUTE_GAME_HISTORY, {name: ':gameId', value: game.id})}
+                                            variant='contained'
+                                            color='secondary'
+                                            fullWidth
+                                        >
+                                            classement
+                                        </ButtonRouter>
+                                    </CardActions>
                                 </Card>
                             </Grid>
                         ))}

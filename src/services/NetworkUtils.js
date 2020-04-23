@@ -4,7 +4,7 @@ import NetworkConfig from "../config/NetworkConfig";
 import {ROUTE_LOGIN} from "../router/routes";
 import {Exception} from "../exceptions/Exception";
 
-export function getRestClient(authenticated = true) {
+export function getRestClient(authenticated = true, additionalHeaders = null) {
     let headers = {};
     if (authenticated) {
         const jwt = getJWT();
@@ -18,11 +18,16 @@ export function getRestClient(authenticated = true) {
         };
     }
 
+    if(additionalHeaders) {
+        headers = Object.assign({}, headers, additionalHeaders);
+    }
+
     const instance = axios.create({
         baseURL: NetworkConfig.ApiUrl,
         timeout: 0, // no timeout
         headers: headers
     });
+
 
     if (authenticated) {
         instance.interceptors.request.use(async (config) => {
