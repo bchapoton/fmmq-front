@@ -2,7 +2,7 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import NetworkConfig from "../config/NetworkConfig";
 import {ROUTE_LOGIN} from "../router/routes";
-import {Exception} from "../exceptions/Exception";
+import Exception from "../exceptions/Exception";
 
 export function getRestClient(authenticated = true, additionalHeaders = null) {
     let headers = {};

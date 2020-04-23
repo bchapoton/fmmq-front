@@ -1,4 +1,4 @@
-class Exception {
+export default class Exception {
 
     constructor(message, code = 'GENERIC') {
         this._message = message;
@@ -22,5 +22,3 @@ class Exception {
         this._code = value;
     }
 }
-
-module.exports.Exception = Exception;

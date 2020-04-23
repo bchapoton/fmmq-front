@@ -1,8 +1,9 @@
 import socketIOClient from "socket.io-client";
+import NetworkConfig from "../config/NetworkConfig";
 
 export const getSocket = (namespace) => {
     const socket = socketIOClient(
-        'http://localhost:8080/' + namespace,
+        NetworkConfig.ApiUrl + namespace,
         {
             transports: ['websocket'],
             transportOptions: {
