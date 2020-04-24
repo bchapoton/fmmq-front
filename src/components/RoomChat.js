@@ -76,6 +76,7 @@ const useStyles = makeStyles({
 });
 
 const initialMessages = [];
+const maxMessages = 50;
 
 function RoomChat(props) {
     const classes = useStyles();
@@ -102,6 +103,9 @@ function RoomChat(props) {
             socket.off('MESSAGE_RECEIVED').on('MESSAGE_RECEIVED', payload => {
                 console.log('message received' + JSON.stringify(payload));
                 const newMessages = [...messages];
+                if(newMessages.length > maxMessages) {
+                    newMessages.shift();
+                }
                 newMessages.push(payload);
                 setMessages(newMessages);
             });
@@ -112,7 +116,7 @@ function RoomChat(props) {
         if (data && data.message) {
             if (data.message.length < 2) {
                 setError('Y va falloir être plus loquace que ça mon pote');
-            } else if (lastSend && (new Date().getTime() - lastSend) < 2000) {
+            } else if (lastSend && (new Date().getTime() - lastSend) < 500) {
                 setError('On se calme');
             } else {
                 const currentTime = new Date().getTime();
