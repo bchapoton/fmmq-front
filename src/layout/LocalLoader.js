@@ -35,6 +35,6 @@ LocalLoader.propTypes = {
 LocalLoader.defaultProps = {
     flex: false,
     load: true
-}
+};
 
 export default LocalLoader;

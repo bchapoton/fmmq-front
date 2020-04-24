@@ -29,7 +29,7 @@ export const getGame = (gameId, onSuccess, onError) => {
 };
 
 export const listGames = (limit, onSuccess) => {
-    return getRestClient(true, {pager: limit})
+    return getRestClient(true, {pager: `0-${limit}`})
         .get('games/podiums')
         .then(onSuccess);
 };

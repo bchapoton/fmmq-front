@@ -15,6 +15,8 @@ import IconButton from "@material-ui/core/IconButton";
 import {generateRoute, ROUTE_DASHBOARD} from "./router/routes";
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import {indigo} from "@material-ui/core/colors";
+import GlobalDrawerButton from "./layout/GlobalDrawerButton";
+import GlobalDrawer from "./layout/GlobalDrawer";
 
 
 const useStyles = makeStyles({
@@ -45,16 +47,11 @@ function App() {
                         <Router history={history}>
                             <AppBar position='static'>
                                 <Toolbar>
+                                    <GlobalDrawerButton/>
                                     <div className={classes.logoContainer}>
                                         <Logo/>
                                     </div>
                                     <div className={classes.toolIconsMenu}>
-                                        <IconButton
-                                            className={classes.button}
-                                            onClick={(e) => history.push(generateRoute(ROUTE_DASHBOARD))}
-                                        >
-                                            <PlayArrowIcon/>
-                                        </IconButton>
                                     </div>
                                     <UserToolbar/>
                                 </Toolbar>
@@ -66,6 +63,7 @@ function App() {
                         </Router>
                         <GlobalLoader/>
                     </div>
+                    <GlobalDrawer/>
                 </RestoreSessionProvider>
             </MyStoreProvider>
         </MuiThemeProvider>

@@ -29,8 +29,6 @@ function RestoreSessionProvider(props) {
                     .catch(e => console.log('error ' + e))
                     .then(() => {
                         setWaiting(false);
-                        // force the refresh otherwise the page doesn't display after the refresh token
-                        window.location.reload();
                     });
             } else {
                 const userData = getUserDataFromJWT();

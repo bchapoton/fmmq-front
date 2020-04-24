@@ -4,13 +4,15 @@ import loader from "./reducers/loader.reducer";
 import context from "./reducers/context.reducer";
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunk from 'redux-thunk'
+import globalDrawer from "./reducers/global.drawer.reducer";
 
 function MyStoreProvider(props) {
     const {children} = props;
 
     const rootReducer = combineReducers({
         loader,
-        context
+        context,
+        globalDrawer
     });
     const store = createStore(rootReducer, applyMiddleware(thunk));
 

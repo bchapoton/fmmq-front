@@ -13,7 +13,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import PropTypes from "prop-types";
-import {onEnter, sendMessageOnChat} from "../services/EventsService";
+import {sendMessageOnChat} from "../services/EventsService";
 import {getSocket} from "../services/SocketUtils";
 
 const useStyles = makeStyles({
@@ -37,7 +37,7 @@ const useStyles = makeStyles({
         color: blue[500]
     },
     operatorAvatar: {
-      marginLeft: '10px'
+        marginLeft: '10px'
     },
     operatorMessage: {
         margin: '0 0 10px 0',
@@ -91,7 +91,7 @@ function RoomChat(props) {
         setSocket(socket);
 
         return () => {
-            if(socket) {
+            if (socket) {
                 socket.disconnect();
             }
         }

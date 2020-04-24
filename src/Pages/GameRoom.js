@@ -348,7 +348,12 @@ function GameRoom() {
                 </Grid>
                 <Grid item xs={4}>
                     <Card>
-                        <RoomChat categoryId={categoryId} playerId={playerId} playerToken={playerToken}/>
+                        <RoomChat
+                            categoryId={categoryId}
+                            playerId={playerId}
+                            playerToken={playerToken}
+                            schemeSize={roomInfo.musicsLength}
+                        />
                     </Card>
                 </Grid>
             </Grid>

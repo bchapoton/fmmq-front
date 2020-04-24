@@ -44,9 +44,9 @@ function hasRole(routeRole, userRole) {
         return false;
     }
     const allSuitableRole = [];
-    allSuitableRole.push(routeRole);
-    if (rolesHierarchy[routeRole].length > 0) {
-        allSuitableRole.push(rolesHierarchy[routeRole]);
+    allSuitableRole.push(userRole);
+    if (rolesHierarchy[userRole].length > 0) {
+        allSuitableRole.push(rolesHierarchy[userRole]);
     }
     return allSuitableRole.includes(userRole);
 }
