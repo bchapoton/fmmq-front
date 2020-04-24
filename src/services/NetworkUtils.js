@@ -32,7 +32,7 @@ export function getRestClient(authenticated = true, additionalHeaders = null) {
     if (authenticated) {
         instance.interceptors.request.use(async (config) => {
             if (isJWTExpired()) {
-                const newToken = refreshToken();
+                const newToken = await refreshToken();
                 config.headers.authorization = newToken;
             }
             return config;
@@ -44,10 +44,6 @@ export function getRestClient(authenticated = true, additionalHeaders = null) {
                 clearAuthentication();
                 window.location = ROUTE_LOGIN;
                 return;
-            }
-            if (response && response.headers && response.headers['x-token']) {
-                console.log('store new one' + response.headers['x-token'])
-                storeJWT(response.headers['x-token']);
             }
             return response;
         });
@@ -113,8 +109,10 @@ export async function refreshToken() {
     if (response && response.status !== 200) {
         throw new Exception("can't refresh the token", 'REFRESH-TOKEN-FAILED');
     }
+    console.log('Token is refreshed set in local storage');
     storeJWT(response.data.token);
     storeRefreshToken(response.data.refreshToken);
+    console.log('set in local storage over');
 
     return response.data.token;
 }

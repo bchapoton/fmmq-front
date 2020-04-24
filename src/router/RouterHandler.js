@@ -4,13 +4,16 @@ import NotFound from "../Pages/NotFound";
 import {ROUTE_HOME, routes} from './routes';
 import {rolesHierarchy} from './roles';
 import {useSelector} from "react-redux";
+import RestoreSessionProvider from "../layout/RestoreSessionProvider";
 
 function RouterHandler() {
     const renderedRoutes = routes.map(route => {
         return (
             <Route path={route.path} exact={!route.notExact} key={route.path}>
                 <SecureChildrenRender route={route}>
-                    {route.children}
+                    <RestoreSessionProvider>
+                        {route.children}
+                    </RestoreSessionProvider>
                 </SecureChildrenRender>
             </Route>
         );
