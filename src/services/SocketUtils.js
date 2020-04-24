@@ -5,14 +5,7 @@ export const getSocket = (namespace) => {
     const socket = socketIOClient(
         NetworkConfig.ApiUrl + namespace,
         {
-            transports: ['websocket'],
-            transportOptions: {
-                polling: {
-                    extraHeaders: {
-                        'x-header-test': 'abc'
-                    }
-                }
-            }
+            transports: ['websocket']
         }
     );
 

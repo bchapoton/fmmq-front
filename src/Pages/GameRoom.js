@@ -34,6 +34,7 @@ import CurrentMusicPodium from "../components/CurrentMusicPodium";
 import history from "../layout/utils/history";
 import {generateRoute, ROUTE_END_GAME} from "../router/routes";
 import MusicSchemeHistory from "../components/MusicSchemeHistory";
+import RoomChat from "../components/RoomChat";
 
 const useStyles = makeStyles({
     root: {},
@@ -194,7 +195,7 @@ function GameRoom() {
             });
 
             socket.off('ALREADY_FOUND_EVERYTHING').on('ALREADY_FOUND_EVERYTHING', payload => {
-                if(payload.playerId === playerId) {
+                if (payload.playerId === playerId) {
                     setFeedback({
                         level: 'nice',
                         message: "Calmate t'as déjà tout trouvé !"
@@ -299,7 +300,7 @@ function GameRoom() {
                             title='Partie en cours'
                         />
                         <CardContent>
-                            <MusicSchemeHistory values={gameHistory} reverse={true} />
+                            <MusicSchemeHistory values={gameHistory} reverse={true}/>
                         </CardContent>
                     </Card>
                 </Grid>
@@ -346,6 +347,9 @@ function GameRoom() {
                     </Card>
                 </Grid>
                 <Grid item xs={4}>
+                    <Card>
+                        <RoomChat categoryId={categoryId} playerId={playerId} playerToken={playerToken}/>
+                    </Card>
                 </Grid>
             </Grid>
         </div>

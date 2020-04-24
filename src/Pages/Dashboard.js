@@ -60,8 +60,7 @@ function Dashboard() {
                                 <Card elevation={2}>
                                     <CardHeader
                                         title={game.category}
-                                        subheader={(<span>le <Moment format='DD/MM/YYYY à H:mm'
-                                                                     unix>{game.date}</Moment></span>)}
+                                        subheader={(<span>le <Moment format='DD/MM/YYYY à H:mm'>{game.date}</Moment></span>)}
                                     />
                                     <CardContent>
                                         <Table className={classes.table} size='small'>

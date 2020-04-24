@@ -12,8 +12,9 @@ import GlobalLoaderFeedback from "./layout/GlobalLoaderFeedback";
 import RestoreSessionProvider from "./layout/RestoreSessionProvider";
 import RouterHandler from "./router/RouterHandler";
 import IconButton from "@material-ui/core/IconButton";
-import DashboardIcon from '@material-ui/icons/Dashboard';
 import {generateRoute, ROUTE_DASHBOARD} from "./router/routes";
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import {indigo} from "@material-ui/core/colors";
 
 
 const useStyles = makeStyles({
@@ -26,7 +27,11 @@ const useStyles = makeStyles({
     logoContainer: {},
     toolIconsMenu: {
         flexGrow: 1
-    }
+    },
+    button: {
+        backgroundColor: indigo[300],
+        margin: '0 5px'
+    },
 });
 
 function App() {
@@ -45,9 +50,10 @@ function App() {
                                     </div>
                                     <div className={classes.toolIconsMenu}>
                                         <IconButton
+                                            className={classes.button}
                                             onClick={(e) => history.push(generateRoute(ROUTE_DASHBOARD))}
                                         >
-                                            <DashboardIcon/>
+                                            <PlayArrowIcon/>
                                         </IconButton>
                                     </div>
                                     <UserToolbar/>

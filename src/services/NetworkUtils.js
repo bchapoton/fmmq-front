@@ -94,6 +94,7 @@ export function isExpired(jwt) {
     } catch (e) {
         return true;
     }
+    console.log(`refresh errors : ${decoded.expire} vs ${(new Date()).getTime()}`);
     return decoded.expire < (new Date()).getTime();
 }
 

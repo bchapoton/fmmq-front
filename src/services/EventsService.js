@@ -1,5 +1,4 @@
 export const sendGuessEvent = (socket, playerId, playerToken, value) => {
-    console.log('emit');
     socket.emit('GUESS', {
         playerId,
         playerToken,
@@ -100,4 +99,14 @@ export const onGuessed = (localPLayerId, gamePlayers, leaderBoardSummary, leader
             message: "Bien ouej pelo, le 69 la trik t'habite !"
         });
     }
+};
+
+export const sendMessageOnChat = (socket, categoryId, playerId, playerToken, time, message) => {
+    socket.emit('SEND_MESSAGE', {
+        categoryId,
+        playerId,
+        playerToken,
+        time,
+        message
+    });
 };

@@ -65,7 +65,7 @@ function GameSummary(props) {
     } else {
         pageTitle = (
             <h1 className={classes.title}>
-                Partie du <Moment format='DD/MM/YYYY à H:mm' unix>{game.date}</Moment> dans la
+                Partie du <Moment format='DD/MM/YYYY à H:mm'>{game.date}</Moment> dans la
                 catégorie {game.categoryLabel}
             </h1>
         );

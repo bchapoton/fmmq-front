@@ -1,57 +1,47 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/styles";
-import {Link} from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import {Card} from "@material-ui/core";
+import CardContent from "@material-ui/core/CardContent";
+import Title from "../layout/Title";
+import RoomChat from "../components/RoomChat";
 
 const useStyles = makeStyles({
-    root: {},
-    container: {}
+    root: {
+        padding: '2rem'
+    }
 });
 
 function Home() {
     const classes = useStyles();
 
-    //useEffect(() => {
-    /*
-    let audioElement = document.getElementById('test');
-    audioElement.play();
-    setTimeout(() => audioElement.stop(), 1000);
-    //audioElement.stop();
-    let audioElementSrc = document.getElementById('src');
-
-     */
-
-    /**
-     HTMLAudioElement.prototype.stop = function () {
-            this.pause();
-            this.currentTime = 0.0;
-        }
-
-     let audio = new Audio();
-     audio.preload = 'auto';
-     audio.src = 'http://localhost:3000/assets/test.mp3';
-     audio.play();
-     setTimeout(() => {
-            audio.stop();
-            audio.src = 'http://localhost:3000/assets/test2.mp3';
-            audio.play();
-            setTimeout(() => audio.stop(), 10000);
-        }, 10000);
-
-     }, []);
-     */
-
     return (
         <div className={classes.root}>
-            Welcome home
-            <ul>
-                <li>
-                    <Link to='/play/1'>Jouer</Link>
-                </li>
-            </ul>
-
-            <div>
-                <h1>Test</h1>
-            </div>
+            <Grid container>
+                <Grid item xs={6}>
+                    <Card elevation={3}>
+                        <CardContent>
+                            <Title>Les règles</Title>
+                            <div>
+                                Une partie c'est en 15 extraits piochés au hasard. Tu as 30 secondes pour découvrir le
+                                titre et l'artiste diffusés.<br/>
+                                <br/>
+                                Tu gagnes 1 point si tu trouves l'artiste ou le titre.<br/>
+                                Tu gagnes 2 points si tu trouves l'artiste et le titre.<br/>
+                                <br/>
+                                Les trois premiers joueurs les plus rapides à trouver l'artiste et le titre gagnent une
+                                coupe. La première place te fait gagner 3 points bonus, la deuxième 2 points bonus et la
+                                troisième 1 point bonus.<br/>
+                                <br/>
+                                Tu fais un combo lorsque tu enchaînes deux sans faute. Un combo te fait gagner 1 point
+                                supplémentaire.
+                            </div>
+                        </CardContent>
+                    </Card>
+                </Grid>
+                <Grid item xs={6}>
+                </Grid>
+            </Grid>
         </div>
     );
 }
