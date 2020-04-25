@@ -19,6 +19,7 @@ import CreateImportAdmin from "../Pages/Admin/CreateImportAdmin";
 import EditImportAdmin from "../Pages/Admin/EditImportAdmin";
 import AdminCreateCategory from "../Pages/Admin/AdminCreateCategory";
 import AdminEditCategory from "../Pages/Admin/AdminEditCategory";
+import AllGame from "../Pages/AllGames";
 
 export const ROUTE_HOME = '/';
 export const ROUTE_DASHBOARD = '/dashboard';
@@ -29,6 +30,7 @@ export const ROUTE_PLAY = '/play/:categoryId';
 export const ROUTE_TIPEEE = '/tipeee';
 export const ROUTE_END_GAME = '/game-over/:gameId';
 export const ROUTE_GAME_HISTORY = '/game/history/:gameId';
+export const ROUTE_ALL_GAME = '/game/all';
 // Administration
 export const ROUTE_ADMIN_USERS = '/administration/users';
 export const ROUTE_ADMIN_EDIT_USERS = '/administration/users/:id';
@@ -109,6 +111,11 @@ export const routes = [
         path: ROUTE_GAME_HISTORY,
         role: ROLE_PLAYER,
         children: (<GameHistory/>)
+    },
+    {
+        path: ROUTE_ALL_GAME,
+        role: ROLE_PLAYER,
+        children: (<AllGame/>)
     },
     // Administration
     {

@@ -5,7 +5,7 @@ import {
     ROUTE_ADMIN_GAMES, ROUTE_ADMIN_IMPORTS,
     ROUTE_ADMIN_MUSICS,
     ROUTE_ADMIN_SERVER_CONFIG,
-    ROUTE_ADMIN_USERS,
+    ROUTE_ADMIN_USERS, ROUTE_ALL_GAME,
     ROUTE_DASHBOARD,
     ROUTE_HOME,
     ROUTE_LOGIN,
@@ -21,6 +21,7 @@ import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
 import CategoryIcon from "@material-ui/icons/Category";
 import AudiotrackIcon from "@material-ui/icons/Audiotrack";
 import ImportExportIcon from '@material-ui/icons/ImportExport';
+import SortIcon from '@material-ui/icons/Sort';
 
 export function getAnonymousMenu() {
     return [
@@ -53,6 +54,11 @@ export function getConnectedMenu(dispatch) {
             label: 'Dashboard',
             icon: (<DashboardIcon/>),
             url: ROUTE_DASHBOARD
+        },
+        {
+            label: 'Historique',
+            icon: (<SortIcon/>),
+            url: ROUTE_ALL_GAME
         },
         {
             label: 'Déconnexion',

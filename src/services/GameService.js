@@ -28,8 +28,7 @@ export const getGame = (gameId, onSuccess, onError) => {
         .catch(onError);
 };
 
-export const listGames = (limit, onSuccess) => {
-    return getRestClient(true, {pager: `0-${limit}`})
-        .get('games/podiums')
-        .then(onSuccess);
+export const listGames = (start, limit) => {
+    return getRestClient(true, {pager: `${start}-${limit}`})
+        .get('games/podiums');
 };
