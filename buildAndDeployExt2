@@ -1,3 +1,5 @@
+echo "Install node module"
+npm install
 echo "Build react scripts"
 npm run-script build
 echo "Clean old directory"
