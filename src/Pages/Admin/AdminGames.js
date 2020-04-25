@@ -1,8 +1,9 @@
 import React from 'react'
 import {makeStyles} from "@material-ui/core/styles";
 import AdminTable from "./AdminTable";
-import {getGamesAdmin} from "../../services/AdminService";
+import {countGamesAdmin, getGamesAdmin} from "../../services/AdminService";
 import {TYPE_DATE, TYPE_JSON} from "./AdminValueConverter";
+import AdminPageMenuWrapper from "./AdminPageMenuWrapper";
 
 const useStyle = makeStyles({
     root: {
@@ -46,13 +47,14 @@ function AdminGames() {
     ];
 
     return (
-        <div className={classes.root}>
+        <AdminPageMenuWrapper>
             <h1>Parties jouées</h1>
             <AdminTable
                 headers={headers}
                 getValuesCallback={(pager) => getGamesAdmin(pager)}
+                countCallback={countGamesAdmin}
             />
-        </div>
+        </AdminPageMenuWrapper>
     )
 }
 

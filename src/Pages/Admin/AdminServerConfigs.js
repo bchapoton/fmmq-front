@@ -6,6 +6,7 @@ import List from "@material-ui/core/List";
 import {getServerConfigAdmin} from "../../services/AdminService";
 import config from "../../config/NetworkConfig";
 import AdminLoadingErrorDisplay from "./AdminLoadingErrorDisplay";
+import AdminPageMenuWrapper from "./AdminPageMenuWrapper";
 
 const useStyle = makeStyles({
     root: {
@@ -36,7 +37,7 @@ function AdminServerConfigs() {
     }
 
     return (
-        <div className={classes.root}>
+        <AdminPageMenuWrapper>
             <h1>Configuration serveur</h1>
             <List>
                 <ListItem>
@@ -79,7 +80,7 @@ function AdminServerConfigs() {
                     />
                 </ListItem>
             </List>
-        </div>
+        </AdminPageMenuWrapper>
     )
 }
 

@@ -1,8 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {makeStyles} from "@material-ui/core/styles";
 import AdminTable from "./AdminTable";
-import {getMusicsAdmin, getUsersAdmin} from "../../services/AdminService";
-import {ROUTE_ADMIN_EDIT_USERS} from "../../router/routes";
+import {
+    countMusicsAdmin,
+    delDuplicateMusics, dropAllMusics,
+    getDuplicateMusics,
+    getMusicsAdmin,
+    postReSanitizeAllDB
+} from "../../services/AdminService";
+import {useDispatch} from "react-redux";
+import {TYPE_FMMQ_MUSIC} from "./AdminValueConverter";
+import AdminPageOperations from "./AdminPageOperations";
+import AdminPageMenuWrapper from "./AdminPageMenuWrapper";
 
 const useStyle = makeStyles({
     root: {
@@ -12,6 +21,8 @@ const useStyle = makeStyles({
 
 function AdminMusics() {
     const classes = useStyle();
+    const dispatch = useDispatch();
+    const [operationResult, setOperationResult] = useState();
 
     const headers = [
         {
@@ -37,21 +48,51 @@ function AdminMusics() {
         },
         {
             id: 'file',
-            label: 'Fichier'
+            label: 'Fichier',
+            type: TYPE_FMMQ_MUSIC
+        },
+        {
+            id: 'randomInt',
+            label: 'randomInt'
+        },
+        {
+            id: 'importObjectId',
+            label: "Créé par l'import"
         }
     ];
 
     const actions = [];
 
+    const operations = [
+        {
+            axiosPromise: postReSanitizeAllDB,
+            label: 'Sanitize all musics'
+        },
+        {
+            axiosPromise: getDuplicateMusics,
+            label: 'Check duplicates'
+        },
+        {
+            axiosPromise: delDuplicateMusics,
+            label: 'Delete duplicates'
+        },
+        {
+            axiosPromise: dropAllMusics,
+            label: 'Drop all musics'
+        }
+    ];
+
     return (
-        <div className={classes.root}>
+        <AdminPageMenuWrapper>
             <h1>Musiques</h1>
+            <AdminPageOperations operations={operations}/>
             <AdminTable
                 headers={headers}
                 getValuesCallback={(pager) => getMusicsAdmin(pager)}
+                countCallback={countMusicsAdmin}
                 actions={actions}
             />
-        </div>
+        </AdminPageMenuWrapper>
     );
 }
 

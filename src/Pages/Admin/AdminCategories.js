@@ -1,7 +1,10 @@
 import React from 'react'
 import {makeStyles} from "@material-ui/core/styles";
 import AdminTable from "./AdminTable";
-import {getCategoriesAdmin, getUsersAdmin} from "../../services/AdminService";
+import {countCategoriesAdmin, deleteCategoryByIdAdmin, getCategoriesAdmin} from "../../services/AdminService";
+import AdminPageMenuWrapper from "./AdminPageMenuWrapper";
+import ButtonRouter from "../../layout/ButtonRouter";
+import {ROUTE_ADMIN_CREATE_CATEGORY, ROUTE_ADMIN_EDIT_CATEGORY, ROUTE_ADMIN_IMPORTS_EDIT} from "../../router/routes";
 
 const useStyle = makeStyles({
     root: {
@@ -25,31 +28,37 @@ function AdminCategories() {
         {
             id: 'description',
             label: 'Description'
+        },
+        {
+            id: 'order',
+            label: 'Ordre'
         }
     ];
 
-    const actions = [];
-    /*
     const actions = [
         {
-            id: 'delete',
-            label: 'Supprimer',
-            callback: (id) => {
-
-            }
+            id: 'edit',
+            label: 'modifier',
+            url: ROUTE_ADMIN_EDIT_CATEGORY
         }
     ];
-    */
 
     return (
-        <div className={classes.root}>
+        <AdminPageMenuWrapper>
             <h1>Catégories</h1>
+            <div>
+                <ButtonRouter to={ROUTE_ADMIN_CREATE_CATEGORY}>
+                    Créer
+                </ButtonRouter>
+            </div>
             <AdminTable
                 headers={headers}
                 getValuesCallback={(pager) => getCategoriesAdmin(pager)}
+                deleteCallback={deleteCategoryByIdAdmin}
+                countCallback={countCategoriesAdmin}
                 actions={actions}
             />
-        </div>
+        </AdminPageMenuWrapper>
     )
 }
 

@@ -83,7 +83,7 @@ function GameSummary(props) {
                             variant='contained'
                             color='primary'
                         >
-                            j'ai trop le seum j'arrête
+                            je fais ma flute j'arrête
                         </ButtonRouter>
                         <ButtonRouter
                             to={generateRoute(ROUTE_PLAY, {name: ':categoryId', value: game.categoryId})}

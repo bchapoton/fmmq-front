@@ -14,6 +14,11 @@ import AdminGames from "../Pages/Admin/AdminGames";
 import AdminCategories from "../Pages/Admin/AdminCategories";
 import AdminMusics from "../Pages/Admin/AdminMusics";
 import AdminServerConfigs from "../Pages/Admin/AdminServerConfigs";
+import AdminImports from "../Pages/Admin/AdminImports";
+import CreateImportAdmin from "../Pages/Admin/CreateImportAdmin";
+import EditImportAdmin from "../Pages/Admin/EditImportAdmin";
+import AdminCreateCategory from "../Pages/Admin/AdminCreateCategory";
+import AdminEditCategory from "../Pages/Admin/AdminEditCategory";
 
 export const ROUTE_HOME = '/';
 export const ROUTE_DASHBOARD = '/dashboard';
@@ -29,8 +34,13 @@ export const ROUTE_ADMIN_USERS = '/administration/users';
 export const ROUTE_ADMIN_EDIT_USERS = '/administration/users/:id';
 export const ROUTE_ADMIN_GAMES = '/administration/games';
 export const ROUTE_ADMIN_CATEGORIES = '/administration/categories';
+export const ROUTE_ADMIN_CREATE_CATEGORY = '/administration/categories/create';
+export const ROUTE_ADMIN_EDIT_CATEGORY = '/administration/categories/edit/:id';
 export const ROUTE_ADMIN_MUSICS = '/administration/musics';
 export const ROUTE_ADMIN_SERVER_CONFIG = '/administration/serverConfig';
+export const ROUTE_ADMIN_IMPORTS = '/administration/imports';
+export const ROUTE_ADMIN_IMPORTS_CREATE = '/administration/imports/create';
+export const ROUTE_ADMIN_IMPORTS_EDIT = '/administration/imports/edit/:id';
 
 export const generateRoute = (path, params) => {
     let generatedPath = path;
@@ -116,6 +126,16 @@ export const routes = [
         children: (<AdminCategories/>)
     },
     {
+        path: ROUTE_ADMIN_CREATE_CATEGORY,
+        role: ROLE_ADMIN,
+        children: (<AdminCreateCategory/>)
+    },
+    {
+        path: ROUTE_ADMIN_EDIT_CATEGORY,
+        role: ROLE_ADMIN,
+        children: (<AdminEditCategory/>)
+    },
+    {
         path: ROUTE_ADMIN_MUSICS,
         role: ROLE_ADMIN,
         children: (<AdminMusics/>)
@@ -124,5 +144,20 @@ export const routes = [
         path: ROUTE_ADMIN_SERVER_CONFIG,
         role: ROLE_ADMIN,
         children: (<AdminServerConfigs/>)
+    },
+    {
+        path: ROUTE_ADMIN_IMPORTS,
+        role: ROLE_ADMIN,
+        children: (<AdminImports/>)
+    },
+    {
+        path: ROUTE_ADMIN_IMPORTS_EDIT,
+        role: ROLE_ADMIN,
+        children: (<EditImportAdmin/>)
+    },
+    {
+        path: ROUTE_ADMIN_IMPORTS_CREATE,
+        role: ROLE_ADMIN,
+        children: (<CreateImportAdmin/>)
     }
 ];
