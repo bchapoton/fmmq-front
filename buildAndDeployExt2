@@ -1,0 +1,6 @@
+echo "Build react scripts"
+npm run-script build
+echo "Clean old directory"
+sudo rm -r /home/ben/nginx/html/fmmq-front/*
+echo "Copy new sources"
+sudo cp -r ./build/* /home/ben/nginx/html/fmmq-front/
