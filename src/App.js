@@ -11,9 +11,6 @@ import history from './layout/utils/history'
 import GlobalLoaderFeedback from "./layout/GlobalLoaderFeedback";
 import RestoreSessionProvider from "./layout/RestoreSessionProvider";
 import RouterHandler from "./router/RouterHandler";
-import IconButton from "@material-ui/core/IconButton";
-import {generateRoute, ROUTE_DASHBOARD} from "./router/routes";
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import {indigo} from "@material-ui/core/colors";
 import GlobalDrawerButton from "./layout/GlobalDrawerButton";
 import GlobalDrawer from "./layout/GlobalDrawer";

@@ -5,7 +5,7 @@ import {
     ROUTE_ADMIN_GAMES, ROUTE_ADMIN_IMPORTS,
     ROUTE_ADMIN_MUSICS,
     ROUTE_ADMIN_SERVER_CONFIG,
-    ROUTE_ADMIN_USERS, ROUTE_ALL_GAME,
+    ROUTE_ADMIN_USERS, ROUTE_ALL_GAME, ROUTE_CONTRIBUTOR_IMPORTS, ROUTE_CONTRIBUTOR_MUSICS,
     ROUTE_DASHBOARD,
     ROUTE_HOME,
     ROUTE_LOGIN,
@@ -22,6 +22,7 @@ import CategoryIcon from "@material-ui/icons/Category";
 import AudiotrackIcon from "@material-ui/icons/Audiotrack";
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import SortIcon from '@material-ui/icons/Sort';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 export function getAnonymousMenu() {
     return [
@@ -74,7 +75,7 @@ export function getAdminMenu() {
     return [
         {
             label: 'Configuration serveur',
-            icon: (<DirectionsRunIcon/>),
+            icon: (<SettingsIcon/>),
             url: ROUTE_ADMIN_SERVER_CONFIG
         },
         {
@@ -101,6 +102,21 @@ export function getAdminMenu() {
             label: 'Musiques',
             icon: (<AudiotrackIcon/>),
             url: ROUTE_ADMIN_MUSICS
+        },
+    ];
+}
+
+export function getContributorMenu() {
+    return [
+        {
+            label: 'Imports',
+            icon: (<ImportExportIcon/>),
+            url: ROUTE_CONTRIBUTOR_IMPORTS
+        },
+        {
+            label: 'Musiques',
+            icon: (<AudiotrackIcon/>),
+            url: ROUTE_CONTRIBUTOR_MUSICS
         },
     ];
 }

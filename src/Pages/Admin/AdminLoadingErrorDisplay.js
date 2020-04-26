@@ -1,26 +1,43 @@
-import React from 'react'
-import {makeStyles} from "@material-ui/core/styles";
+import React, {useEffect} from 'react'
 import PropTypes from "prop-types";
+import LocalLoader from "../../layout/LocalLoader";
+import {makeStyles} from "@material-ui/core/styles";
+import {useDispatch} from "react-redux";
+import {hideLoader, showLoader} from "../../store/actions/loader.action";
 
 const useStyle = makeStyles({
-    root: {
-        padding: '1rem'
+    loaderContainer: {
+        height: '200px'
     }
 });
 
 function AdminLoadingErrorDisplay(props) {
+    const {loading, error, children} = props;
     const classes = useStyle();
-    const {loading, error} = props;
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if(loading) {
+            dispatch(showLoader());
+        } else {
+            dispatch(hideLoader());
+        }
+    }, [loading]);
 
     if (loading) {
-        return (<span>loading</span>);
+        return (
+            <div className={classes.loaderContainer}>
+                <LocalLoader/>
+            </div>
+        );
     }
 
     if (error) {
-        return (<span>{error}</span>);
+        console.log('error' + error );
+        return (<span>error</span>);
     }
 
-    return null;
+    return children;
 }
 
 AdminLoadingErrorDisplay.propTypes = {

@@ -1,4 +1,5 @@
 import {CLEAR_USER_DATA, LOGGED_IN, LOGGED_OUT, SET_USER_DATA} from "../actions/context.action";
+import {clearAuthentication} from "../../services/NetworkUtils";
 
 const initialState = {
     loggedIN: false,
@@ -25,6 +26,7 @@ const context = function (state = initialState, action) {
             };
         }
         case CLEAR_USER_DATA: {
+            clearAuthentication();
             return Object.assign({}, initialState);
         }
         default: {

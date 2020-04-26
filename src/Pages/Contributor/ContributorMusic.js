@@ -1,18 +1,10 @@
 import React from 'react'
-import AdminTable from "./AdminTable";
-import {
-    countMusicsAdmin,
-    delDuplicateMusics,
-    dropAllMusics,
-    getDuplicateMusics,
-    getMusicsAdmin,
-    postReSanitizeAllDB
-} from "../../services/AdminService";
-import {TYPE_FMMQ_MUSIC} from "./AdminValueConverter";
-import AdminPageOperations from "./AdminPageOperations";
+import {countMusicsContributor, getMusicsContributor} from "../../services/ContributorService";
+import {TYPE_FMMQ_MUSIC} from "../Admin/AdminValueConverter";
+import AdminTable from "../Admin/AdminTable";
 import FMMQPageContainer from "../commons/FMMQPageContainer";
 
-function AdminMusics() {
+function ContributorMusic() {
     const headers = [
         {
             isId: true,
@@ -54,39 +46,16 @@ function AdminMusics() {
         }
     ];
 
-    const actions = [];
-
-    const operations = [
-        {
-            axiosPromise: postReSanitizeAllDB,
-            label: 'Sanitize all musics'
-        },
-        {
-            axiosPromise: getDuplicateMusics,
-            label: 'Check duplicates'
-        },
-        {
-            axiosPromise: delDuplicateMusics,
-            label: 'Delete duplicates'
-        },
-        {
-            axiosPromise: dropAllMusics,
-            label: 'Drop all musics'
-        }
-    ];
-
     return (
         <FMMQPageContainer>
             <h1>Musiques</h1>
-            <AdminPageOperations operations={operations}/>
             <AdminTable
                 headers={headers}
-                getValuesCallback={(pager) => getMusicsAdmin(pager)}
-                countCallback={countMusicsAdmin}
-                actions={actions}
+                getValuesCallback={(pager) => getMusicsContributor(pager)}
+                countCallback={countMusicsContributor}
             />
         </FMMQPageContainer>
     );
 }
 
-export default AdminMusics;
+export default ContributorMusic;

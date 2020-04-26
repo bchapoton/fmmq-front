@@ -1,4 +1,3 @@
-import {HIDE_LOADER, SHOW_LOADER} from "../actions/loader.action";
 import {HIDE_DRAWER, SHOW_DRAWER} from "../actions/global.drawer.action";
 
 const initialState = {

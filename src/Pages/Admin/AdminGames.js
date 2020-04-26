@@ -1,19 +1,10 @@
 import React from 'react'
-import {makeStyles} from "@material-ui/core/styles";
 import AdminTable from "./AdminTable";
 import {countGamesAdmin, getGamesAdmin} from "../../services/AdminService";
 import {TYPE_DATE, TYPE_JSON} from "./AdminValueConverter";
-import AdminPageMenuWrapper from "./AdminPageMenuWrapper";
-
-const useStyle = makeStyles({
-    root: {
-        padding: '1rem'
-    }
-});
+import FMMQPageContainer from "../commons/FMMQPageContainer";
 
 function AdminGames() {
-    const classes = useStyle();
-
     const headers = [
         {
             isId: true,
@@ -47,14 +38,14 @@ function AdminGames() {
     ];
 
     return (
-        <AdminPageMenuWrapper>
+        <FMMQPageContainer>
             <h1>Parties jouées</h1>
             <AdminTable
                 headers={headers}
                 getValuesCallback={(pager) => getGamesAdmin(pager)}
                 countCallback={countGamesAdmin}
             />
-        </AdminPageMenuWrapper>
+        </FMMQPageContainer>
     )
 }
 

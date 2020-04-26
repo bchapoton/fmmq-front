@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {makeStyles} from "@material-ui/core/styles";
 import {useParams} from "react-router-dom";
-import {doImportAdmin, getImportByIdAdmin} from "../../services/AdminService";
+import {getImportByIdAdmin} from "../../services/AdminService";
 import {useDispatch} from "react-redux";
 import {hideLoader, showLoader} from "../../store/actions/loader.action";
 import Grid from "@material-ui/core/Grid";
@@ -12,6 +12,8 @@ import ListItem from "@material-ui/core/ListItem";
 import {ListItemText} from "@material-ui/core";
 import Moment from "react-moment";
 import Button from "@material-ui/core/Button";
+import PropTypes from "prop-types";
+import ButtonRouter from "../../layout/ButtonRouter";
 
 const useStyle = makeStyles({
     root: {
@@ -19,7 +21,8 @@ const useStyle = makeStyles({
     }
 });
 
-function EditImportAdmin() {
+function EditImportCommons(props) {
+    const {doImportFunction, getImportByIdFunction} = props;
     const classes = useStyle();
     const {id} = useParams();
     const dispatch = useDispatch();
@@ -28,7 +31,7 @@ function EditImportAdmin() {
 
     useEffect(() => {
         dispatch(showLoader());
-        loadData(id, dispatch, setData);
+        loadData(id, dispatch, setData,getImportByIdFunction);
     }, []);
 
     if (!data) {
@@ -41,12 +44,14 @@ function EditImportAdmin() {
             <Grid container direction='column' spacing={2}>
                 <Grid item>
                     <Button
+                        variant='contained'
+                        color='primary'
                         onClick={() => {
                             dispatch(showLoader());
-                            doImportAdmin(data._id)
+                            doImportFunction(data._id)
                                 .then(response => {
                                     setImportResult(response.data);
-                                    loadData(data._id, dispatch, setData);
+                                    loadData(data._id, dispatch, setData, getImportByIdFunction);
                                 })
                                 .catch(error => {
                                     setImportResult(error);
@@ -78,7 +83,7 @@ function EditImportAdmin() {
                             />
                             <ListItemText
                                 primary='Créé par'
-                                secondary={JSON.parse(data.createdBy).nickname}
+                                secondary={data.ownerNickname}
                             />
                             <ListItemText
                                 primary='Déjà importé'
@@ -86,7 +91,7 @@ function EditImportAdmin() {
                             />
                             <ListItemText
                                 primary='Date dernier import'
-                                secondary={data.lastImported}
+                                secondary={data.lastImported ? (<Moment>{data.lastImported}</Moment>) : (<span>N/A</span>)}
                             />
                         </ListItem>
                     </List>
@@ -101,8 +106,8 @@ function EditImportAdmin() {
 }
 
 
-function loadData(id, dispatch, setData) {
-    getImportByIdAdmin(id)
+function loadData(id, dispatch, setData, getImportByIdFunction) {
+    getImportByIdFunction(id)
         .then((response) => {
             setData(response.data);
         })
@@ -112,4 +117,11 @@ function loadData(id, dispatch, setData) {
         });
 }
 
-export default EditImportAdmin;
+EditImportCommons.propTypes = {
+    doImportFunction: PropTypes.func.isRequired,
+    getImportByIdFunction: PropTypes.func.isRequired,
+};
+
+EditImportCommons.defaultProps = {};
+
+export default EditImportCommons;

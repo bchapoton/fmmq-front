@@ -11,13 +11,13 @@ export const TYPE_FMMQ_MUSIC = 'FMMQMusic';
 
 export const valueConverter = (header, value) => {
     if (header.type === TYPE_DATE) {
-        return (<Moment>{value}</Moment>);
+        return value ? (<Moment>{value}</Moment>) : (<span>&nbsp;</span>);
     } else if (header.type === TYPE_JSON) {
         return (<JSONValue value={value} headerLabel={header.label}/>);
     } else if (header.type === TYPE_FMMQ_MUSIC) {
         return (<Link href={config.MusicServerBaseUrl + value} target='_blank'>{value}</Link>);
     } else if (header.type === TYPE_BOOLEAN) {
-        return value ? 'oui' : 'non';
+        return value === "true" ? 'oui' : 'non';
     }
     return value;
 };

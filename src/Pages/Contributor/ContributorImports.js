@@ -1,13 +1,17 @@
 import React from 'react'
-import AdminTable from "./AdminTable";
-import {countImportsAdmin, deleteImportsAdmin, getImportsAdmin} from "../../services/AdminService";
-import {TYPE_BOOLEAN, TYPE_DATE, TYPE_JSON} from "./AdminValueConverter";
-import {ROUTE_ADMIN_IMPORTS_CREATE, ROUTE_ADMIN_IMPORTS_EDIT} from "../../router/routes";
+import {ROUTE_CONTRIBUTOR_IMPORTS_CREATE, ROUTE_CONTRIBUTOR_IMPORTS_EDIT} from "../../router/routes";
 import ButtonRouter from "../../layout/ButtonRouter";
+import {TYPE_BOOLEAN, TYPE_DATE, TYPE_JSON} from "../Admin/AdminValueConverter";
+import {
+    countImportsContributor,
+    deleteImportsContributor,
+    getImportsContributor
+} from "../../services/ContributorService";
+import AdminTable from "../Admin/AdminTable";
 import FMMQPageContainer from "../commons/FMMQPageContainer";
 import EditIcon from "@material-ui/icons/Edit";
 
-function AdminImports() {
+function ContributorImports() {
     const headers = [
         {
             isId: true,
@@ -30,25 +34,22 @@ function AdminImports() {
             type: TYPE_DATE
         },
         {
+            id: 'ownerNickname',
+            label: 'Créer par',
+            type: TYPE_JSON
+        },
+        {
             id: 'creationDate',
             label: 'Date de création',
             type: TYPE_DATE
-        },
-        {
-            id: 'ownerNickname',
-            label: 'Owner'
-        },
-        {
-            id: 'ownerId',
-            label: 'Owner id'
-        },
+        }
     ];
 
     const actions = [
         {
             id: 'edit',
             label: (<EditIcon/>),
-            url: ROUTE_ADMIN_IMPORTS_EDIT
+            url: ROUTE_CONTRIBUTOR_IMPORTS_EDIT
         }
     ];
 
@@ -58,19 +59,19 @@ function AdminImports() {
             <ButtonRouter
                 variant='contained'
                 color='primary'
-                to={ROUTE_ADMIN_IMPORTS_CREATE}
+                to={ROUTE_CONTRIBUTOR_IMPORTS_CREATE}
             >
                 créer
             </ButtonRouter>
             <AdminTable
                 headers={headers}
                 actions={actions}
-                getValuesCallback={(pager) => getImportsAdmin(pager)}
-                countCallback={countImportsAdmin}
-                deleteCallback={deleteImportsAdmin}
+                getValuesCallback={(pager) => getImportsContributor(pager)}
+                countCallback={countImportsContributor}
+                deleteCallback={deleteImportsContributor}
             />
         </FMMQPageContainer>
     )
 }
 
-export default AdminImports;
+export default ContributorImports;

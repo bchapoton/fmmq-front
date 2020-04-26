@@ -39,7 +39,7 @@ function JSONValue(props) {
 
     return (
         <React.Fragment>
-            <Button onClick={() => toggleModal(true)}>
+            <Button variant='outlined' onClick={() => toggleModal(true)}>
                 JSONValue
             </Button>
             <Modal

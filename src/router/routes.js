@@ -4,7 +4,7 @@ import CGU from "../Pages/CGU";
 import SignUp from "../Pages/SignUp";
 import GameRoom from "../Pages/GameRoom";
 import Dashboard from "../Pages/Dashboard";
-import {ROLE_ADMIN, ROLE_PLAYER} from "./roles";
+import {ROLE_ADMIN, ROLE_CONTRIBUTOR, ROLE_PLAYER} from "./roles";
 import Home from "../Pages/Home";
 import TipeeePage from "../Pages/TipeeePage";
 import EndGame from "../Pages/EndGame";
@@ -15,11 +15,16 @@ import AdminCategories from "../Pages/Admin/AdminCategories";
 import AdminMusics from "../Pages/Admin/AdminMusics";
 import AdminServerConfigs from "../Pages/Admin/AdminServerConfigs";
 import AdminImports from "../Pages/Admin/AdminImports";
-import CreateImportAdmin from "../Pages/Admin/CreateImportAdmin";
-import EditImportAdmin from "../Pages/Admin/EditImportAdmin";
+import CreateImportCommons from "../Pages/commons/CreateImportCommons";
+import EditImportCommons from "../Pages/commons/EditImportCommons";
 import AdminCreateCategory from "../Pages/Admin/AdminCreateCategory";
 import AdminEditCategory from "../Pages/Admin/AdminEditCategory";
 import AllGame from "../Pages/AllGames";
+import ContributorMusic from "../Pages/Contributor/ContributorMusic";
+import ContributorImports from "../Pages/Contributor/ContributorImports";
+import {createImportsAdmin, doImportAdmin, getImportByIdAdmin} from "../services/AdminService";
+import {createImportsContributor, doImportContributor, getImportByIdContributor} from "../services/ContributorService";
+import EditUserAdmin from "../Pages/Admin/EditUserAdmin";
 
 export const ROUTE_HOME = '/';
 export const ROUTE_DASHBOARD = '/dashboard';
@@ -31,6 +36,11 @@ export const ROUTE_TIPEEE = '/tipeee';
 export const ROUTE_END_GAME = '/game-over/:gameId';
 export const ROUTE_GAME_HISTORY = '/game/history/:gameId';
 export const ROUTE_ALL_GAME = '/game/all';
+// contributor
+export const ROUTE_CONTRIBUTOR_MUSICS = '/contributor/musics';
+export const ROUTE_CONTRIBUTOR_IMPORTS = '/contributor/imports';
+export const ROUTE_CONTRIBUTOR_IMPORTS_CREATE = '/contributor/imports/create';
+export const ROUTE_CONTRIBUTOR_IMPORTS_EDIT = '/contributor/imports/edit/:id';
 // Administration
 export const ROUTE_ADMIN_USERS = '/administration/users';
 export const ROUTE_ADMIN_EDIT_USERS = '/administration/users/:id';
@@ -117,12 +127,39 @@ export const routes = [
         role: ROLE_PLAYER,
         children: (<AllGame/>)
     },
+    // Contributor
+    {
+        path: ROUTE_CONTRIBUTOR_MUSICS,
+        role: ROLE_CONTRIBUTOR,
+        children: (<ContributorMusic/>)
+    },
+    {
+        path: ROUTE_CONTRIBUTOR_IMPORTS,
+        role: ROLE_CONTRIBUTOR,
+        children: (<ContributorImports/>)
+    },
+    {
+        path: ROUTE_CONTRIBUTOR_IMPORTS_CREATE,
+        role: ROLE_CONTRIBUTOR,
+        children: (<CreateImportCommons
+            createImportFunction={createImportsContributor}
+            previousUrlScreen={ROUTE_CONTRIBUTOR_IMPORTS}
+        />)
+    },
+    {
+        path: ROUTE_CONTRIBUTOR_IMPORTS_EDIT,
+        role: ROLE_CONTRIBUTOR,
+        children: (<EditImportCommons
+            doImportFunction={doImportContributor}
+            getImportByIdFunction={getImportByIdContributor}
+        />)
+    },
     // Administration
     {
         path: ROUTE_ADMIN_USERS,
         role: ROLE_ADMIN,
         children: (<AdminUsers/>)
-    },{
+    }, {
         path: ROUTE_ADMIN_GAMES,
         role: ROLE_ADMIN,
         children: (<AdminGames/>)
@@ -160,11 +197,22 @@ export const routes = [
     {
         path: ROUTE_ADMIN_IMPORTS_EDIT,
         role: ROLE_ADMIN,
-        children: (<EditImportAdmin/>)
+        children: (<EditImportCommons
+            doImportFunction={doImportAdmin}
+            getImportByIdFunction={getImportByIdAdmin}
+        />)
     },
     {
         path: ROUTE_ADMIN_IMPORTS_CREATE,
         role: ROLE_ADMIN,
-        children: (<CreateImportAdmin/>)
+        children: (<CreateImportCommons
+            createImportFunction={createImportsAdmin}
+            previousUrlScreen={ROUTE_ADMIN_IMPORTS}
+        />)
+    },
+    {
+        path: ROUTE_ADMIN_EDIT_USERS,
+        role: ROLE_ADMIN,
+        children: (<EditUserAdmin/>)
     }
 ];

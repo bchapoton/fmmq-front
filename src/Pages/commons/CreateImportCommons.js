@@ -14,9 +14,8 @@ import FolderIcon from '@material-ui/icons/Folder';
 import {grey, orange, yellow} from "@material-ui/core/colors";
 import clsx from "clsx";
 import ButtonRouter from "../../layout/ButtonRouter";
-import {ROUTE_ADMIN_IMPORTS} from "../../router/routes";
-import {createImportsAdmin} from "../../services/AdminService";
 import history from "../../layout/utils/history";
+import PropTypes from "prop-types";
 
 
 const useStyle = makeStyles({
@@ -48,20 +47,21 @@ const useStyle = makeStyles({
     }
 });
 
-function CreateImportAdmin() {
+function CreateImportCommons(props) {
+    const {createImportFunction, previousUrlScreen} = props;
     const classes = useStyle();
     const dispatch = useDispatch();
-    const {handleSubmit, register, errors, clearError, triggerValidation, setError} = useForm({mode: 'onBlur'});
+    const {handleSubmit, register, errors, clearError, triggerValidation} = useForm({mode: 'onBlur'});
 
     const onSubmit = async (data) => {
         if (await triggerValidation()) {
             console.log(data);
             clearError();
             dispatch(showLoader());
-            createImportsAdmin({metadata: JSON.parse(data.metadata)})
+            createImportFunction({metadata: JSON.parse(data.metadata)})
                 .then((response => {
                     dispatch(hideLoader());
-                    history.push(ROUTE_ADMIN_IMPORTS);
+                    history.push(previousUrlScreen);
                 }))
                 .catch(error => {
                     console.log('error : ' + error.message);
@@ -147,7 +147,7 @@ function CreateImportAdmin() {
                     </Grid>
                     <Grid item className={classes.buttonContainer}>
                         <ButtonRouter
-                            to={ROUTE_ADMIN_IMPORTS}
+                            to={previousUrlScreen}
                             variant='contained'
                             color='secondary'
                             className={classes.button}
@@ -196,4 +196,11 @@ function validateMetadataFormat(data) {
     }
 }
 
-export default CreateImportAdmin;
+CreateImportCommons.propTypes = {
+    createImportFunction: PropTypes.func.isRequired,
+    previousUrlScreen: PropTypes.string.isRequired
+};
+
+CreateImportCommons.defaultProps = {};
+
+export default CreateImportCommons;

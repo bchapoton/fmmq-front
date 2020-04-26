@@ -15,7 +15,7 @@ import AdminPager from "./AdminPager";
 import Button from "@material-ui/core/Button";
 import {useDispatch} from "react-redux";
 import {hideLoader, showLoader} from "../../store/actions/loader.action";
-
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles({
     table: {
@@ -75,19 +75,9 @@ function AdminTable(props) {
                 console.log("can't count full size object : " + error.message);
             });
     }, []);
-    /*
-        useEffect(() => {
-            console.log('pager load')
-            loadData(pager);
-        }, [loadData, pager]);
-    */
-
-    if (loading || error) {
-        return (<AdminLoadingErrorDisplay loading={loading} error={error}/>);
-    }
 
     return (
-        <React.Fragment>
+        <AdminLoadingErrorDisplay loading={loading} error={error}>
             <div>
                 {deleteMessage}
             </div>
@@ -134,7 +124,7 @@ function AdminTable(props) {
                                     {actions.map(action => {
                                         return (
                                             <TableCell key={`${rowKey}-action-${action.id}`}>
-                                                <ButtonRouter to={generateActionUrl(action.url, idValue)}>
+                                                <ButtonRouter variant='outlined' to={generateActionUrl(action.url, idValue)}>
                                                     {action.label}
                                                 </ButtonRouter>
                                             </TableCell>
@@ -144,31 +134,32 @@ function AdminTable(props) {
                                         (
                                             <TableCell key={`${rowKey}-deleteAction`}>
                                                 <Button
-                                                onClick={() => {
-                                                    dispatch(showLoader());
-                                                    deleteCallback(idValue)
-                                                        .then((response => {
-                                                            setDeleteMessage((
-                                                                <span>Element supprimé</span>
-                                                            ));
-                                                            loadData(pager);
-                                                        }))
-                                                        .catch(error => {
-                                                            setDeleteMessage((
-                                                                <span>L'élement n'a pas pu être supprimé</span>
-                                                            ));
-                                                        })
-                                                        .then(()=> {
-                                                            dispatch(hideLoader());
-                                                            setTimeout(() => setDeleteMessage(null), 3000)
-                                                        })
-                                                }}
+                                                    variant='outlined'
+                                                    onClick={() => {
+                                                        dispatch(showLoader());
+                                                        deleteCallback(idValue)
+                                                            .then((response => {
+                                                                setDeleteMessage((
+                                                                    <span>Element supprimé</span>
+                                                                ));
+                                                                loadData(pager);
+                                                            }))
+                                                            .catch(error => {
+                                                                setDeleteMessage((
+                                                                    <span>L'élement n'a pas pu être supprimé</span>
+                                                                ));
+                                                            })
+                                                            .then(() => {
+                                                                dispatch(hideLoader());
+                                                                setTimeout(() => setDeleteMessage(null), 3000)
+                                                            })
+                                                    }}
                                                 >
-                                                    supprimer
+                                                    <DeleteIcon/>
                                                 </Button>
                                             </TableCell>
                                         )
-                                    : null}
+                                        : null}
                                 </TableRow>
                             )
                         })}
@@ -193,7 +184,7 @@ function AdminTable(props) {
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
             />
-        </React.Fragment>
+        </AdminLoadingErrorDisplay>
     )
 }
 

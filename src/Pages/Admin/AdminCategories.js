@@ -2,9 +2,10 @@ import React from 'react'
 import {makeStyles} from "@material-ui/core/styles";
 import AdminTable from "./AdminTable";
 import {countCategoriesAdmin, deleteCategoryByIdAdmin, getCategoriesAdmin} from "../../services/AdminService";
-import AdminPageMenuWrapper from "./AdminPageMenuWrapper";
 import ButtonRouter from "../../layout/ButtonRouter";
-import {ROUTE_ADMIN_CREATE_CATEGORY, ROUTE_ADMIN_EDIT_CATEGORY, ROUTE_ADMIN_IMPORTS_EDIT} from "../../router/routes";
+import {ROUTE_ADMIN_CREATE_CATEGORY, ROUTE_ADMIN_EDIT_CATEGORY} from "../../router/routes";
+import FMMQPageContainer from "../commons/FMMQPageContainer";
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyle = makeStyles({
     root: {
@@ -38,13 +39,13 @@ function AdminCategories() {
     const actions = [
         {
             id: 'edit',
-            label: 'modifier',
+            label: (<EditIcon/>),
             url: ROUTE_ADMIN_EDIT_CATEGORY
         }
     ];
 
     return (
-        <AdminPageMenuWrapper>
+        <FMMQPageContainer>
             <h1>Catégories</h1>
             <div>
                 <ButtonRouter to={ROUTE_ADMIN_CREATE_CATEGORY}>
@@ -58,7 +59,7 @@ function AdminCategories() {
                 countCallback={countCategoriesAdmin}
                 actions={actions}
             />
-        </AdminPageMenuWrapper>
+        </FMMQPageContainer>
     )
 }
 
