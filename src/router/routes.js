@@ -25,6 +25,8 @@ import ContributorImports from "../Pages/Contributor/ContributorImports";
 import {createImportsAdmin, doImportAdmin, getImportByIdAdmin} from "../services/AdminService";
 import {createImportsContributor, doImportContributor, getImportByIdContributor} from "../services/ContributorService";
 import EditUserAdmin from "../Pages/Admin/EditUserAdmin";
+import AdminCacheDisplay from "../Pages/Admin/AdminCacheDisplay";
+import AdminRoomCacheDisplay from "../Pages/Admin/AdminRoomCacheDisplay";
 
 export const ROUTE_HOME = '/';
 export const ROUTE_DASHBOARD = '/dashboard';
@@ -53,6 +55,8 @@ export const ROUTE_ADMIN_SERVER_CONFIG = '/administration/serverConfig';
 export const ROUTE_ADMIN_IMPORTS = '/administration/imports';
 export const ROUTE_ADMIN_IMPORTS_CREATE = '/administration/imports/create';
 export const ROUTE_ADMIN_IMPORTS_EDIT = '/administration/imports/edit/:id';
+export const ROUTE_ADMIN_CACHE_DISPLAY = '/administration/cache/objects';
+export const ROUTE_ADMIN_CACHE_DISPLAY_ROOM = '/administration/cache/objects/:roomId';
 
 export const generateRoute = (path, params) => {
     let generatedPath = path;
@@ -214,5 +218,15 @@ export const routes = [
         path: ROUTE_ADMIN_EDIT_USERS,
         role: ROLE_ADMIN,
         children: (<EditUserAdmin/>)
+    },
+    {
+        path: ROUTE_ADMIN_CACHE_DISPLAY,
+        role: ROLE_ADMIN,
+        children: (<AdminCacheDisplay/>)
+    },
+    {
+        path: ROUTE_ADMIN_CACHE_DISPLAY_ROOM,
+        role: ROLE_ADMIN,
+        children: (<AdminRoomCacheDisplay/>)
     }
 ];

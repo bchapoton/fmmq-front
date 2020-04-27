@@ -94,6 +94,14 @@ export const getServerConfigAdmin = () => {
     return getRestClient().get('admin/serverconfig');
 };
 
+export const getServerCacheObjectsAdmin = () => {
+    return getRestClient().get('admin/cache/objects');
+};
+
+export const getServerCachedRoomAdmin = (roomId) => {
+    return getRestClient().get(`admin/cache/objects/${roomId}`);
+};
+
 // operations
 export const postReSanitizeAllDB = () => {
     return getRestClient().post('admin/musics/reSanitizeDB', {});

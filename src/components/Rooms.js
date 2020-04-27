@@ -4,7 +4,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import LocalLoader from "../layout/LocalLoader";
 import {Card, ListItemAvatar, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
-import {getCategories} from "../services/DashboardService";
+import {getCategories, getRoomsMusicCounter} from "../services/DashboardService";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Avatar from "@material-ui/core/Avatar";
@@ -31,17 +31,38 @@ function Rooms() {
     const classes = useStyles();
     const [load, setLoad] = useState(true);
     const [rooms, setRooms] = useState([]);
+    const [roomsCounter, setRoomsCounter] = useState([]);
 
     useEffect(() => {
         getCategories(
             (response) => {
                 setRooms(response.data);
+                const roomsCounters = [];
+                for (let index in response.data) {
+                    roomsCounters.push(response.data[index]._id);
+                }
+                setRoomsCounter(roomsCounters);
             },
             error => {
                 console.log(error)
             }
         ).then(() => setLoad(false));
     }, []);
+
+    useEffect(() => {
+        if (roomsCounter && roomsCounter.length > 0) {
+            const counters = [...roomsCounter];
+            const currentId = counters.pop();
+            getRoomsMusicCounter(currentId)
+                .then(response => {
+                    console.log('count : ' + response.data.count);
+                })
+                .catch(error => {
+                    console.log("Can't count the room : "+ currentId)
+                })
+                .then(() => setRoomsCounter(counters));
+        }
+    }, [roomsCounter]);
 
     return (
         <Card elevation={3}>

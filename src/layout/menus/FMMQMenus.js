@@ -1,6 +1,7 @@
 import React from "react";
 import HomeIcon from "@material-ui/icons/Home";
 import {
+    ROUTE_ADMIN_CACHE_DISPLAY,
     ROUTE_ADMIN_CATEGORIES,
     ROUTE_ADMIN_GAMES, ROUTE_ADMIN_IMPORTS,
     ROUTE_ADMIN_MUSICS,
@@ -23,6 +24,7 @@ import AudiotrackIcon from "@material-ui/icons/Audiotrack";
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import SortIcon from '@material-ui/icons/Sort';
 import SettingsIcon from '@material-ui/icons/Settings';
+import CachedIcon from '@material-ui/icons/Cached';
 
 export function getAnonymousMenu() {
     return [
@@ -77,6 +79,11 @@ export function getAdminMenu() {
             label: 'Configuration serveur',
             icon: (<SettingsIcon/>),
             url: ROUTE_ADMIN_SERVER_CONFIG
+        },
+        {
+            label: 'Cache serveur',
+            icon: (<CachedIcon/>),
+            url: ROUTE_ADMIN_CACHE_DISPLAY
         },
         {
             label: 'Imports',

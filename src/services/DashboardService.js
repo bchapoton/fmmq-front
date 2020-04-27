@@ -7,6 +7,11 @@ export const getCategories = (onSuccess, onError) => {
         .catch(onError);
 };
 
+export const getRoomsMusicCounter = (categoryId) => {
+    return getRestClient()
+        .get(`rooms/${categoryId}/musics/count`);
+};
+
 export const joinRoom = (categoryId, onSuccess) => {
     return getRestClient()
         .post(`rooms/${categoryId}/join`, {})
