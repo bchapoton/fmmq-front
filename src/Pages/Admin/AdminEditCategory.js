@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {useForm} from "react-hook-form";
 import {hideLoader, showLoader} from "../../store/actions/loader.action";
 import {useDispatch} from "react-redux";
-import {TextField} from "@material-ui/core";
+import {FormControlLabel, TextField} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import ButtonRouter from "../../layout/ButtonRouter";
@@ -11,6 +11,7 @@ import {ROUTE_ADMIN_CATEGORIES} from "../../router/routes";
 import {getCategoryAdmin, putCategoriesAdmin} from "../../services/AdminService";
 import history from "../../layout/utils/history";
 import {useParams} from "react-router-dom";
+import Checkbox from "@material-ui/core/Checkbox";
 
 
 const useStyle = makeStyles({
@@ -42,6 +43,7 @@ function AdminEditCategory() {
                 setValue('label', category.label);
                 setValue('description', category.description);
                 setValue('order', category.order);
+                setValue('allMusicsOnServer', category.allMusicsOnServer);
             })
             .catch(error => {
                 console.log('error : ' + error);
@@ -129,6 +131,19 @@ function AdminEditCategory() {
                                     required: "L'ordre est obligatoire"
                                 }
                             )}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <FormControlLabel
+                            control={(
+                                <Checkbox
+                                    id='allMusicsOnServer'
+                                    name='allMusicsOnServer'
+                                    color="primary"
+                                    inputRef={register()}
+                                />
+                            )}
+                            label='Prendre toutes les musiques du serveur'
                         />
                     </Grid>
                     <Grid item className={classes.buttonContainer}>

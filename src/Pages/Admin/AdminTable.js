@@ -32,7 +32,7 @@ const useStyles = makeStyles({
     }
 });
 
-const pagerSize = 5;
+const pagerSize = 20;
 const pagerInitialState = '0-' + pagerSize;
 
 function AdminTable(props) {
@@ -88,6 +88,7 @@ function AdminTable(props) {
                 fullSize={fullSize}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
+                pagerSize={pagerSize}
             />
             <TableContainer component={Paper}>
                 <Table className={classes.table}>
@@ -183,6 +184,7 @@ function AdminTable(props) {
                 fullSize={fullSize}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
+                pagerSize={pagerSize}
             />
         </AdminLoadingErrorDisplay>
     )

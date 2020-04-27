@@ -6,6 +6,7 @@ import ButtonRouter from "../../layout/ButtonRouter";
 import {ROUTE_ADMIN_CREATE_CATEGORY, ROUTE_ADMIN_EDIT_CATEGORY} from "../../router/routes";
 import FMMQPageContainer from "../commons/FMMQPageContainer";
 import EditIcon from '@material-ui/icons/Edit';
+import {TYPE_BOOLEAN} from "./AdminValueConverter";
 
 const useStyle = makeStyles({
     root: {
@@ -33,6 +34,11 @@ function AdminCategories() {
         {
             id: 'order',
             label: 'Ordre'
+        },
+        {
+            id: 'allMusicsOnServer',
+            label: 'Tout le serveur',
+            type: TYPE_BOOLEAN
         }
     ];
 
@@ -48,7 +54,7 @@ function AdminCategories() {
         <FMMQPageContainer>
             <h1>Catégories</h1>
             <div>
-                <ButtonRouter to={ROUTE_ADMIN_CREATE_CATEGORY}>
+                <ButtonRouter variant='contained' color='primary' to={ROUTE_ADMIN_CREATE_CATEGORY}>
                     Créer
                 </ButtonRouter>
             </div>

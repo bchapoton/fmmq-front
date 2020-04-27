@@ -19,11 +19,9 @@ const useStyles = makeStyles({
     }
 });
 
-const pagerSize = 5;
-
 function AdminPager(props) {
     const classes = useStyles();
-    const {loadData, currentDataSize, fullSize, setPager, currentPage, setCurrentPage} = props;
+    const {loadData, currentDataSize, fullSize, setPager, currentPage, setCurrentPage, pagerSize} = props;
 
     return (
             <div className={classes.buttonContainer}>
@@ -64,6 +62,7 @@ AdminPager.propTypes = {
     currentPage: PropTypes.number.isRequired,
     currentDataSize: PropTypes.number.isRequired,
     fullSize: PropTypes.number,
+    pagerSize: PropTypes.number.isRequired,
 };
 
 AdminPager.defaultProps = {

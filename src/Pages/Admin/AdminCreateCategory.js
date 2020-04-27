@@ -3,20 +3,15 @@ import {makeStyles} from "@material-ui/core/styles";
 import {useForm} from "react-hook-form";
 import {hideLoader, showLoader} from "../../store/actions/loader.action";
 import {useDispatch} from "react-redux";
-import {TextField} from "@material-ui/core";
+import {FormControlLabel, TextField} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import JSONPretty from "react-json-pretty";
-import JSONPrettyMon from 'react-json-pretty/themes/monikai.css';
-import DescriptionIcon from '@material-ui/icons/Description';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import FolderIcon from '@material-ui/icons/Folder';
-import {grey, orange, yellow} from "@material-ui/core/colors";
-import clsx from "clsx";
 import ButtonRouter from "../../layout/ButtonRouter";
-import {ROUTE_ADMIN_CATEGORIES, ROUTE_ADMIN_IMPORTS} from "../../router/routes";
-import {createCategoriesAdmin, createImportsAdmin} from "../../services/AdminService";
+import {ROUTE_ADMIN_CATEGORIES, ROUTE_CGU} from "../../router/routes";
+import {createCategoriesAdmin} from "../../services/AdminService";
 import history from "../../layout/utils/history";
+import Checkbox from "@material-ui/core/Checkbox";
+import {Link} from "react-router-dom";
 
 
 const useStyle = makeStyles({
@@ -95,6 +90,19 @@ function AdminCreateCategory() {
                                     required: "La description est obligatoire"
                                 }
                             )}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <FormControlLabel
+                            control={(
+                                <Checkbox
+                                    id='allMusicsOnServer'
+                                    name='allMusicsOnServer'
+                                    color="primary"
+                                    inputRef={register()}
+                                />
+                            )}
+                            label='Prendre toutes les musiques du serveur'
                         />
                     </Grid>
                     <Grid item className={classes.buttonContainer}>

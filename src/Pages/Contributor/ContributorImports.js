@@ -36,7 +36,6 @@ function ContributorImports() {
         {
             id: 'ownerNickname',
             label: 'Créer par',
-            type: TYPE_JSON
         },
         {
             id: 'creationDate',
