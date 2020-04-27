@@ -46,12 +46,12 @@ function hasRole(routeRole, userRole) {
     if (!userRole) { // route has a role but not the user, no need to go further
         return false;
     }
-    const allSuitableRole = [];
-    allSuitableRole.push(userRole);
+    let allUserRoles = [];
+    allUserRoles.push(userRole);
     if (rolesHierarchy[userRole].length > 0) {
-        allSuitableRole.push(rolesHierarchy[userRole]);
+        allUserRoles = allUserRoles.concat(rolesHierarchy[userRole]);
     }
-    return allSuitableRole.includes(userRole);
+    return allUserRoles.includes(routeRole);
 }
 
 export default RouterHandler;
