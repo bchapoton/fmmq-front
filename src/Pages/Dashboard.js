@@ -5,6 +5,12 @@ import Tipeee from "../components/Tipeee";
 import Rooms from "../components/Rooms";
 import {listGames} from "../services/GameService";
 import GameSummaryCard from "./GameSummaryCard";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import SortIcon from "@material-ui/icons/Sort";
+import history from "../layout/utils/history";
+import {generateRoute, ROUTE_ALL_GAME} from "../router/routes";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles({
     root: {
@@ -17,7 +23,7 @@ function Dashboard() {
     const [lastGames, setLastGames] = useState([]);
 
     useEffect(() => {
-        listGames(0, 3)
+        listGames(0, 5)
             .then(response => {
                 setLastGames(response.data);
             });
@@ -37,8 +43,25 @@ function Dashboard() {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={5}>
-                    <h4 hidden={lastGames.length === 0}>Dernières parties</h4>
                     <Grid container spacing={1} direction="column">
+                        <Grid item hidden={lastGames.length === 0}>
+                            <Card>
+                                <CardHeader
+                                    title='Dernières parties'
+                                    action={(
+                                        <IconButton
+                                            aria-label="Afficher le détail"
+                                            onClick={() => {
+                                                history.push(generateRoute(ROUTE_ALL_GAME));
+                                            }}
+
+                                        >
+                                            <SortIcon/>
+                                        </IconButton>
+                                    )}
+                                />
+                            </Card>
+                        </Grid>
                         {lastGames.map((game) => (
                             <Grid item key={`${game.date}-${game.category}`}>
                                 <GameSummaryCard game={game}/>

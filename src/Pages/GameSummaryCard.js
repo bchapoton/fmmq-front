@@ -6,18 +6,24 @@ import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import {PlayerIconTrophy} from "../components/LeaderBoardPlayerIcon";
-import CardActions from "@material-ui/core/CardActions";
-import ButtonRouter from "../layout/ButtonRouter";
 import {generateRoute, ROUTE_GAME_HISTORY} from "../router/routes";
 import {Card} from "@material-ui/core";
 import React from "react";
 import PropTypes from "prop-types";
 import {makeStyles} from "@material-ui/core/styles";
 import clsx from "clsx";
+import {grey} from "@material-ui/core/colors";
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from '@material-ui/icons/Add';
+import history from "../layout/utils/history";
 
 const useStyle = makeStyles({
     fullHeight: {
         height: '100%'
+    },
+    headerDate: {
+        fontSize: '1rem',
+        color: grey[600]
     }
 });
 
@@ -28,8 +34,19 @@ function GameSummaryCard(props) {
     return (
         <Card elevation={2} className={clsx(fullHeight ? classes.fullHeight : null)}>
             <CardHeader
-                title={game.category}
-                subheader={(<span>le <Moment format='DD/MM/YYYY à H[h]mm'>{game.date}</Moment></span>)}
+                title={(<span>{game.category}&nbsp;<span className={classes.headerDate}><Moment
+                    format='DD/MM/YYYY à H[h]mm'>{game.date}</Moment></span></span>)}
+                action={
+                    <IconButton
+                        aria-label="Afficher le détail"
+                        onClick={() => {
+                            history.push(generateRoute(ROUTE_GAME_HISTORY, {name: ':gameId', value: game.id}))
+                        }}
+
+                    >
+                        <AddIcon/>
+                    </IconButton>
+                }
             />
             <CardContent>
                 <Table size='small'>
@@ -46,16 +63,6 @@ function GameSummaryCard(props) {
                     </TableBody>
                 </Table>
             </CardContent>
-            <CardActions>
-                <ButtonRouter
-                    to={generateRoute(ROUTE_GAME_HISTORY, {name: ':gameId', value: game.id})}
-                    variant='contained'
-                    color='secondary'
-                    fullWidth
-                >
-                    classement
-                </ButtonRouter>
-            </CardActions>
         </Card>
     );
 }

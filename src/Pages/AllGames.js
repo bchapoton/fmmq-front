@@ -18,7 +18,7 @@ const useStyle = makeStyles({
     }
 });
 
-const pagerSize = 6;
+const pagerSize = 9;
 
 function AllGame() {
     const classes = useStyle();
