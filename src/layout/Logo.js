@@ -19,8 +19,8 @@ const useStyles = makeStyles({
     logoFree: {
         color: green[500]
     },
-    betaFlag: {
-        color: red[500],
+    RCFlag: {
+        color: green[500],
         fontSize: '11px'
     }
 });
@@ -50,7 +50,7 @@ function Logo() {
 
     return (
         <Link to={ROUTE_HOME} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classes.logo}>
-            F{randomLogo}MMQ<span className={classes.betaFlag}>beta</span>
+            F{randomLogo}MMQ<span className={classes.RCFlag}>ReleaseCandidate 0.9</span>
         </Link>
     );
 }
