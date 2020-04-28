@@ -29,7 +29,7 @@ function GameSummaryCard(props) {
         <Card elevation={2} className={clsx(fullHeight ? classes.fullHeight : null)}>
             <CardHeader
                 title={game.category}
-                subheader={(<span>le <Moment format='DD/MM/YYYY à H:mm'>{game.date}</Moment></span>)}
+                subheader={(<span>le <Moment format='DD/MM/YYYY à H[h]mm'>{game.date}</Moment></span>)}
             />
             <CardContent>
                 <Table size='small'>

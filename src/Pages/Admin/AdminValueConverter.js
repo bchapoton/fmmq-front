@@ -11,7 +11,7 @@ export const TYPE_FMMQ_MUSIC = 'FMMQMusic';
 
 export const valueConverter = (header, value) => {
     if (header.type === TYPE_DATE) {
-        return value ? (<Moment format='DD/MM/YYYY à H:mm'>{value}</Moment>) : (<span>&nbsp;</span>);
+        return value ? (<Moment format='DD/MM/YYYY H[h]mm'>{value}</Moment>) : (<span>&nbsp;</span>);
     } else if (header.type === TYPE_JSON) {
         return (<JSONValue value={value} headerLabel={header.label}/>);
     } else if (header.type === TYPE_FMMQ_MUSIC) {
