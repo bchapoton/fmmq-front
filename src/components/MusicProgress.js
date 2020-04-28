@@ -25,10 +25,10 @@ const useStyle = makeStyles({
  * @constructor
  */
 function MusicProgress(props) {
-    const {duration, started, animationEnded, text, musicUrl} = props;
+    const {duration, started, animationEnded, text, musicUrl, startPosition} = props;
+    const [audioObject, setAudioObject] = useState(new Audio());
     const [startedInternal, setStartedInternal] = useState(started);
     const [completed, setCompleted] = useState(0);
-    const [audioObject, setAudioObject] = useState(new Audio());
     const maxCompleted = Math.round(duration / animationStepDuration);
     const classes = useStyle();
 
@@ -43,7 +43,7 @@ function MusicProgress(props) {
         }
 
         return () => {
-            if(audioObject) {
+            if (audioObject) {
                 audioObject.stop();
             }
         }
@@ -61,14 +61,15 @@ function MusicProgress(props) {
     useEffect(() => {
         if (audioObject) {
             if (started) {
+                audioObject.currentTime = getStartPositionInSeconds(startPosition);
                 audioObject.play();
             } else {
                 audioObject.stop();
             }
         }
+        setCompleted(scaleCompletedValue(startPosition, animationStepDuration));
         setStartedInternal(started);
-        setCompleted(0);
-    }, [started, audioObject]);
+    }, [started, startPosition, audioObject]);
 
     useEffect(() => {
         let timer;
@@ -106,29 +107,60 @@ function MusicProgress(props) {
         animationEnded,
         maxCompleted]);
 
-    const normalise = value => (value) * 100 / maxCompleted; // scale the completed value on range 0-100, 100 is the completion status
-
     if (!startedInternal) {
         return <div className={classes.container}>&nbsp;</div>;
     }
 
     return (
         <div className={classes.container}>
-            <LinearProgress variant="determinate" value={normalise(completed)}/>
+            <LinearProgress variant="determinate" value={normalize(completed, maxCompleted)}/>
             <div className={classes.text}>{text}</div>
         </div>
     );
 }
 
+/**
+ * scale the completed value on range 0-100, 100 is the completion status
+ *
+ * @param {number} value current position
+ * @param {number} maxCompleted max completed real value
+ * @return {number} the completed value on range 0-100
+ */
+function normalize(value, maxCompleted) {
+    if (value)
+        return (value) * 100 / maxCompleted;
+    else return 0;
+}
+
+/**
+ * Scale the duration according to the animation step duration
+ * Define the completed range
+ *
+ * @param {number} duration
+ * @param {number} animationStepDuration
+ */
+function scaleCompletedValue(duration, animationStepDuration) {
+    return Math.round(duration / animationStepDuration);
+}
+
+function getStartPositionInSeconds(value) {
+    if(value) {
+        return value / 1000;
+    }
+    return 0;
+}
+
 MusicProgress.propTypes = {
     started: PropTypes.bool.isRequired,
-    musicUrl: PropTypes.string.isRequired,
+    startPosition: PropTypes.number,
+    musicUrl: PropTypes.string,
     text: PropTypes.string,
     duration: PropTypes.number,
     animationEnded: PropTypes.func
 };
 
 MusicProgress.defaultProps = {
+    startPosition: 0,
     duration: 30000,
     text: ''
 };

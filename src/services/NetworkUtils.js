@@ -39,7 +39,6 @@ export function getRestClient(authenticated = true, additionalHeaders = null) {
         });
 
         instance.interceptors.response.use((response) => {
-            console.log('intercept response');
             if (response.status === 401) {
                 clearAuthentication();
                 window.location = ROUTE_LOGIN;
@@ -90,7 +89,6 @@ export function isExpired(jwt) {
     } catch (e) {
         return true;
     }
-    console.log(`refresh errors : ${decoded.expire} vs ${(new Date()).getTime()}`);
     return decoded.expire < (new Date()).getTime();
 }
 

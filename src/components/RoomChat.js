@@ -101,7 +101,6 @@ function RoomChat(props) {
     useEffect(() => {
         if (socket) {
             socket.off('MESSAGE_RECEIVED').on('MESSAGE_RECEIVED', payload => {
-                console.log('message received' + JSON.stringify(payload));
                 const newMessages = [...messages];
                 if(newMessages.length > maxMessages) {
                     newMessages.shift();

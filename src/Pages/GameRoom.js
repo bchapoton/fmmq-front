@@ -102,7 +102,8 @@ function GameRoom() {
 
     const [feedback, setFeedback] = useState({});
     const [musicInProgress, setMusicInProgress] = useState(false);
-    const [musicInProgressUrl, setMusicInProgressUrl] = useState("false");
+    const [musicInProgressUrl, setMusicInProgressUrl] = useState();
+    const [musicStartPosition, setMusicStartPosition] = useState(0);
     const [currentArtist, setCurrentArtist] = useState();
     const [currentTitle, setCurrentTitle] = useState();
 
@@ -128,6 +129,7 @@ function GameRoom() {
             socket = getSocket(roomInfoData.socketNamespace);
             setSocket(socket);
             setLoadingEnterRoom(false);
+            startInTheMiddleOfAMusic(roomInfoData.currentMusicInProgress, setMusicInProgressUrl, setMusicInProgress, setMusicStartPosition)
         });
 
         return () => {
@@ -173,6 +175,7 @@ function GameRoom() {
             });
 
             socket.off('ROUND_STARTS').on('ROUND_STARTS', payload => {
+                setMusicStartPosition(0);
                 setMusicInProgressUrl(payload.fileUrl);
                 setCurrentMusicIndexDisplayed(payload.currentMusicIndexDisplayed);
                 setMusicInProgress(true);
@@ -251,6 +254,7 @@ function GameRoom() {
                             </Grid>
                             <Grid item xs={12}>
                                 <MusicProgress
+                                    startPosition={musicStartPosition}
                                     started={musicInProgress}
                                     musicUrl={musicInProgressUrl}
                                     animationEnded={animationEnded}
@@ -359,6 +363,22 @@ function GameRoom() {
             </Grid>
         </div>
     );
+}
+
+function startInTheMiddleOfAMusic(currentMusicInProgress, setMusicInProgressUrl, setMusicInProgress, setMusicStartPosition) {
+    if (currentMusicInProgress) {
+        if (currentMusicInProgress.positionMilliseconds
+            && currentMusicInProgress.positionMilliseconds >= 0
+            && currentMusicInProgress.positionMilliseconds < 28000) {
+            // only start the music if is left more than 2s to play
+            if (currentMusicInProgress.musicInfo
+                && currentMusicInProgress.musicInfo.fileUrl) {
+                setMusicInProgressUrl(currentMusicInProgress.musicInfo.fileUrl);
+                setMusicInProgress(true);
+                setMusicStartPosition(currentMusicInProgress.positionMilliseconds);
+            }
+        }
+    }
 }
 
 export default GameRoom;

@@ -1,5 +1,4 @@
 import React from 'react'
-import {makeStyles} from "@material-ui/core/styles";
 import AdminTable from "./AdminTable";
 import {countCategoriesAdmin, deleteCategoryByIdAdmin, getCategoriesAdmin} from "../../services/AdminService";
 import ButtonRouter from "../../layout/ButtonRouter";
@@ -8,15 +7,7 @@ import FMMQPageContainer from "../commons/FMMQPageContainer";
 import EditIcon from '@material-ui/icons/Edit';
 import {TYPE_BOOLEAN} from "./AdminValueConverter";
 
-const useStyle = makeStyles({
-    root: {
-        padding: '1rem'
-    }
-});
-
 function AdminCategories() {
-    const classes = useStyle();
-
     const headers = [
         {
             isId: true,
