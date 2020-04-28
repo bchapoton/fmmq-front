@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import {Card} from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import Title from "../layout/Title";
-import RoomChat from "../components/RoomChat";
 
 const useStyles = makeStyles({
     root: {

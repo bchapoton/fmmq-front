@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {makeStyles} from "@material-ui/core/styles";
 import {indigo} from "@material-ui/core/colors";
 import config from "../config/NetworkConfig";
+import NavigatorMusicPermissionModal from "./NavigatorMusicPermissionModal";
 
 const animationStepDuration = 250; // each step take 250ms for fluid animation
 
@@ -30,11 +31,18 @@ function MusicProgress(props) {
     const [startedInternal, setStartedInternal] = useState(started);
     const [completed, setCompleted] = useState(0);
     const maxCompleted = Math.round(duration / animationStepDuration);
+    const [displayPermissionModal, setDisplayPermissionModal] = useState(false);
     const classes = useStyle();
 
     HTMLAudioElement.prototype.stop = function () {
         this.pause();
         this.currentTime = 0.0;
+    };
+
+    HTMLAudioElement.prototype.wrappedPlay = function () {
+        this.play().catch(error => {
+            setDisplayPermissionModal(true);
+        });
     };
 
     useEffect(() => {
@@ -62,7 +70,7 @@ function MusicProgress(props) {
         if (audioObject) {
             if (started) {
                 audioObject.currentTime = getStartPositionInSeconds(startPosition);
-                audioObject.play();
+                audioObject.wrappedPlay();
             } else {
                 audioObject.stop();
             }
@@ -112,10 +120,14 @@ function MusicProgress(props) {
     }
 
     return (
-        <div className={classes.container}>
-            <LinearProgress variant="determinate" value={normalize(completed, maxCompleted)}/>
-            <div className={classes.text}>{text}</div>
-        </div>
+        <React.Fragment>
+            <div className={classes.container}>
+                <LinearProgress variant="determinate" value={normalize(completed, maxCompleted)}/>
+                <div className={classes.text}>{text}</div>
+            </div>
+            <NavigatorMusicPermissionModal open={displayPermissionModal}
+                                           onClose={() => setDisplayPermissionModal(false)}/>
+        </React.Fragment>
     );
 }
 
@@ -144,7 +156,7 @@ function scaleCompletedValue(duration, animationStepDuration) {
 }
 
 function getStartPositionInSeconds(value) {
-    if(value) {
+    if (value) {
         return value / 1000;
     }
     return 0;
