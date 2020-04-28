@@ -41,7 +41,10 @@ function MusicProgress(props) {
 
     HTMLAudioElement.prototype.wrappedPlay = function () {
         this.play().catch(error => {
-            setDisplayPermissionModal(true);
+            console.log(error.name);
+            if(error && error.name && error.name.toLowerCase() === 'NotAllowedError'.toLowerCase()) {
+                setDisplayPermissionModal(true);
+            }
         });
     };
 
