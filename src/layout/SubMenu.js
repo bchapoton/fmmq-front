@@ -7,13 +7,21 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import PropTypes from "prop-types";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyle = makeStyles({
+   subHeader: {
+       backgroundColor: '#ffffff'
+   }
+});
 
 function SubMenu(props) {
     const {values, divider, title} = props;
+    const classes = useStyle();
     if (values && values.length > 0) {
         return (
             <React.Fragment>
-                <List subheader={title ? <ListSubheader>{title}</ListSubheader> : null}>
+                <List subheader={title ? <ListSubheader className={classes.subHeader}>{title}</ListSubheader> : null}>
                     {values.map((item) => (
                         <ListItem
                             button

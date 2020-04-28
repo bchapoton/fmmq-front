@@ -9,7 +9,8 @@ import {ROLE_ADMIN, ROLE_CONTRIBUTOR} from "../router/roles";
 
 const useStyle = makeStyles({
     menuContainer: {
-        width: '250px'
+        width: '270px',
+        overflowX: 'hidden'
     }
 });
 
