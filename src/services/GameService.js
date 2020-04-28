@@ -23,9 +23,7 @@ export const decrypt = (data, key, iv) => {
 
 export const getGame = (gameId, onSuccess, onError) => {
     return getRestClient()
-        .get(`games/over/${gameId}`)
-        .then(onSuccess)
-        .catch(onError);
+        .get(`games/over/${gameId}`);
 };
 
 export const listGames = (start, limit) => {

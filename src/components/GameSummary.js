@@ -17,6 +17,9 @@ import {TableCell} from "@material-ui/core";
 import ButtonRouter from "../layout/ButtonRouter";
 import {generateRoute, ROUTE_DASHBOARD, ROUTE_PLAY} from "../router/routes";
 import PodiumElement from "./PodiumElement";
+import {getSocket} from "../services/SocketUtils";
+import {onEnter} from "../services/EventsService";
+import NewGameStartsModal from "./NewGameStartsModal";
 
 const useStyles = makeStyles({
     root: {
@@ -39,19 +42,45 @@ function GameSummary(props) {
     const classes = useStyles();
     const {gameId, endGame} = props;
     const [game, setGame] = useState();
+    const [nextGameModalOpen, setNextGameModalOpen] = useState(false);
+    const [nextGameModalPlayerNickname, setNextGameModalPlayerNickname] = useState(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(showLoader());
-        getGame(gameId,
-            response => {
-                setGame(response.data);
-                dispatch(hideLoader());
-            },
-            error => {
+        if(dispatch && gameId) {
+            dispatch(showLoader());
+            getGame(gameId)
+                .then(response => {
+                    setGame(response.data);
+                    dispatch(hideLoader());
+                })
+                .catch(error => {
 
-            });
-    }, [dispatch]);
+                });
+        }
+    }, [dispatch, gameId]);
+
+    useEffect(() => {
+        // listen to the room socket, if someone restart a new game on this category, you redirected to the room, avoid to miss the first music cf Zambla gate
+        let socket;
+        if(game && endGame) {
+            if(endGame) {
+                socket = getSocket(game.categoryId);
+                socket.off('NEW_GAME_STARTS').on('NEW_GAME_STARTS', payload => {
+                    setNextGameModalPlayerNickname(payload.playerNickname);
+                    setNextGameModalOpen(true);
+                });
+            }
+        }
+
+        return () => {
+            if(socket) {
+                console.log('disconnect the socket');
+                socket.disconnect();
+            }
+        }
+    }, [game, endGame]);
+
 
     if (!game) {
         return null;
@@ -141,6 +170,14 @@ function GameSummary(props) {
                     </Grid>
                 </Grid>
             </Grid>
+            <NewGameStartsModal
+                open={nextGameModalOpen}
+                onClose={() => {
+                    setNextGameModalOpen(false);
+                }}
+                categoryId={game.categoryId}
+                nickname={nextGameModalPlayerNickname}
+            />
         </div>
     );
 }

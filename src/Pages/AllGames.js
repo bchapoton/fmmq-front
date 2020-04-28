@@ -30,7 +30,6 @@ function AllGame() {
     useEffect(() => {
         if (Number.isInteger(start)) {
             dispatch(showLoader());
-            console.log('start' + start)
             listGames(start, pagerSize)
                 .then((response) => {
                     setGames(response.data);
