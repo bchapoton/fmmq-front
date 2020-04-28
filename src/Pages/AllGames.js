@@ -6,15 +6,12 @@ import GameSummaryCard from "./GameSummaryCard";
 import Button from "@material-ui/core/Button";
 import {useDispatch} from "react-redux";
 import {hideLoader, showLoader} from "../store/actions/loader.action";
+import ButtonContainer from "../layout/ButtonContainer";
+import HistoryBackButton from "../layout/HistoryBackButton";
 
 const useStyle = makeStyles({
     root: {
         padding: '1rem'
-    },
-    buttonContainer: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        margin: '10px 0'
     }
 });
 
@@ -41,8 +38,11 @@ function AllGame() {
 
     return (
         <div className={classes.root}>
+            <ButtonContainer>
+                <HistoryBackButton/>
+            </ButtonContainer>
             <h1>Historique des parties</h1>
-            <div className={classes.buttonContainer}>
+            <ButtonContainer justifyContent='space-between'>
                 <Button
                     variant='contained'
                     color='primary'
@@ -59,7 +59,7 @@ function AllGame() {
                 >
                     next
                 </Button>
-            </div>
+            </ButtonContainer>
             <Grid container spacing={2}>
                 {games.map(game => {
                     return (

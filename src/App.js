@@ -30,7 +30,7 @@ const useStyles = makeStyles({
     button: {
         backgroundColor: indigo[300],
         margin: '0 5px'
-    },
+    }
 });
 
 function App() {

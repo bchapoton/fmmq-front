@@ -5,19 +5,13 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import {blue} from "@material-ui/core/colors";
 import history from "../layout/utils/history";
 import {ROUTE_DASHBOARD} from "../router/routes";
+import ButtonContainer from "../layout/ButtonContainer";
+import HistoryBackButton from "../layout/HistoryBackButton";
 
 const useStyle = makeStyles({
     root: {
-        position: 'relative',
-        padding: '30px 0',
+        padding: '1rem',
         textAlign: 'center'
-    },
-    backButton: {
-        position: 'absolute',
-        backgroundColor: blue[100],
-        color: blue[900],
-        left: '10px',
-        top: '10px'
     }
 });
 
@@ -26,13 +20,10 @@ function TipeeePage() {
 
     return (
         <div className={classes.root}>
+            <ButtonContainer>
+                <HistoryBackButton/>
+            </ButtonContainer>
             <img alt="thanks you" src='assets/img/thanks.jfif'/>
-            <IconButton
-                className={classes.backButton}
-                onClick={e => history.push(ROUTE_DASHBOARD)}
-            >
-                <KeyboardBackspaceIcon/>
-            </IconButton>
         </div>
     );
 }

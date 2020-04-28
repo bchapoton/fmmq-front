@@ -37,14 +37,14 @@ import MusicSchemeHistory from "../components/MusicSchemeHistory";
 import RoomChat from "../components/RoomChat";
 
 const useStyles = makeStyles({
-    root: {},
-    container: {},
     gameContainer: {
-        // backgroundImage: "url('/assets/img/IehB7.png')",
-        // backgroundRepeat: 'repeat',
         backgroundColor: cyan[600],
-        padding: '10px',
+        padding: '10px 0',
         marginBottom: '10px'
+    },
+    // workaround for a bug on the grid with spacing adding negative margin and calc(100%) + margin value : this make the grid overflow on the x and show a x scroll
+    gridSpacingWorkaround: {
+        padding: '8px'
     },
     artistTitleContainer: {
         display: 'flex',
@@ -237,9 +237,9 @@ function GameRoom() {
     }
 
     return (
-        <div className={classes.root}>
+        <div>
             <div className={classes.gameContainer}>
-                <Grid container spacing={2}>
+                <Grid container>
                     <Grid item xs={2}>
                         <GameRoomNextTitleLoader displayed={!musicInProgress}/>
                     </Grid>
@@ -297,70 +297,72 @@ function GameRoom() {
                     </Grid>
                 </Grid>
             </div>
-            <Grid container spacing={2}>
-                <Grid item xs={4}>
-                    <Card>
-                        <CardHeader
-                            title='Partie en cours'
-                        />
-                        <CardContent>
-                            <MusicSchemeHistory values={gameHistory} reverse={true}/>
-                        </CardContent>
-                    </Card>
+            <div className={classes.gridSpacingWorkaround}>
+                <Grid container spacing={2}>
+                    <Grid item xs={3}>
+                        <Card>
+                            <CardHeader
+                                title='Partie en cours'
+                            />
+                            <CardContent>
+                                <MusicSchemeHistory values={gameHistory} reverse={true}/>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Card>
+                            <CardHeader
+                                title='Leaderboard'
+                            />
+                            <CardContent>
+                                <div className={classes.leaderBoardIconsContainer}>
+                                    <LeaderBoardIcon value={leaderBoardSummary.none} icon={(<HelpIcon/>)}
+                                                     color={grey[400]}
+                                                     helperText="n'ont rien trouvé"/>
+                                    <LeaderBoardIcon value={leaderBoardSummary.artist} icon={(<PersonIcon/>)}
+                                                     color={lightGreen['A700']} helperText="ont trouvé l'artiste"/>
+                                    <LeaderBoardIcon value={leaderBoardSummary.title} icon={(<MicIcon/>)}
+                                                     color={lightGreen['A700']} helperText="ont trouvé le titre"/>
+                                    <LeaderBoardIcon value={leaderBoardSummary.both} icon={(<StarIcon/>)}
+                                                     color={yellow[700]} helperText="ont trouvé le titre et l'artiste"/>
+                                </div>
+                                <TableContainer>
+                                    <Table>
+                                        <TableBody>
+                                            {leaderBoard.map((item, i) => {
+                                                return (
+                                                    <TableRow key={item.id}>
+                                                        <TableCell>{i + 1}.</TableCell>
+                                                        <TableCell>{item.nickname}</TableCell>
+                                                        <TableCell
+                                                            style={{display: 'flex', justifyContent: 'flex-end'}}>
+                                                            <LeaderBoardGuessedCellContent
+                                                                leaderBoardGuessed={leaderBoardGuessed}
+                                                                playerId={item.id}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell align='right'>{item.score}pts</TableCell>
+                                                    </TableRow>
+                                                );
+                                            })}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={5}>
+                        <Card>
+                            <RoomChat
+                                categoryId={categoryId}
+                                playerId={playerId}
+                                playerToken={playerToken}
+                                schemeSize={roomInfo.musicsLength}
+                            />
+                        </Card>
+                    </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                    <Card>
-                        <CardHeader
-                            title='Leaderboard'
-                        />
-                        <CardContent>
-                            <div className={classes.leaderBoardIconsContainer}>
-                                <LeaderBoardIcon value={leaderBoardSummary.none} icon={(<HelpIcon/>)}
-                                                 color={grey[400]}
-                                                 helperText="n'ont rien trouvé"/>
-                                <LeaderBoardIcon value={leaderBoardSummary.artist} icon={(<PersonIcon/>)}
-                                                 color={lightGreen['A700']} helperText="ont trouvé l'artiste"/>
-                                <LeaderBoardIcon value={leaderBoardSummary.title} icon={(<MicIcon/>)}
-                                                 color={lightGreen['A700']} helperText="ont trouvé le titre"/>
-                                <LeaderBoardIcon value={leaderBoardSummary.both} icon={(<StarIcon/>)}
-                                                 color={yellow[700]} helperText="ont trouvé le titre et l'artiste"/>
-                            </div>
-                            <TableContainer>
-                                <Table>
-                                    <TableBody>
-                                        {leaderBoard.map((item, i) => {
-                                            return (
-                                                <TableRow key={item.id}>
-                                                    <TableCell>{i + 1}.</TableCell>
-                                                    <TableCell>{item.nickname}</TableCell>
-                                                    <TableCell
-                                                        style={{display: 'flex', justifyContent: 'flex-end'}}>
-                                                        <LeaderBoardGuessedCellContent
-                                                            leaderBoardGuessed={leaderBoardGuessed}
-                                                            playerId={item.id}
-                                                        />
-                                                    </TableCell>
-                                                    <TableCell align='right'>{item.score}pts</TableCell>
-                                                </TableRow>
-                                            );
-                                        })}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={4}>
-                    <Card>
-                        <RoomChat
-                            categoryId={categoryId}
-                            playerId={playerId}
-                            playerToken={playerToken}
-                            schemeSize={roomInfo.musicsLength}
-                        />
-                    </Card>
-                </Grid>
-            </Grid>
+            </div>
         </div>
     );
 }

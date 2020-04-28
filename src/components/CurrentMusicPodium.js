@@ -7,12 +7,15 @@ import {cyan} from "@material-ui/core/colors";
 
 const useStyle = makeStyles({
     root: {
+        width: '94%',
+        margin: '0 3%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center'
     },
     title: {
-        color: cyan[50]
+        color: cyan[50],
+        textAlign: 'center'
     },
     podiumItem: {
         display: 'flex',
@@ -37,7 +40,8 @@ function CurrentMusicPodium(props) {
         return null;
     }
 
-    return (<div className={classes.root}>
+    return (
+        <div className={classes.root}>
         <h4 className={classes.title}>Morceau en cours</h4>
         <div className={clsx(classes.podiumItem, currentMusicPodium.first ? null : classes.hidden)}>
             <PlayerIconFirstFound/>
@@ -51,7 +55,8 @@ function CurrentMusicPodium(props) {
             <PlayerIconThirdFound/>
             <span className={classes.podiumItemPlayer}>{currentMusicPodium.third}</span>
         </div>
-    </div>);
+    </div>
+    );
 }
 
 

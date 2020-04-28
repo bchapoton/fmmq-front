@@ -6,6 +6,8 @@ import history from "./utils/history";
 function ButtonRouter(props) {
     const {to} = props;
     return (<Button
+        variant='contained'
+        color='primary'
         {...props}
         onClick={(e) => {
             e.preventDefault();

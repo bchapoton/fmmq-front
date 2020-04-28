@@ -18,18 +18,14 @@ import ButtonRouter from "../layout/ButtonRouter";
 import {generateRoute, ROUTE_DASHBOARD, ROUTE_PLAY} from "../router/routes";
 import PodiumElement from "./PodiumElement";
 import {getSocket} from "../services/SocketUtils";
-import {onEnter} from "../services/EventsService";
 import NewGameStartsModal from "./NewGameStartsModal";
+import HistoryBackButton from "../layout/HistoryBackButton";
+import ButtonContainer from "../layout/ButtonContainer";
 
 const useStyles = makeStyles({
     root: {
         position: 'relative',
         padding: '1rem'
-    },
-    buttonContainer: {
-        display: 'flex',
-        justifyContent: 'space-around',
-        margin: '10px 0',
     },
     title: {
         fontFamily: 'ChunkFiveRegular',
@@ -47,7 +43,7 @@ function GameSummary(props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(dispatch && gameId) {
+        if (dispatch && gameId) {
             dispatch(showLoader());
             getGame(gameId)
                 .then(response => {
@@ -63,8 +59,8 @@ function GameSummary(props) {
     useEffect(() => {
         // listen to the room socket, if someone restart a new game on this category, you redirected to the room, avoid to miss the first music cf Zambla gate
         let socket;
-        if(game && endGame) {
-            if(endGame) {
+        if (game && endGame) {
+            if (endGame) {
                 socket = getSocket(game.categoryId);
                 socket.off('NEW_GAME_STARTS').on('NEW_GAME_STARTS', payload => {
                     setNextGameModalPlayerNickname(payload.playerNickname);
@@ -74,7 +70,7 @@ function GameSummary(props) {
         }
 
         return () => {
-            if(socket) {
+            if (socket) {
                 console.log('disconnect the socket');
                 socket.disconnect();
             }
@@ -106,7 +102,7 @@ function GameSummary(props) {
             <Divider/>
             {endGame ?
                 (
-                    <div className={classes.buttonContainer} hidden={!endGame}>
+                    <ButtonContainer justifyContent='space-around' hidden={!endGame}>
                         <ButtonRouter
                             to={generateRoute(ROUTE_DASHBOARD)}
                             variant='contained'
@@ -121,19 +117,15 @@ function GameSummary(props) {
                         >
                             vas y ramène-toi c'est reparti
                         </ButtonRouter>
-                    </div>
+                    </ButtonContainer>
                 )
                 :
                 (
-                    <div className={classes.buttonContainer} hidden={!endGame}>
-                        <ButtonRouter
-                            to={generateRoute(ROUTE_DASHBOARD)}
-                            variant='contained'
-                            color='primary'
-                        >
-                            retour au dashboard
-                        </ButtonRouter>
-                    </div>
+                    <ButtonContainer hidden={!endGame}>
+                        <HistoryBackButton>
+                            retour
+                        </HistoryBackButton>
+                    </ButtonContainer>
                 )}
             <Grid container spacing={1}>
                 <Grid item xs={4}>
@@ -145,7 +137,8 @@ function GameSummary(props) {
                         <Grid item>
                             {game.podium.map((item, i) => {
                                 return (
-                                    <PodiumElement key={item.nickname} score={item.score} nickname={item.nickname} position={i + 1}/>
+                                    <PodiumElement key={item.nickname} score={item.score} nickname={item.nickname}
+                                                   position={i + 1}/>
                                 );
                             })}
                         </Grid>

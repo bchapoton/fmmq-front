@@ -5,16 +5,8 @@ import {setUserData} from "../store/actions/context.action";
 import LocalLoader from "./LocalLoader";
 import {makeStyles} from "@material-ui/core/styles";
 
-const useStyle = makeStyles({
-    root: {
-        width: '100%',
-        height: '100vh'
-    }
-});
-
 function RestoreSessionProvider(props) {
     const {children} = props;
-    const classes = useStyle();
     const dispatch = useDispatch();
     const [waiting, setWaiting] = useState(true);
 
@@ -41,7 +33,7 @@ function RestoreSessionProvider(props) {
     }, [dispatch]);
 
     return (
-        <div className={classes.root}>
+        <div>
             {waiting ? <LocalLoader/> : children}
         </div>
     )

@@ -11,6 +11,7 @@ import {teal} from "@material-ui/core/colors";
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import {clearUserData} from "../store/actions/context.action";
 import {ROUTE_LOGIN, ROUTE_SIGN_UP} from "../router/routes";
+import {Tooltip} from "@material-ui/core";
 
 const useStyles = makeStyles({
     buttonContainer: {
@@ -45,25 +46,31 @@ function UserToolbar() {
                     </Avatar>
                     <Typography>{context.user.nickname}</Typography>
                 </div>
-                <IconButton
-                    className={classes.button}
-                    onClick={(e) => {
-                        dispatch(clearUserData());
-                    }}
-                >
-                    <DirectionsRunIcon/>
-                </IconButton>
+                <Tooltip title='Déconnexion'>
+                    <IconButton
+                        className={classes.button}
+                        onClick={(e) => {
+                            dispatch(clearUserData());
+                        }}
+                    >
+                        <DirectionsRunIcon/>
+                    </IconButton>
+                </Tooltip>
             </React.Fragment>
         );
     } else {
         return (
             <div className={classes.buttonContainer}>
-                <IconButton className={classes.button} onClick={() => history.push(ROUTE_LOGIN)}>
-                    <PersonIcon/>
-                </IconButton>
-                <IconButton className={classes.button} onClick={() => history.push(ROUTE_SIGN_UP)}>
-                    <AssignmentIcon/>
-                </IconButton>
+                <Tooltip title='Connexion'>
+                    <IconButton className={classes.button} onClick={() => history.push(ROUTE_LOGIN)}>
+                        <PersonIcon/>
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title='Créer un compte'>
+                    <IconButton className={classes.button} onClick={() => history.push(ROUTE_SIGN_UP)}>
+                        <AssignmentIcon/>
+                    </IconButton>
+                </Tooltip>
             </div>
         );
     }

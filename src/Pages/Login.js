@@ -14,6 +14,7 @@ import ButtonRouter from "../layout/ButtonRouter";
 import {getUserDataFromJWT, storeJWT, storeRefreshToken} from "../services/NetworkUtils";
 import {setUserData} from "../store/actions/context.action";
 import {ROUTE_DASHBOARD, ROUTE_SIGN_UP} from "../router/routes";
+import ButtonContainer from "../layout/ButtonContainer";
 
 const useStyles = makeStyles({
     root: {
@@ -36,10 +37,6 @@ const useStyles = makeStyles({
     },
     errorAlert: {
         margin: '5px 0'
-    },
-    signUpContainer: {
-        display: 'flex',
-        justifyContent: 'flex-end'
     }
 });
 
@@ -86,7 +83,7 @@ function Login() {
                                 type='text'
                                 label='Email'
                                 variant='outlined'
-                                error={loginError || ( errors && errors.email ) ? true : false}
+                                error={loginError || (errors && errors.email) ? true : false}
                                 helperText={errors && errors.email ? errors.email.message : ''}
                                 fullWidth
                                 inputRef={register({required: 'Le mail est obligatoire'})}
@@ -101,7 +98,7 @@ function Login() {
                                 label='Mot de passe'
                                 fullWidth
                                 inputRef={register({required: 'Le mot de passe est obligatoire'})}
-                                error={loginError || ( errors && errors.password ) ? true : false}
+                                error={loginError || (errors && errors.password) ? true : false}
                                 helperText={errors && errors.password ? errors.password.message : ''}
                             />
                         </Grid>
@@ -121,12 +118,17 @@ function Login() {
                             </Button>
                         </Grid>
                     </Grid>
-                    <Grid item className={classes.signUpContainer}>
-                        <ButtonRouter
-                            color='secondary'
-                            size='small'
-                            to={ROUTE_SIGN_UP}
-                        >Pas encore de compte ?</ButtonRouter>
+                    <Grid item>
+                        <ButtonContainer justifyContent='flex-end'>
+                            <ButtonRouter
+                                variant='outlined'
+                                color='secondary'
+                                size='small'
+                                to={ROUTE_SIGN_UP}
+                            >
+                                Pas encore de compte ?
+                            </ButtonRouter>
+                        </ButtonContainer>
                     </Grid>
                 </form>
             </Card>
