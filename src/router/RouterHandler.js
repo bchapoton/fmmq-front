@@ -1,7 +1,7 @@
 import React from 'react'
 import {Redirect, Route, Switch} from "react-router-dom";
 import NotFound from "../Pages/NotFound";
-import {ROUTE_HOME, routes} from './routes';
+import {ROUTE_DASHBOARD, ROUTE_LOGIN, routes} from './routes';
 import {rolesHierarchy} from './roles';
 import {useSelector} from "react-redux";
 import RestoreSessionProvider from "../layout/RestoreSessionProvider";
@@ -44,10 +44,11 @@ function RouterHandler() {
 
 function SecureChildrenRender(props) {
     const {children, route} = props;
-    const userContext = useSelector(({context}) => context.user);
+    const context = useSelector(({context}) => context);
+    const userContext = context.user;
     const currentUserRole = userContext && userContext.role ? userContext.role : null;
     if (!hasRole(route.role, currentUserRole)) {
-        return (<Redirect to={ROUTE_HOME}/>)
+        return (<Redirect to={context.loggedIN ? ROUTE_DASHBOARD : ROUTE_LOGIN}/>)
     }
     return children;
 }

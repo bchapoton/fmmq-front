@@ -1,14 +1,16 @@
 import React from "react";
-import HomeIcon from "@material-ui/icons/Home";
 import {
     ROUTE_ADMIN_CACHE_DISPLAY,
     ROUTE_ADMIN_CATEGORIES,
-    ROUTE_ADMIN_GAMES, ROUTE_ADMIN_IMPORTS,
+    ROUTE_ADMIN_GAMES,
+    ROUTE_ADMIN_IMPORTS,
     ROUTE_ADMIN_MUSICS,
     ROUTE_ADMIN_SERVER_CONFIG,
-    ROUTE_ADMIN_USERS, ROUTE_ALL_GAME, ROUTE_CONTRIBUTOR_IMPORTS, ROUTE_CONTRIBUTOR_MUSICS,
+    ROUTE_ADMIN_USERS,
+    ROUTE_ALL_GAME,
+    ROUTE_CONTRIBUTOR_IMPORTS,
+    ROUTE_CONTRIBUTOR_MUSICS,
     ROUTE_DASHBOARD,
-    ROUTE_HOME,
     ROUTE_LOGIN,
     ROUTE_SIGN_UP
 } from "../../router/routes";
@@ -29,11 +31,6 @@ import CachedIcon from '@material-ui/icons/Cached';
 export function getAnonymousMenu() {
     return [
         {
-            label: 'Accueil',
-            icon: (<HomeIcon/>),
-            url: ROUTE_HOME
-        },
-        {
             label: 'Connexion',
             icon: (<PersonIcon/>),
             url: ROUTE_LOGIN
@@ -48,11 +45,6 @@ export function getAnonymousMenu() {
 
 export function getConnectedMenu(dispatch) {
     return [
-        {
-            label: 'Accueil',
-            icon: (<HomeIcon/>),
-            url: ROUTE_HOME
-        },
         {
             label: 'Dashboard',
             icon: (<DashboardIcon/>),

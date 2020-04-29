@@ -5,7 +5,6 @@ import SignUp from "../Pages/SignUp";
 import GameRoom from "../Pages/GameRoom";
 import Dashboard from "../Pages/Dashboard";
 import {ROLE_ADMIN, ROLE_CONTRIBUTOR, ROLE_PLAYER} from "./roles";
-import Home from "../Pages/Home";
 import TipeeePage from "../Pages/TipeeePage";
 import EndGame from "../Pages/EndGame";
 import GameHistory from "../Pages/GameHistory";
@@ -86,10 +85,6 @@ const replaceParameter = (path, param) => {
  */
 
 export const routes = [
-    {
-        path: ROUTE_HOME,
-        children: (<Home/>)
-    },
     {
         path: ROUTE_DASHBOARD,
         role: ROLE_PLAYER,

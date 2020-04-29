@@ -11,6 +11,7 @@ import SortIcon from "@material-ui/icons/Sort";
 import history from "../layout/utils/history";
 import {generateRoute, ROUTE_ALL_GAME} from "../router/routes";
 import IconButton from "@material-ui/core/IconButton";
+import Rules from "../components/Rules";
 
 const useStyles = makeStyles({
     root: {
@@ -34,6 +35,9 @@ function Dashboard() {
             <Grid container spacing={2}>
                 <Grid item xs={12} md={7}>
                     <Grid container spacing={1} direction="column">
+                        <Grid item>
+                            <Rules/>
+                        </Grid>
                         <Grid item>
                             <Rooms/>
                         </Grid>

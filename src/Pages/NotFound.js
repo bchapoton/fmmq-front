@@ -2,7 +2,8 @@ import React from 'react';
 import {makeStyles} from "@material-ui/styles";
 import ButtonContainer from "../layout/ButtonContainer";
 import ButtonRouter from "../layout/ButtonRouter";
-import {ROUTE_HOME} from "../router/routes";
+import {ROUTE_DASHBOARD, ROUTE_LOGIN} from "../router/routes";
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles({
     root: {
@@ -17,12 +18,13 @@ const useStyles = makeStyles({
 
 function NotFound() {
     const classes = useStyles();
+    const loggedIN = useSelector(({context}) => context.loggedIN);
 
     return (
         <div className={classes.root}>
             <ButtonContainer>
                 <ButtonRouter
-                    to={ROUTE_HOME}
+                    to={loggedIN ? ROUTE_DASHBOARD : ROUTE_LOGIN}
                 >
                     Retour à l'accueil
                 </ButtonRouter>

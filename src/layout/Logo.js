@@ -3,7 +3,8 @@ import {makeStyles} from "@material-ui/styles";
 import {Slide} from "@material-ui/core";
 import {green, red} from "@material-ui/core/colors";
 import {Link} from "react-router-dom";
-import {ROUTE_HOME} from "../router/routes";
+import {ROUTE_DASHBOARD, ROUTE_LOGIN} from "../router/routes";
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles({
     logo: {
@@ -28,6 +29,8 @@ const useStyles = makeStyles({
 function Logo() {
     const classes = useStyles();
     const [randomLogo, setRandomLogo] = useState('');
+    const loggedIN = useSelector(({context}) => context.loggedIN);
+
 
     const onMouseEnter = (e) => {
         let text = 'uck';
@@ -49,7 +52,8 @@ function Logo() {
     };
 
     return (
-        <Link to={ROUTE_HOME} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classes.logo}>
+        <Link to={loggedIN ? ROUTE_DASHBOARD : ROUTE_LOGIN} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}
+              className={classes.logo}>
             F{randomLogo}MMQ<span className={classes.RCFlag}>ReleaseCandidate 0.9</span>
         </Link>
     );
