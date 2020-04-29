@@ -172,42 +172,53 @@ function RoomChat(props) {
                 className={clsx(hideChatContent ? classes.chatContentHidden : null)}
 
             >
-                <Scrollbar style={messageStyle}>
-                    <List className={classes.chatContent}>
-                        {messages.map((message, index) => {
-                            const listItemKeyValue = `${message.time}-${index}`;
-                            if (message.playerId === 'operator') {
-                                return (
-                                    <ListItem key={listItemKeyValue} className={classes.operatorMessage}>
-                                        <ListItemAvatar className={classes.operatorAvatar}>
-                                            <Avatar alt="Operator" src="/assets/img/operator.png"/>
-                                        </ListItemAvatar>
-                                        <ListItemText
-                                            primary={`Extrait ${message.musicIndex}/${schemeSize} terminé, c'était pourtant pas si dur !`}
-                                            secondary={`${message.artist} - ${message.title}`}
-                                        />
-                                    </ListItem>
-                                );
-                            }
-                            const isCurrentPlayer = message.playerId === playerId;
-                            const nickname = isCurrentPlayer ? null : (
-                                <span className={classes.author}>{message.playerNickname}</span>);
-                            return (
-                                <ListItem key={listItemKeyValue} className={classes.listItem}>
-                                    <div className={classes.messageWrapper}>
-                                        {nickname}
-                                        <div
-                                            className={clsx(classes.message, isCurrentPlayer ? classes.me : classes.other)}>
-                                            {message.content}
-                                        </div>
-                                    </div>
-                                </ListItem>
-                            );
-                        })}
-                    </List>
-                </Scrollbar>
+                {parentHeight > -1 ?
+                    (<Scrollbar style={messageStyle}>
+                        {chatContent(classes, messages, playerId, schemeSize)}
+                    </Scrollbar>)
+                    :
+                    chatContent(classes, messages, playerId, schemeSize)
+                }
+
             </div>
         </div>
+    );
+}
+
+function chatContent(classes, messages, playerId, schemeSize) {
+    return (
+        <List className={classes.chatContent}>
+            {messages.map((message, index) => {
+                const listItemKeyValue = `${message.time}-${index}`;
+                if (message.playerId === 'operator') {
+                    return (
+                        <ListItem key={listItemKeyValue} className={classes.operatorMessage}>
+                            <ListItemAvatar className={classes.operatorAvatar}>
+                                <Avatar alt="Operator" src="/assets/img/operator.png"/>
+                            </ListItemAvatar>
+                            <ListItemText
+                                primary={`Extrait ${message.musicIndex}/${schemeSize} terminé, c'était pourtant pas si dur !`}
+                                secondary={`${message.artist} - ${message.title}`}
+                            />
+                        </ListItem>
+                    );
+                }
+                const isCurrentPlayer = message.playerId === playerId;
+                const nickname = isCurrentPlayer ? null : (
+                    <span className={classes.author}>{message.playerNickname}</span>);
+                return (
+                    <ListItem key={listItemKeyValue} className={classes.listItem}>
+                        <div className={classes.messageWrapper}>
+                            {nickname}
+                            <div
+                                className={clsx(classes.message, isCurrentPlayer ? classes.me : classes.other)}>
+                                {message.content}
+                            </div>
+                        </div>
+                    </ListItem>
+                );
+            })}
+        </List>
     );
 }
 

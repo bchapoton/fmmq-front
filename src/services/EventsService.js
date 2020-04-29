@@ -102,7 +102,6 @@ export const onGuessed = (localPLayerId, gamePlayers, leaderBoardSummary, leader
 };
 
 export const sendMessageOnChat = (socket, categoryId, playerId, playerToken, time, message) => {
-    console.log('emit : ' + + socket);
     socket.emit('SEND_MESSAGE', {
         categoryId,
         playerId,
