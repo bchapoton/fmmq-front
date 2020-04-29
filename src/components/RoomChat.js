@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {makeStyles} from "@material-ui/styles";
-import Typography from "@material-ui/core/Typography";
 import {blue, grey, red} from "@material-ui/core/colors";
 import clsx from "clsx";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
@@ -18,15 +17,15 @@ import {getSocket} from "../services/SocketUtils";
 
 const useStyles = makeStyles({
     root: {
-        padding: '5px'
     },
     chatContent: {
         width: '100%',
+        padding: '0',
         display: 'flex',
         flexDirection: 'column-reverse'
     },
     formContainer: {
-        margin: '5px 0'
+        margin: '5px'
     },
     errorMessage: {
         marginLeft: '10px',
@@ -48,10 +47,10 @@ const useStyles = makeStyles({
         borderColor: grey[300]
     },
     message: {
-        width: '85%',
-        padding: '5px',
-        borderRadius: '10px',
-        marginBottom: '10px'
+        width: 'calc(85% - 20px)',
+        padding: '5px 10px',
+        borderRadius: '20px',
+        marginBottom: '5px'
     },
     listItem: {
         margin: '0',
@@ -67,11 +66,18 @@ const useStyles = makeStyles({
     },
     me: {
         marginLeft: '14%',
-        backgroundColor: blue[200]
+        color: 'white',
+        backgroundColor: blue[400]
     },
     other: {
         marginLeft: '1%',
         backgroundColor: grey[200]
+    },
+    messagesWrapperWithParentHeight: {
+        overflow: 'auto'
+    },
+    chatContentHidden: {
+        display: 'none'
     }
 });
 
@@ -80,29 +86,40 @@ const maxMessages = 50;
 
 function RoomChat(props) {
     const classes = useStyles();
-    const {schemeSize, categoryId, playerId, playerToken} = props;
+    const {schemeSize, categoryId, playerId, playerToken, socketNamespace, text, parentHeight, hideChatContent} = props;
     const {register, handleSubmit, reset} = useForm();
     const [messages, setMessages] = useState(initialMessages);
     const [error, setError] = useState();
     const [lastSend, setLastSend] = useState();
     const [socket, setSocket] = useState();
+    const [divElement, setDivElement] = useState();
+    const [messageStyle, setMessageStyle] = useState({});
 
     useEffect(() => {
-        let socket = getSocket(categoryId + '-chat');
+        // if parent height is set fix the size of the message according to the parent height
+        if (divElement && parentHeight > -1) {
+            setMessageStyle({height: Math.round(parentHeight - divElement.clientHeight) + 'px'});
+        }
+    }, [divElement, parentHeight]);
+
+    useEffect(() => {
+        let socket = getSocket(socketNamespace);
+        console.log('connect to namespace ' + socketNamespace);
         setSocket(socket);
 
         return () => {
             if (socket) {
                 socket.disconnect();
+                console.log('disconnect to namespace ' + socketNamespace);
             }
         }
-    }, [categoryId]);
+    }, [socketNamespace]);
 
     useEffect(() => {
         if (socket) {
             socket.off('MESSAGE_RECEIVED').on('MESSAGE_RECEIVED', payload => {
                 const newMessages = [...messages];
-                if(newMessages.length > maxMessages) {
+                if (newMessages.length > maxMessages) {
                     newMessages.shift();
                 }
                 newMessages.push(payload);
@@ -129,74 +146,87 @@ function RoomChat(props) {
 
     return (
         <div className={classes.root}>
-            <Typography variant="subtitle1" gutterBottom>
-                Envie d'insulter les autres joueurs ? C'est par ici
-            </Typography>
-            <div className={classes.formContainer}>
-                <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-                    <OutlinedInput
-                        className={classes.guessField}
-                        id="message"
-                        name="message"
-                        type='text'
-                        placeholder="Exprime toi pelo"
-
-                        fullWidth
-                        inputRef={register()}
-                        autoComplete="new-password"
-                        endAdornment={(
-                            <Button type='submit' variant='text' color='primary'>
-                                <SendIcon className={classes.sendIcon}/>
-                            </Button>
-                        )}
-                    />
-                </form>
-                <span className={classes.errorMessage}>{error}</span>
+            <div ref={(divElement => setDivElement(divElement))}>
+                {text ? text : null}
+                <div
+                    className={clsx(classes.formContainer, hideChatContent ? classes.chatContentHidden : null)}
+                >
+                    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+                        <OutlinedInput
+                            className={classes.guessField}
+                            id="message"
+                            name="message"
+                            type='text'
+                            placeholder="Exprime toi pelo"
+                            fullWidth
+                            inputRef={register()}
+                            autoComplete="new-password"
+                            endAdornment={(
+                                <Button type='submit' variant='text' color='primary'>
+                                    <SendIcon className={classes.sendIcon}/>
+                                </Button>
+                            )}
+                        />
+                    </form>
+                    <span className={classes.errorMessage}>{error}</span>
+                </div>
             </div>
-            <List className={classes.chatContent}>
-                {messages.map((message, index) => {
-                    const listItemKeyValue = `${message.time}-${index}`;
-                    if (message.playerId === 'operator') {
+            <div
+                className={clsx(parentHeight > -1 ? classes.messagesWrapperWithParentHeight : null, hideChatContent ? classes.chatContentHidden : null)}
+                style={messageStyle}
+            >
+                <List className={classes.chatContent}>
+                    {messages.map((message, index) => {
+                        const listItemKeyValue = `${message.time}-${index}`;
+                        if (message.playerId === 'operator') {
+                            return (
+                                <ListItem key={listItemKeyValue} className={classes.operatorMessage}>
+                                    <ListItemAvatar className={classes.operatorAvatar}>
+                                        <Avatar alt="Operator" src="/assets/img/operator.png"/>
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary={`Extrait ${message.musicIndex}/${schemeSize} terminé, c'était pourtant pas si dur !`}
+                                        secondary={`${message.artist} - ${message.title}`}
+                                    />
+                                </ListItem>
+                            );
+                        }
+                        const isCurrentPlayer = message.playerId === playerId;
+                        const nickname = isCurrentPlayer ? null : (
+                            <span className={classes.author}>{message.playerNickname}</span>);
                         return (
-                            <ListItem key={listItemKeyValue} className={classes.operatorMessage}>
-                                <ListItemAvatar className={classes.operatorAvatar}>
-                                    <Avatar alt="Operator" src="/assets/img/operator.png"/>
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary={`Extrait ${message.musicIndex}/${schemeSize} terminé, c'était pourtant pas si dur !`}
-                                    secondary={`${message.artist} - ${message.title}`}
-                                />
+                            <ListItem key={listItemKeyValue} className={classes.listItem}>
+                                <div className={classes.messageWrapper}>
+                                    {nickname}
+                                    <div
+                                        className={clsx(classes.message, isCurrentPlayer ? classes.me : classes.other)}>
+                                        {message.content}
+                                    </div>
+                                </div>
                             </ListItem>
                         );
-                    }
-                    const isCurrentPlayer = message.playerId === playerId;
-                    const nickname = isCurrentPlayer ? null : (
-                        <span className={classes.author}>{message.playerNickname}</span>);
-                    return (
-                        <ListItem key={listItemKeyValue} className={classes.listItem}>
-                            <div className={classes.messageWrapper}>
-                                {nickname}
-                                <div className={clsx(classes.message, isCurrentPlayer ? classes.me : classes.other)}>
-                                    {message.content}
-                                </div>
-                            </div>
-                        </ListItem>
-                    );
-                })}
-            </List>
+                    })}
+                </List>
+            </div>
         </div>
     );
 }
 
 RoomChat.propTypes = {
+    socketNamespace: PropTypes.string.isRequired,
     categoryId: PropTypes.string.isRequired,
     playerId: PropTypes.string.isRequired,
     playerToken: PropTypes.string.isRequired,
     schemeSize: PropTypes.number,
+    text: PropTypes.element,
+    parentHeight: PropTypes.number,
+    hideChatContent: PropTypes.bool,
 };
 
 RoomChat.defaultProps = {
-    schemeSize: 15
+    schemeSize: 15,
+    parentHeight: -1,
+    hideChatContent: false
 };
 
 export default RoomChat;

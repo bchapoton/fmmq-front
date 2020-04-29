@@ -1,0 +1,43 @@
+import React from 'react';
+import PropTypes from "prop-types";
+import RoomChat from "./RoomChat";
+import {getInGameChatSocketNamespace} from "../services/ChatUtils";
+import Typography from "@material-ui/core/Typography";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyle = makeStyles({
+    root: {
+        padding: '5px'
+    }
+});
+
+export default function InGameRoomChat(props) {
+    const {schemeSize, categoryId, playerId, playerToken} = props;
+    const classes = useStyle();
+
+    return (
+        <RoomChat
+            categoryId={categoryId}
+            playerId={playerId}
+            playerToken={playerToken}
+            schemeSize={schemeSize}
+            socketNamespace={getInGameChatSocketNamespace(categoryId)}
+            text={(
+                <Typography variant="subtitle1" gutterBottom className={classes.root}>
+                    Envie d'insulter les autres joueurs ? C'est par ici
+                </Typography>
+            )}
+        />
+    );
+}
+
+InGameRoomChat.propTypes = {
+    categoryId: PropTypes.string.isRequired,
+    playerId: PropTypes.string.isRequired,
+    playerToken: PropTypes.string.isRequired,
+    schemeSize: PropTypes.number,
+};
+
+InGameRoomChat.defaultProps = {
+    schemeSize: 15
+};

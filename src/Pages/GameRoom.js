@@ -35,6 +35,7 @@ import history from "../layout/utils/history";
 import {generateRoute, ROUTE_END_GAME} from "../router/routes";
 import MusicSchemeHistory from "../components/MusicSchemeHistory";
 import RoomChat from "../components/RoomChat";
+import InGameRoomChat from "../components/InGameRoomChat";
 
 const useStyles = makeStyles({
     gameContainer: {
@@ -353,7 +354,7 @@ function GameRoom() {
                     </Grid>
                     <Grid item xs={5}>
                         <Card>
-                            <RoomChat
+                            <InGameRoomChat
                                 categoryId={categoryId}
                                 playerId={playerId}
                                 playerToken={playerToken}

@@ -21,7 +21,7 @@ export const decrypt = (data, key, iv) => {
     return cipher.output.toString();
 };
 
-export const getGame = (gameId, onSuccess, onError) => {
+export const getGame = (gameId) => {
     return getRestClient()
         .get(`games/over/${gameId}`);
 };
@@ -29,4 +29,9 @@ export const getGame = (gameId, onSuccess, onError) => {
 export const listGames = (start, limit) => {
     return getRestClient(true, {pager: `${start}-${limit}`})
         .get('games/podiums');
+};
+
+export const joinChatEndGame = (categoryId) => {
+    return getRestClient()
+        .post(`chat/${categoryId}/join`, {});
 };

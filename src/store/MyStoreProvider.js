@@ -5,6 +5,7 @@ import context from "./reducers/context.reducer";
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunk from 'redux-thunk'
 import globalDrawer from "./reducers/global.drawer.reducer";
+import chat from "./reducers/chat.reducer";
 
 function MyStoreProvider(props) {
     const {children} = props;
@@ -12,7 +13,8 @@ function MyStoreProvider(props) {
     const rootReducer = combineReducers({
         loader,
         context,
-        globalDrawer
+        globalDrawer,
+        chat
     });
     const store = createStore(rootReducer, applyMiddleware(thunk));
 

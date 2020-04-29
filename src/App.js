@@ -14,13 +14,20 @@ import RouterHandler from "./router/RouterHandler";
 import {indigo} from "@material-ui/core/colors";
 import GlobalDrawerButton from "./layout/GlobalDrawerButton";
 import GlobalDrawer from "./layout/GlobalDrawer";
+import GlobalChatContainer from "./layout/GlobalChatContainer";
 
+const headerHeight = 64;
 
 const useStyles = makeStyles({
     root: {
-        position: 'relative',
+        height: '100vh'
+    },
+    appBar: {
+      height: headerHeight + 'px'
     },
     container: {
+        height: `calc(100vh - ${headerHeight}px)`,
+        overflow: 'auto',
         padding: '0'
     },
     logoContainer: {},
@@ -41,7 +48,7 @@ function App() {
                 <RestoreSessionProvider>
                     <div className={classes.root}>
                         <Router history={history}>
-                            <AppBar position='static'>
+                            <AppBar position='static' className={classes.appBar}>
                                 <Toolbar>
                                     <GlobalDrawerButton/>
                                     <div className={classes.logoContainer}>
@@ -60,6 +67,7 @@ function App() {
                         <GlobalLoader/>
                     </div>
                     <GlobalDrawer/>
+                    <GlobalChatContainer/>
                 </RestoreSessionProvider>
             </MyStoreProvider>
         </MuiThemeProvider>

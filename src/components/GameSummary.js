@@ -21,6 +21,8 @@ import {getSocket} from "../services/SocketUtils";
 import NewGameStartsModal from "./NewGameStartsModal";
 import HistoryBackButton from "../layout/HistoryBackButton";
 import ButtonContainer from "../layout/ButtonContainer";
+import EndGameRoomChat from "./EndGameRoomChat";
+import {displayChatEndGame, hideChatEndGame} from "../store/actions/chat.action";
 
 const useStyles = makeStyles({
     root: {
@@ -73,9 +75,10 @@ function GameSummary(props) {
             if (socket) {
                 console.log('disconnect the socket');
                 socket.disconnect();
+                dispatch(hideChatEndGame());
             }
         }
-    }, [game, endGame]);
+    }, [game, endGame, dispatch]);
 
 
     if (!game) {
@@ -87,6 +90,7 @@ function GameSummary(props) {
         pageTitle = (
             <h1 className={classes.title}>La partie est terminée !</h1>
         );
+        dispatch(displayChatEndGame(game.categoryId));
     } else {
         pageTitle = (
             <h1 className={classes.title}>
