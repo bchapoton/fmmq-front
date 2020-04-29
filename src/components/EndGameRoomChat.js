@@ -92,7 +92,6 @@ export default function EndGameRoomChat(props) {
     return (
         <div
             className={clsx(classes.chatContainer, open ? classes.chatContainerOpen : classes.chatContainerClose)}
-            // style={{top: `calc(100vh - 64px - ${open ? parentHeightOpen : parentHeightClose}px - 2px + ${chatTop}px)`}}
         >
             <RoomChat
                 categoryId={categoryId}
@@ -108,7 +107,7 @@ export default function EndGameRoomChat(props) {
                             setOpen(!open);
                         }}
                     >
-                        <div>Un petit débrief ?</div>
+                        <div>Un petit debrief</div>
                         <IconButton
                             size='small'
                         >

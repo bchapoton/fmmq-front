@@ -5,15 +5,28 @@ import {ROUTE_HOME, routes} from './routes';
 import {rolesHierarchy} from './roles';
 import {useSelector} from "react-redux";
 import RestoreSessionProvider from "../layout/RestoreSessionProvider";
+import {makeStyles} from "@material-ui/core/styles";
+import {getHeaderHeight} from "../App";
+import {Scrollbar} from "react-scrollbars-custom";
+
+const useStyle = makeStyles({
+    scrollContent: {
+        height: `calc(100vh - ${getHeaderHeight()}px)`,
+        overflow: 'auto',
+    }
+});
 
 function RouterHandler() {
+    const classes = useStyle();
     const renderedRoutes = routes.map(route => {
         return (
             <Route path={route.path} exact={!route.notExact} key={route.path}>
                 <SecureChildrenRender route={route}>
-                    <RestoreSessionProvider>
-                        {route.children}
-                    </RestoreSessionProvider>
+                    <Scrollbar style={{height: `calc(100vh - ${getHeaderHeight()}px)`}}>
+                        <RestoreSessionProvider>
+                            {route.children}
+                        </RestoreSessionProvider>
+                    </Scrollbar>
                 </SecureChildrenRender>
             </Route>
         );

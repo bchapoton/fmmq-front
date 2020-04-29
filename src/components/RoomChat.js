@@ -14,10 +14,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import PropTypes from "prop-types";
 import {sendMessageOnChat} from "../services/EventsService";
 import {getSocket} from "../services/SocketUtils";
+import {Scrollbar} from "react-scrollbars-custom";
 
 const useStyles = makeStyles({
-    root: {
-    },
+    root: {},
     chatContent: {
         width: '100%',
         padding: '0',
@@ -72,9 +72,6 @@ const useStyles = makeStyles({
     other: {
         marginLeft: '1%',
         backgroundColor: grey[200]
-    },
-    messagesWrapperWithParentHeight: {
-        overflow: 'auto'
     },
     chatContentHidden: {
         display: 'none'
@@ -172,41 +169,43 @@ function RoomChat(props) {
                 </div>
             </div>
             <div
-                className={clsx(parentHeight > -1 ? classes.messagesWrapperWithParentHeight : null, hideChatContent ? classes.chatContentHidden : null)}
-                style={messageStyle}
+                className={clsx(hideChatContent ? classes.chatContentHidden : null)}
+
             >
-                <List className={classes.chatContent}>
-                    {messages.map((message, index) => {
-                        const listItemKeyValue = `${message.time}-${index}`;
-                        if (message.playerId === 'operator') {
+                <Scrollbar style={messageStyle}>
+                    <List className={classes.chatContent}>
+                        {messages.map((message, index) => {
+                            const listItemKeyValue = `${message.time}-${index}`;
+                            if (message.playerId === 'operator') {
+                                return (
+                                    <ListItem key={listItemKeyValue} className={classes.operatorMessage}>
+                                        <ListItemAvatar className={classes.operatorAvatar}>
+                                            <Avatar alt="Operator" src="/assets/img/operator.png"/>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary={`Extrait ${message.musicIndex}/${schemeSize} terminé, c'était pourtant pas si dur !`}
+                                            secondary={`${message.artist} - ${message.title}`}
+                                        />
+                                    </ListItem>
+                                );
+                            }
+                            const isCurrentPlayer = message.playerId === playerId;
+                            const nickname = isCurrentPlayer ? null : (
+                                <span className={classes.author}>{message.playerNickname}</span>);
                             return (
-                                <ListItem key={listItemKeyValue} className={classes.operatorMessage}>
-                                    <ListItemAvatar className={classes.operatorAvatar}>
-                                        <Avatar alt="Operator" src="/assets/img/operator.png"/>
-                                    </ListItemAvatar>
-                                    <ListItemText
-                                        primary={`Extrait ${message.musicIndex}/${schemeSize} terminé, c'était pourtant pas si dur !`}
-                                        secondary={`${message.artist} - ${message.title}`}
-                                    />
+                                <ListItem key={listItemKeyValue} className={classes.listItem}>
+                                    <div className={classes.messageWrapper}>
+                                        {nickname}
+                                        <div
+                                            className={clsx(classes.message, isCurrentPlayer ? classes.me : classes.other)}>
+                                            {message.content}
+                                        </div>
+                                    </div>
                                 </ListItem>
                             );
-                        }
-                        const isCurrentPlayer = message.playerId === playerId;
-                        const nickname = isCurrentPlayer ? null : (
-                            <span className={classes.author}>{message.playerNickname}</span>);
-                        return (
-                            <ListItem key={listItemKeyValue} className={classes.listItem}>
-                                <div className={classes.messageWrapper}>
-                                    {nickname}
-                                    <div
-                                        className={clsx(classes.message, isCurrentPlayer ? classes.me : classes.other)}>
-                                        {message.content}
-                                    </div>
-                                </div>
-                            </ListItem>
-                        );
-                    })}
-                </List>
+                        })}
+                    </List>
+                </Scrollbar>
             </div>
         </div>
     );

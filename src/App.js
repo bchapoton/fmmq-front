@@ -9,25 +9,25 @@ import MyStoreProvider from "./store/MyStoreProvider";
 import UserToolbar from "./layout/UserToolbar";
 import history from './layout/utils/history'
 import GlobalLoaderFeedback from "./layout/GlobalLoaderFeedback";
-import RestoreSessionProvider from "./layout/RestoreSessionProvider";
 import RouterHandler from "./router/RouterHandler";
 import {indigo} from "@material-ui/core/colors";
 import GlobalDrawerButton from "./layout/GlobalDrawerButton";
 import GlobalDrawer from "./layout/GlobalDrawer";
 import GlobalChatContainer from "./layout/GlobalChatContainer";
+import RestoreSessionProvider from "./layout/RestoreSessionProvider";
 
-const headerHeight = 64;
+export function getHeaderHeight() {
+    return 64;
+}
 
 const useStyles = makeStyles({
     root: {
         height: '100vh'
     },
     appBar: {
-      height: headerHeight + 'px'
+        height: getHeaderHeight() + 'px'
     },
     container: {
-        height: `calc(100vh - ${headerHeight}px)`,
-        overflow: 'auto',
         padding: '0'
     },
     logoContainer: {},
