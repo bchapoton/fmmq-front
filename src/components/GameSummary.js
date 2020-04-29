@@ -68,6 +68,8 @@ function GameSummary(props) {
                     setNextGameModalPlayerNickname(payload.playerNickname);
                     setNextGameModalOpen(true);
                 });
+
+                dispatch(displayChatEndGame(game.categoryId));
             }
         }
 
@@ -90,7 +92,6 @@ function GameSummary(props) {
         pageTitle = (
             <h1 className={classes.title}>La partie est terminée !</h1>
         );
-        dispatch(displayChatEndGame(game.categoryId));
     } else {
         pageTitle = (
             <h1 className={classes.title}>
