@@ -26,6 +26,7 @@ import {createImportsContributor, doImportContributor, getImportByIdContributor}
 import EditUserAdmin from "../Pages/Admin/EditUserAdmin";
 import AdminCacheDisplay from "../Pages/Admin/AdminCacheDisplay";
 import AdminRoomCacheDisplay from "../Pages/Admin/AdminRoomCacheDisplay";
+import Home from "../Pages/Home";
 
 export const ROUTE_HOME = '/';
 export const ROUTE_DASHBOARD = '/dashboard';
@@ -85,6 +86,10 @@ const replaceParameter = (path, param) => {
  */
 
 export const routes = [
+    {
+        path: ROUTE_HOME,
+        children: (<Home/>)
+    },
     {
         path: ROUTE_DASHBOARD,
         role: ROLE_PLAYER,

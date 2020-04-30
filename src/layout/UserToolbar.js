@@ -51,6 +51,7 @@ function UserToolbar() {
                         className={classes.button}
                         onClick={(e) => {
                             dispatch(clearUserData());
+                            history.push(ROUTE_LOGIN);
                         }}
                     >
                         <DirectionsRunIcon/>

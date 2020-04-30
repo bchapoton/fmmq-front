@@ -27,6 +27,7 @@ import ImportExportIcon from '@material-ui/icons/ImportExport';
 import SortIcon from '@material-ui/icons/Sort';
 import SettingsIcon from '@material-ui/icons/Settings';
 import CachedIcon from '@material-ui/icons/Cached';
+import history from "../utils/history";
 
 export function getAnonymousMenu() {
     return [
@@ -59,7 +60,8 @@ export function getConnectedMenu(dispatch) {
             label: 'Déconnexion',
             icon: (<DirectionsRunIcon/>),
             callback: () => {
-                dispatch(clearUserData())
+                dispatch(clearUserData());
+                history.push(ROUTE_LOGIN);
             }
         }
     ];
