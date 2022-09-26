@@ -107,10 +107,6 @@ export const routes = [
         children: (<GameRoom/>)
     },
     {
-        path: ROUTE_TIPEEE,
-        children: (<TipeeePage/>)
-    },
-    {
         path: ROUTE_END_GAME,
         role: ROLE_PLAYER,
         children: (<EndGame/>)
