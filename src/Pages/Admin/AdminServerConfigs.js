@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import List from "@material-ui/core/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import List from "@mui/material/List";
 import {getServerConfigAdmin} from "../../services/AdminService";
 import config from "../../config/NetworkConfig";
 import AdminLoadingErrorDisplay from "./AdminLoadingErrorDisplay";

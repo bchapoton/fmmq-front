@@ -1,19 +1,19 @@
 import React from 'react';
 import Title from "../layout/Title";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
 
 export default function Rules() {
     return (
-        <ExpansionPanel>
-            <ExpansionPanelSummary
+        <Accordion>
+            <AccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
             >
                 <Title>Les règles</Title>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            </AccordionSummary>
+            <AccordionDetails>
                 <div>
                     Une partie c'est en 15 extraits piochés au hasard. Tu as 30 secondes pour découvrir le
                     titre et l'artiste diffusés.<br/>
@@ -28,7 +28,7 @@ export default function Rules() {
                     Tu fais un combo lorsque tu enchaînes deux sans faute. Un combo te fait gagner 1 point
                     supplémentaire.
                 </div>
-            </ExpansionPanelDetails>
-        </ExpansionPanel>
+            </AccordionDetails>
+        </Accordion>
     );
 }

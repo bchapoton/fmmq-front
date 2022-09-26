@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react'
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@mui/material/styles";
 import {useForm} from "react-hook-form";
 import {hideLoader, showLoader} from "../../store/actions/loader.action";
 import {useDispatch} from "react-redux";
-import {FormControlLabel, TextField} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+import {FormControlLabel, TextField} from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import ButtonRouter from "../../layout/ButtonRouter";
 import {ROUTE_ADMIN_CATEGORIES} from "../../router/routes";
 import {getCategoryAdmin, putCategoriesAdmin} from "../../services/AdminService";
-import history from "../../layout/utils/history";
-import {useParams} from "react-router-dom";
-import Checkbox from "@material-ui/core/Checkbox";
+import {useNavigate, useParams} from "react-router-dom";
+import Checkbox from "@mui/material/Checkbox";
 
 
 const useStyle = makeStyles({
@@ -33,6 +32,7 @@ function AdminEditCategory() {
     const dispatch = useDispatch();
     const {handleSubmit, register, errors, clearError, triggerValidation, setValue} = useForm({mode: 'onBlur'});
     const [category, setCategory] = useState();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(showLoader());
@@ -60,7 +60,7 @@ function AdminEditCategory() {
             putCategoriesAdmin(id, data)
                 .then((response => {
                     dispatch(hideLoader());
-                    history.push(ROUTE_ADMIN_CATEGORIES);
+                    navigate(ROUTE_ADMIN_CATEGORIES);
                 }))
                 .catch(error => {
                     console.log('error : ' + error.message);

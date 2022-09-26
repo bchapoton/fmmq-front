@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {makeStyles} from "@material-ui/styles";
-import Grid from "@material-ui/core/Grid";
+import {makeStyles} from "@mui/styles";
+import Grid from "@mui/material/Grid";
 import Rooms from "../components/Rooms";
 import {listGames} from "../services/GameService";
 import GameSummaryCard from "./GameSummaryCard";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import SortIcon from "@material-ui/icons/Sort";
-import history from "../layout/utils/history";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import SortIcon from "@mui/icons-material/Sort";
 import {generateRoute, ROUTE_ALL_GAME} from "../router/routes";
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from "@mui/material/IconButton";
 import Rules from "../components/Rules";
+import {useNavigate} from "react-router-dom";
 
 const useStyles = makeStyles({
     root: {
@@ -21,6 +21,7 @@ const useStyles = makeStyles({
 function Dashboard() {
     const classes = useStyles();
     const [lastGames, setLastGames] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         listGames(0, 5)
@@ -52,7 +53,7 @@ function Dashboard() {
                                         <IconButton
                                             aria-label="Afficher le détail"
                                             onClick={() => {
-                                                history.push(generateRoute(ROUTE_ALL_GAME));
+                                                navigate(generateRoute(ROUTE_ALL_GAME));
                                             }}
 
                                         >

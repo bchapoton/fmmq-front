@@ -1,26 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import {makeStyles} from "@material-ui/styles";
-import {useParams} from 'react-router-dom'
-import Grid from "@material-ui/core/Grid";
-import MicIcon from '@material-ui/icons/Mic';
-import PersonIcon from '@material-ui/icons/Person';
-import Button from "@material-ui/core/Button";
+import {makeStyles} from "@mui/styles";
+import {useNavigate, useParams} from 'react-router-dom'
+import Grid from "@mui/material/Grid";
+import MicIcon from '@mui/icons-material/Mic';
+import PersonIcon from '@mui/icons-material/Person';
+import Button from "@mui/material/Button";
 import {useForm} from "react-hook-form";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import {cyan, grey, lightBlue, lightGreen, yellow} from "@material-ui/core/colors";
-import Typography from "@material-ui/core/Typography";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import {cyan, grey, lightBlue, lightGreen, yellow} from "@mui/material/colors";
+import Typography from "@mui/material/Typography";
 import MusicElement from "../components/MusicElement";
-import {Card, TableCell} from "@material-ui/core";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import HelpIcon from '@material-ui/icons/Help';
+import {Card, TableCell} from "@mui/material";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import HelpIcon from '@mui/icons-material/Help';
 import LeaderBoardIcon from "../components/LeaderBoardIcon";
-import StarIcon from '@material-ui/icons/Star';
+import StarIcon from '@mui/icons-material/Star';
 import {sortPayersInRoom} from '../services/GameService'
-import TableContainer from "@material-ui/core/TableContainer";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableRow from "@material-ui/core/TableRow";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
 import {onEnter, onFailed, onGuessed, sendGuessEvent} from "../services/EventsService";
 import LeaderBoardGuessedCellContent from "../components/LeaderBoardGuessedCellContent";
 import {joinRoom} from "../services/DashboardService";
@@ -29,12 +29,10 @@ import {getSocket} from "../services/SocketUtils";
 import EventMessageFeedback from "../components/EventMessageFeedback";
 import MusicProgress from "../components/MusicProgress";
 import GameRoomNextTitleLoader from "../components/GameRoomNextTitleLoader";
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CurrentMusicPodium from "../components/CurrentMusicPodium";
-import history from "../layout/utils/history";
 import {generateRoute, ROUTE_END_GAME} from "../router/routes";
 import MusicSchemeHistory from "../components/MusicSchemeHistory";
-import RoomChat from "../components/RoomChat";
 import InGameRoomChat from "../components/InGameRoomChat";
 
 const useStyles = makeStyles({
@@ -84,7 +82,7 @@ const useStyles = makeStyles({
     }
 });
 
-const leaderBoardSummaryInitiaState = {
+const leaderBoardSummaryInitialState = {
     none: 0,
     artist: 0,
     title: 0,
@@ -113,7 +111,8 @@ function GameRoom() {
     const [leaderBoardGuessed, setLeaderBoardGuessed] = useState([]);
     const [gamePlayers, setGamePlayers] = useState([]);
     const [leaderBoard, setLeaderBoard] = useState([]);
-    const [leaderBoardSummary, setLeaderBoardSummary] = useState(leaderBoardSummaryInitiaState);
+    const [leaderBoardSummary, setLeaderBoardSummary] = useState(leaderBoardSummaryInitialState);
+    const navigate = useNavigate();
 
     const [loadingEnterRoom, setLoadingEnterRoom] = useState(true);
 
@@ -188,7 +187,7 @@ function GameRoom() {
                 setMusicInProgress(false);
                 setLeaderBoardGuessed([]);
                 setCurrentMusicPodium({});
-                setLeaderBoardSummary(Object.assign({}, leaderBoardSummaryInitiaState, {none: gamePlayers.length}));
+                setLeaderBoardSummary(Object.assign({}, leaderBoardSummaryInitialState, {none: gamePlayers.length}));
                 setCurrentArtist(null);
                 setCurrentTitle(null);
                 if (payload.music) {
@@ -208,7 +207,7 @@ function GameRoom() {
             });
 
             socket.off('GAME_ENDS').on('GAME_ENDS', payload => {
-                history.push(generateRoute(ROUTE_END_GAME, {name: ':gameId', value: payload.gameId}));
+                navigate(generateRoute(ROUTE_END_GAME, {name: ':gameId', value: payload.gameId}));
             });
         }
     }, [socket,

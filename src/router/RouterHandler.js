@@ -1,11 +1,11 @@
 import React from 'react'
-import {Redirect, Route, Switch} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import NotFound from "../Pages/NotFound";
 import {ROUTE_DASHBOARD, ROUTE_LOGIN, routes} from './routes';
 import {rolesHierarchy} from './roles';
 import {useSelector} from "react-redux";
 import RestoreSessionProvider from "../layout/RestoreSessionProvider";
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@mui/material/styles";
 import {getHeaderHeight} from "../App";
 import {Scrollbar} from "react-scrollbars-custom";
 
@@ -33,12 +33,12 @@ function RouterHandler() {
     });
 
     return (
-        <Switch>
+        <Routes>
             {renderedRoutes}
             <Route path='*'>
                 <NotFound/>
             </Route>
-        </Switch>
+        </Routes>
     )
 }
 
@@ -48,7 +48,7 @@ function SecureChildrenRender(props) {
     const userContext = context.user;
     const currentUserRole = userContext && userContext.role ? userContext.role : null;
     if (!hasRole(route.role, currentUserRole)) {
-        return (<Redirect to={context.loggedIN ? ROUTE_DASHBOARD : ROUTE_LOGIN}/>)
+        return (<Navigate to={context.loggedIN ? ROUTE_DASHBOARD : ROUTE_LOGIN}/>)
     }
     return children;
 }

@@ -1,13 +1,13 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/styles";
+import {makeStyles} from "@mui/styles";
 import clsx from 'clsx'
 import PropTypes from "prop-types";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
-import AudiotrackIcon from "@material-ui/icons/Audiotrack";
-import ListItemText from "@material-ui/core/ListItemText";
-import List from "@material-ui/core/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import AudiotrackIcon from "@mui/icons-material/Audiotrack";
+import ListItemText from "@mui/material/ListItemText";
+import List from "@mui/material/List";
 
 const useStyles = makeStyles({
     root: {

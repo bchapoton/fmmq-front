@@ -4,7 +4,7 @@ import {countCategoriesAdmin, deleteCategoryByIdAdmin, getCategoriesAdmin} from 
 import ButtonRouter from "../../layout/ButtonRouter";
 import {ROUTE_ADMIN_CREATE_CATEGORY, ROUTE_ADMIN_EDIT_CATEGORY} from "../../router/routes";
 import FMMQPageContainer from "../commons/FMMQPageContainer";
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from '@mui/icons-material/Edit';
 import {TYPE_BOOLEAN} from "./AdminValueConverter";
 
 function AdminCategories() {

@@ -1,10 +1,10 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/styles";
-import {Paper} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import {makeStyles} from "@mui/styles";
+import {Paper} from "@mui/material";
+import Typography from "@mui/material/Typography";
 import clsx from 'clsx'
 import PropTypes from "prop-types";
-import {blueGrey} from "@material-ui/core/colors";
+import {blueGrey} from "@mui/material/colors";
 
 function MusicElement(props) {
     const {value, label, icon, color} = props;

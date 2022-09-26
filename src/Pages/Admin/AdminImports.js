@@ -5,7 +5,7 @@ import {TYPE_BOOLEAN, TYPE_DATE, TYPE_JSON} from "./AdminValueConverter";
 import {ROUTE_ADMIN_IMPORTS_CREATE, ROUTE_ADMIN_IMPORTS_EDIT} from "../../router/routes";
 import ButtonRouter from "../../layout/ButtonRouter";
 import FMMQPageContainer from "../commons/FMMQPageContainer";
-import EditIcon from "@material-ui/icons/Edit";
+import EditIcon from "@mui/icons-material/Edit";
 
 function AdminImports() {
     const headers = [

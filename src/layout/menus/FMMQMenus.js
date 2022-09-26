@@ -14,20 +14,19 @@ import {
     ROUTE_LOGIN,
     ROUTE_SIGN_UP
 } from "../../router/routes";
-import PersonIcon from "@material-ui/icons/Person";
-import AssignmentIcon from "@material-ui/icons/Assignment";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
+import PersonIcon from "@mui/icons-material/Person";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import {clearUserData} from "../../store/actions/context.action";
-import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
-import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
-import CategoryIcon from "@material-ui/icons/Category";
-import AudiotrackIcon from "@material-ui/icons/Audiotrack";
-import ImportExportIcon from '@material-ui/icons/ImportExport';
-import SortIcon from '@material-ui/icons/Sort';
-import SettingsIcon from '@material-ui/icons/Settings';
-import CachedIcon from '@material-ui/icons/Cached';
-import history from "../utils/history";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+import CategoryIcon from "@mui/icons-material/Category";
+import AudiotrackIcon from "@mui/icons-material/Audiotrack";
+import ImportExportIcon from '@mui/icons-material/ImportExport';
+import SortIcon from '@mui/icons-material/Sort';
+import SettingsIcon from '@mui/icons-material/Settings';
+import CachedIcon from '@mui/icons-material/Cached';
 
 export function getAnonymousMenu() {
     return [
@@ -44,7 +43,7 @@ export function getAnonymousMenu() {
     ];
 }
 
-export function getConnectedMenu(dispatch) {
+export function getConnectedMenu(dispatch, navigate) {
     return [
         {
             label: 'Dashboard',
@@ -61,7 +60,7 @@ export function getConnectedMenu(dispatch) {
             icon: (<DirectionsRunIcon/>),
             callback: () => {
                 dispatch(clearUserData());
-                history.push(ROUTE_LOGIN);
+                navigate(ROUTE_LOGIN);
             }
         }
     ];

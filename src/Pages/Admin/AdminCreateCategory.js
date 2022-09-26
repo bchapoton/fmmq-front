@@ -1,16 +1,16 @@
 import React from 'react'
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@mui/material/styles";
 import {useForm} from "react-hook-form";
 import {hideLoader, showLoader} from "../../store/actions/loader.action";
 import {useDispatch} from "react-redux";
-import {FormControlLabel, TextField} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+import {FormControlLabel, TextField} from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import ButtonRouter from "../../layout/ButtonRouter";
 import {ROUTE_ADMIN_CATEGORIES} from "../../router/routes";
 import {createCategoriesAdmin} from "../../services/AdminService";
-import history from "../../layout/utils/history";
-import Checkbox from "@material-ui/core/Checkbox";
+import Checkbox from "@mui/material/Checkbox";
+import {useNavigate} from "react-router-dom";
 
 
 const useStyle = makeStyles({
@@ -29,6 +29,7 @@ const useStyle = makeStyles({
 function AdminCreateCategory() {
     const classes = useStyle();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {handleSubmit, register, errors, clearError, triggerValidation, setError} = useForm({mode: 'onBlur'});
 
     const onSubmit = async (data) => {
@@ -39,7 +40,7 @@ function AdminCreateCategory() {
             createCategoriesAdmin(data)
                 .then((response => {
                     dispatch(hideLoader());
-                    history.push(ROUTE_ADMIN_CATEGORIES);
+                    navigate(ROUTE_ADMIN_CATEGORIES);
                 }))
                 .catch(error => {
                     console.log('error : ' + error.message);

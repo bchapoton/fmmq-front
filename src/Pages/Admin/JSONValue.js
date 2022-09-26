@@ -1,14 +1,14 @@
 import React, {useState} from 'react'
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@mui/material/styles";
 import PropTypes from "prop-types";
-import Button from "@material-ui/core/Button";
-import Modal from "@material-ui/core/Modal";
-import Paper from "@material-ui/core/Paper";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
+import Paper from "@mui/material/Paper";
 import JSONPretty from "react-json-pretty";
 import JSONPrettyMon from 'react-json-pretty/themes/monikai.css';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import IconButton from "@material-ui/core/IconButton";
-import Snackbar from "@material-ui/core/Snackbar";
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import IconButton from "@mui/material/IconButton";
+import Snackbar from "@mui/material/Snackbar";
 
 const useStyle = makeStyles({
     root: {

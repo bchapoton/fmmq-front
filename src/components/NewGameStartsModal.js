@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {makeStyles} from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import Typography from '@material-ui/core/Typography';
+import {makeStyles} from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import Typography from '@mui/material/Typography';
 import theme from "../layout/MUITheme";
-import {DialogActions, DialogContent} from "@material-ui/core";
+import {DialogActions, DialogContent} from "@mui/material";
 import {generateRoute, ROUTE_PLAY} from "../router/routes";
-import history from "../layout/utils/history";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
     heading: {
@@ -31,6 +31,8 @@ export default function NewGameStartsModal(props) {
         onClose();
     };
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         return () => {
             clearTimers(timeoutRef, setTimeoutRef, intervalRef, setIntervalRef);
@@ -49,7 +51,7 @@ export default function NewGameStartsModal(props) {
             setIntervalRef(intervalRef);
             timeoutRef = setTimeout(() => {
                 clearTimers(timeoutRef, setTimeoutRef, intervalRef, setIntervalRef);
-                history.push(roomUrl);
+                navigate(roomUrl);
             }, 1000 * redirectCounterValue);
             setTimeoutRef(timeoutRef);
         } else {
@@ -87,7 +89,7 @@ export default function NewGameStartsModal(props) {
                     color='primary'
                     onClick={() => {
                         clearTimers(timeoutRef, setTimeoutRef, intervalRef, setIntervalRef);
-                        history.push(roomUrl);
+                        navigate(roomUrl);
                     }}
                 >
                     J'y vais

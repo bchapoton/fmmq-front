@@ -1,7 +1,7 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/styles";
-import {Paper, Tooltip} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import {makeStyles} from "@mui/styles";
+import {Paper, Tooltip} from "@mui/material";
+import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
 function LeaderBoardIcon(props) {

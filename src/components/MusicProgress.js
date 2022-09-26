@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {LinearProgress} from "@material-ui/core";
+import {LinearProgress} from "@mui/material";
 import PropTypes from "prop-types";
-import {makeStyles} from "@material-ui/core/styles";
-import {indigo} from "@material-ui/core/colors";
+import {makeStyles} from "@mui/material/styles";
+import {indigo} from "@mui/material/colors";
 import config from "../config/NetworkConfig";
 import NavigatorMusicPermissionModal from "./NavigatorMusicPermissionModal";
 

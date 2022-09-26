@@ -1,13 +1,13 @@
 import React from "react";
-import List from "@material-ui/core/List";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import ListItem from "@material-ui/core/ListItem";
-import history from "./utils/history";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
+import List from "@mui/material/List";
+import ListSubheader from "@mui/material/ListSubheader";
+import ListItem from "@mui/material/ListItem";
+import { useNavigate } from "react-router-dom";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
 import PropTypes from "prop-types";
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@mui/material/styles";
 
 const useStyle = makeStyles({
    subHeader: {
@@ -18,6 +18,7 @@ const useStyle = makeStyles({
 function SubMenu(props) {
     const {values, divider, title} = props;
     const classes = useStyle();
+    const navigate = useNavigate();
     if (values && values.length > 0) {
         return (
             <React.Fragment>
@@ -28,7 +29,7 @@ function SubMenu(props) {
                             key={item.label}
                             onClick={() => {
                                 if (item.url) {
-                                    history.push(item.url);
+                                    navigate(item.url);
                                 } else if (item.callback) {
                                     item.callback();
                                 }

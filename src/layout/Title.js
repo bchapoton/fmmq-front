@@ -1,6 +1,6 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/styles";
-import {orange} from "@material-ui/core/colors";
+import {makeStyles} from "@mui/styles";
+import {orange} from "@mui/material/colors";
 import PropTypes from "prop-types";
 
 function Title(props) {

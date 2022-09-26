@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {makeStyles} from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import Typography from '@material-ui/core/Typography';
+import {makeStyles} from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import Typography from '@mui/material/Typography';
 import theme from "../layout/MUITheme";
-import {DialogActions, DialogContent} from "@material-ui/core";
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Link from "@material-ui/core/Link";
+import {DialogActions, DialogContent} from "@mui/material";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Link from "@mui/material/Link";
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({
@@ -55,8 +55,8 @@ export default function NavigatorMusicPermissionModal(props) {
             </DialogTitle>
             <DialogContent>
                 <div>Pour pouvoir jouer il faut autoriser le site à jouer des sons en arrière plan pour ce site.</div>
-                <ExpansionPanel>
-                    <ExpansionPanelSummary
+                <Accordion>
+                    <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
@@ -65,8 +65,8 @@ export default function NavigatorMusicPermissionModal(props) {
                             J'ai Firefox (<Link href='https://www.mozilla.org/fr/firefox/new/' target='_blank'>si je ne
                             l'ai pas je devrais</Link>)
                         </Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+                    </AccordionSummary>
+                    <AccordionDetails className={classes.expansionPanelDetails}>
                         <div>Dans la barre d'adresse mettre le paramètre <b>Lire automatiquement des médias</b> à <b>Autoriser
                             l'audio et la vidéo</b></div>
                         <img
@@ -74,10 +74,10 @@ export default function NavigatorMusicPermissionModal(props) {
                             alt='Réglage permissions de son pour firefox'
                             src='/assets/img/permissions/firefox_sound_permission_first.png'
                         />
-                    </ExpansionPanelDetails>
-                </ExpansionPanel>
-                <ExpansionPanel>
-                    <ExpansionPanelSummary
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion>
+                    <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel2a-content"
                         id="panel2a-header"
@@ -85,8 +85,8 @@ export default function NavigatorMusicPermissionModal(props) {
                         <Typography className={classes.expansionPanelHeading}>
                             J'ai Chrome
                         </Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+                    </AccordionSummary>
+                    <AccordionDetails className={classes.expansionPanelDetails}>
                         <div>Dans la barre d'adresse</div>
                         <img
                             className={classes.permissionsImage}
@@ -100,10 +100,10 @@ export default function NavigatorMusicPermissionModal(props) {
                             alt='Réglage permissions de son pour chrome seconde étape'
                             src='/assets/img/permissions/chrome_sound_permission_second.png'
                         />
-                    </ExpansionPanelDetails>
-                </ExpansionPanel>
-                <ExpansionPanel>
-                    <ExpansionPanelSummary
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion>
+                    <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel2a-content"
                         id="panel2a-header"
@@ -111,8 +111,8 @@ export default function NavigatorMusicPermissionModal(props) {
                         <Typography className={classes.expansionPanelHeading}>
                             J'ai un autre navigateur
                         </Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
+                    </AccordionSummary>
+                    <AccordionDetails>
                         <Typography>
                             <Link
                                 href={'https://duckduckgo.com/?q=' + encodeURI('[Remplacer ici le nom de mon navigateur]') + '+autoriser+la+lecture+automatique+des+sons+sur+'}
@@ -121,8 +121,8 @@ export default function NavigatorMusicPermissionModal(props) {
                                 C'est par là
                             </Link>
                         </Typography>
-                    </ExpansionPanelDetails>
-                </ExpansionPanel>
+                    </AccordionDetails>
+                </Accordion>
             </DialogContent>
             <DialogActions>
                 <Button

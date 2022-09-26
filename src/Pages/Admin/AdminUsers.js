@@ -3,7 +3,7 @@ import AdminTable from "./AdminTable";
 import {countUsersAdmin, getUsersAdmin} from "../../services/AdminService";
 import {ROUTE_ADMIN_EDIT_USERS} from "../../router/routes";
 import FMMQPageContainer from "../commons/FMMQPageContainer";
-import EditIcon from "@material-ui/icons/Edit";
+import EditIcon from "@mui/icons-material/Edit";
 
 function AdminUsers() {
     const headers = [

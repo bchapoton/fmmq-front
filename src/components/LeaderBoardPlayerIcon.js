@@ -1,12 +1,12 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/styles";
+import {makeStyles} from "@mui/styles";
 import PropTypes from "prop-types";
-import {lightGreen, yellow} from "@material-ui/core/colors";
-import PersonIcon from "@material-ui/icons/Person";
-import MicIcon from "@material-ui/icons/Mic";
-import StarIcon from "@material-ui/icons/Star";
-import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
-import Badge from "@material-ui/core/Badge";
+import {lightGreen, yellow} from "@mui/material/colors";
+import PersonIcon from "@mui/icons-material/Person";
+import MicIcon from "@mui/icons-material/Mic";
+import StarIcon from "@mui/icons-material/Star";
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import Badge from "@mui/material/Badge";
 
 
 function LeaderBoardPlayerIcon(props) {

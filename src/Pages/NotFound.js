@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/styles";
+import {makeStyles} from "@mui/styles";
 import ButtonContainer from "../layout/ButtonContainer";
 import ButtonRouter from "../layout/ButtonRouter";
 import {ROUTE_DASHBOARD, ROUTE_LOGIN} from "../router/routes";

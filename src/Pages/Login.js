@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
-import {makeStyles} from "@material-ui/styles";
-import Grid from "@material-ui/core/Grid";
+import {makeStyles} from "@mui/styles";
+import Grid from "@mui/material/Grid";
 import {useForm} from "react-hook-form";
-import {Card, TextField} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Avatar from "@material-ui/core/Avatar";
+import {Card, TextField} from "@mui/material";
+import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
 import {login} from "../services/NetworkService";
-import {Redirect} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {hideLoader, showLoader} from "../store/actions/loader.action";
-import {Alert, AlertTitle} from '@material-ui/lab';
+import {Alert, AlertTitle} from '@mui/lab';
 import ButtonRouter from "../layout/ButtonRouter";
 import {getUserDataFromJWT, storeJWT, storeRefreshToken} from "../services/NetworkUtils";
 import {setUserData} from "../store/actions/context.action";
@@ -48,7 +48,7 @@ function Login() {
 
     const loggedIn = useSelector(({context}) => context.loggedIN);
     if (loggedIn) {
-        return (<Redirect to={ROUTE_DASHBOARD}/>)
+        return (<Navigate to={ROUTE_DASHBOARD}/>)
     }
 
     const onSubmit = async (data) => {

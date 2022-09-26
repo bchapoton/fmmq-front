@@ -1,6 +1,6 @@
 import React from 'react'
 import {useSelector} from "react-redux";
-import {LinearProgress} from "@material-ui/core";
+import {LinearProgress} from "@mui/material";
 
 function GlobalLoaderFeedback() {
     const loading = useSelector(({loader}) => loader.load);

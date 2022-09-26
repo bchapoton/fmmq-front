@@ -4,7 +4,6 @@ import SignUp from "../Pages/SignUp";
 import GameRoom from "../Pages/GameRoom";
 import Dashboard from "../Pages/Dashboard";
 import {ROLE_ADMIN, ROLE_CONTRIBUTOR, ROLE_PLAYER} from "./roles";
-import TipeeePage from "../Pages/TipeeePage";
 import EndGame from "../Pages/EndGame";
 import GameHistory from "../Pages/GameHistory";
 import AdminUsers from "../Pages/Admin/AdminUsers";

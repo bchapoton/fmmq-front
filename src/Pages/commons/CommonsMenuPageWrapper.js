@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import SubMenu from "../../layout/SubMenu";
 import {getAdminMenu} from "../../layout/menus/FMMQMenus";
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@mui/material/styles";
 import PropTypes from "prop-types";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import clsx from "clsx";
 
 const useStyle = makeStyles({

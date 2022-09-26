@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react'
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@mui/material/styles";
 import {useParams} from "react-router-dom";
 import {getImportByIdAdmin} from "../../services/AdminService";
 import {useDispatch} from "react-redux";
 import {hideLoader, showLoader} from "../../store/actions/loader.action";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import JSONPrettyMon from "react-json-pretty/themes/monikai.css";
 import JSONPretty from "react-json-pretty";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import {ListItemText} from "@material-ui/core";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import {ListItemText} from "@mui/material";
 import Moment from "react-moment";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import ButtonRouter from "../../layout/ButtonRouter";
 

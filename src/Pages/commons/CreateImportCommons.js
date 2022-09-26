@@ -1,21 +1,21 @@
 import React from 'react'
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@mui/material/styles";
 import {useForm} from "react-hook-form";
 import {hideLoader, showLoader} from "../../store/actions/loader.action";
 import {useDispatch} from "react-redux";
-import {TextField} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+import {TextField} from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import JSONPretty from "react-json-pretty";
 import JSONPrettyMon from 'react-json-pretty/themes/monikai.css';
-import DescriptionIcon from '@material-ui/icons/Description';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import FolderIcon from '@material-ui/icons/Folder';
-import {grey, orange, yellow} from "@material-ui/core/colors";
+import DescriptionIcon from '@mui/icons-material/Description';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import FolderIcon from '@mui/icons-material/Folder';
+import {grey, orange, yellow} from "@mui/material/colors";
 import clsx from "clsx";
 import ButtonRouter from "../../layout/ButtonRouter";
-import history from "../../layout/utils/history";
 import PropTypes from "prop-types";
+import {useNavigate} from "react-router-dom";
 
 
 const useStyle = makeStyles({
@@ -52,6 +52,7 @@ function CreateImportCommons(props) {
     const classes = useStyle();
     const dispatch = useDispatch();
     const {handleSubmit, register, errors, clearError, triggerValidation} = useForm({mode: 'onBlur'});
+    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         if (await triggerValidation()) {
@@ -61,7 +62,7 @@ function CreateImportCommons(props) {
             createImportFunction({metadata: JSON.parse(data.metadata)})
                 .then((response => {
                     dispatch(hideLoader());
-                    history.push(previousUrlScreen);
+                    navigate(previousUrlScreen);
                 }))
                 .catch(error => {
                     console.log('error : ' + error.message);

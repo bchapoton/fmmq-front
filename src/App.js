@@ -1,16 +1,16 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/styles";
-import {AppBar, MuiThemeProvider, Toolbar} from "@material-ui/core";
+import {makeStyles} from "@mui/styles";
+import {AppBar, Toolbar} from "@mui/material";
+import { ThemeProvider } from '@mui/material/styles';
 import {Router} from "react-router-dom";
 import theme from "./layout/MUITheme";
 import Logo from "./layout/Logo";
 import GlobalLoader from "./layout/GlobalLoader";
 import MyStoreProvider from "./store/MyStoreProvider";
 import UserToolbar from "./layout/UserToolbar";
-import history from './layout/utils/history'
 import GlobalLoaderFeedback from "./layout/GlobalLoaderFeedback";
 import RouterHandler from "./router/RouterHandler";
-import {indigo} from "@material-ui/core/colors";
+import {indigo} from "@mui/material/colors";
 import GlobalDrawerButton from "./layout/GlobalDrawerButton";
 import GlobalDrawer from "./layout/GlobalDrawer";
 import GlobalChatContainer from "./layout/GlobalChatContainer";
@@ -43,11 +43,11 @@ const useStyles = makeStyles({
 function App() {
     const classes = useStyles();
     return (
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
             <MyStoreProvider>
                 <RestoreSessionProvider>
                     <div className={classes.root}>
-                        <Router history={history}>
+                        <Router>
                             <AppBar position='static' className={classes.appBar}>
                                 <Toolbar>
                                     <GlobalDrawerButton/>
@@ -70,7 +70,7 @@ function App() {
                     <GlobalChatContainer/>
                 </RestoreSessionProvider>
             </MyStoreProvider>
-        </MuiThemeProvider>
+        </ThemeProvider>
     );
 }
 

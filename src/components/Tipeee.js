@@ -1,11 +1,11 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/styles";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import history from "../layout/utils/history";
+import {makeStyles} from "@mui/styles";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import { useNavigate } from "react-router-dom";
 import {ROUTE_TIPEEE} from "../router/routes";
 import {Link} from "react-router-dom";
-import {red} from "@material-ui/core/colors";
+import {red} from "@mui/material/colors";
 
 const useStyles = makeStyles({
     root: {
@@ -53,6 +53,7 @@ const useStyles = makeStyles({
 
 function Tipeee() {
     const classes = useStyles();
+    const navigate = useNavigate();
     return (
         <Paper className={classes.root}>
             <Typography variant='h6'>Soutenez le projet</Typography>
@@ -63,7 +64,7 @@ function Tipeee() {
             <div className={classes.tipeeContainer}>
                 <span
                     className={classes.paperTipeeLogo}
-                    onClick={e => history.push(ROUTE_TIPEEE)}
+                    onClick={e => navigate(ROUTE_TIPEEE)}
                 >
                     Tip!
                 </span>

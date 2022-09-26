@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import {CircularProgress} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
-import {indigo} from "@material-ui/core/colors";
+import {CircularProgress} from "@mui/material";
+import {makeStyles} from "@mui/material/styles";
+import {indigo} from "@mui/material/colors";
 
 
 const useStyle = makeStyles({

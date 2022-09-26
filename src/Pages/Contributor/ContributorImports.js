@@ -9,7 +9,7 @@ import {
 } from "../../services/ContributorService";
 import AdminTable from "../Admin/AdminTable";
 import FMMQPageContainer from "../commons/FMMQPageContainer";
-import EditIcon from "@material-ui/icons/Edit";
+import EditIcon from "@mui/icons-material/Edit";
 
 function ContributorImports() {
     const headers = [

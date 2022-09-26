@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux";
 import {getUserDataFromJWT, hasJWT, isJWTExpired, refreshToken} from "../services/NetworkUtils";
 import {setUserData} from "../store/actions/context.action";
 import LocalLoader from "./LocalLoader";
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@mui/material/styles";
 
 function RestoreSessionProvider(props) {
     const {children} = props;

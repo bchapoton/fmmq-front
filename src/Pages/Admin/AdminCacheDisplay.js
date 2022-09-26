@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import List from "@material-ui/core/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import List from "@mui/material/List";
 import {getServerCacheObjectsAdmin} from "../../services/AdminService";
 import AdminLoadingErrorDisplay from "./AdminLoadingErrorDisplay";
 import FMMQPageContainer from "../commons/FMMQPageContainer";
 import AdminCacheElement from "./AdminCacheElement";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 
 function AdminCacheDisplay() {
     const [loading, setLoading] = useState(true);

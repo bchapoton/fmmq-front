@@ -1,6 +1,6 @@
 import React from 'react'
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from '@material-ui/icons/Menu';
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from '@mui/icons-material/Menu';
 import {useDispatch} from "react-redux";
 import {showGlobalDrawer} from "../store/actions/global.drawer.action";
 

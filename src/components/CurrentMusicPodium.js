@@ -1,9 +1,9 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@mui/material/styles";
 import {PlayerIconFirstFound, PlayerIconSecondFound, PlayerIconThirdFound} from "./LeaderBoardPlayerIcon";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import {cyan} from "@material-ui/core/colors";
+import {cyan} from "@mui/material/colors";
 
 const useStyle = makeStyles({
     root: {

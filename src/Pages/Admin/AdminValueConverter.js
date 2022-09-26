@@ -1,7 +1,7 @@
 import React from "react";
 import JSONValue from "./JSONValue";
 import Moment from "react-moment";
-import Link from "@material-ui/core/Link";
+import Link from "@mui/material/Link";
 import config from "../../config/NetworkConfig";
 
 export const TYPE_DATE = 'date';

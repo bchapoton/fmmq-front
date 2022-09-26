@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import {makeStyles} from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import {makeStyles} from "@mui/material/styles";
+import Button from "@mui/material/Button";
 import {useDispatch} from "react-redux";
 import {hideLoader, showLoader} from "../../store/actions/loader.action";
 import PropTypes from "prop-types";

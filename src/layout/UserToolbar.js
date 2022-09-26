@@ -1,17 +1,17 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/styles";
-import history from './utils/history'
+import {makeStyles} from "@mui/styles";
+import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import PersonIcon from '@material-ui/icons/Person';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import {teal} from "@material-ui/core/colors";
-import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import PersonIcon from '@mui/icons-material/Person';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import {teal} from "@mui/material/colors";
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import {clearUserData} from "../store/actions/context.action";
 import {ROUTE_LOGIN, ROUTE_SIGN_UP} from "../router/routes";
-import {Tooltip} from "@material-ui/core";
+import {Tooltip} from "@mui/material";
 
 const useStyles = makeStyles({
     buttonContainer: {
@@ -36,6 +36,7 @@ function UserToolbar() {
     const classes = useStyles();
     const context = useSelector(({context}) => context);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     if (context.loggedIN) {
         return (
@@ -51,7 +52,7 @@ function UserToolbar() {
                         className={classes.button}
                         onClick={(e) => {
                             dispatch(clearUserData());
-                            history.push(ROUTE_LOGIN);
+                            navigate(ROUTE_LOGIN);
                         }}
                     >
                         <DirectionsRunIcon/>
@@ -63,12 +64,12 @@ function UserToolbar() {
         return (
             <div className={classes.buttonContainer}>
                 <Tooltip title='Connexion'>
-                    <IconButton className={classes.button} onClick={() => history.push(ROUTE_LOGIN)}>
+                    <IconButton className={classes.button} onClick={() => navigate(ROUTE_LOGIN)}>
                         <PersonIcon/>
                     </IconButton>
                 </Tooltip>
                 <Tooltip title='Créer un compte'>
-                    <IconButton className={classes.button} onClick={() => history.push(ROUTE_SIGN_UP)}>
+                    <IconButton className={classes.button} onClick={() => navigate(ROUTE_SIGN_UP)}>
                         <AssignmentIcon/>
                     </IconButton>
                 </Tooltip>

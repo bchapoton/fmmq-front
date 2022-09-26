@@ -1,21 +1,21 @@
 import React, {useEffect, useState} from 'react'
-import {makeStyles} from "@material-ui/core/styles";
-import TableContainer from "@material-ui/core/TableContainer";
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import Paper from "@material-ui/core/Paper";
-import TableBody from "@material-ui/core/TableBody";
+import {makeStyles} from "@mui/material/styles";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import Paper from "@mui/material/Paper";
+import TableBody from "@mui/material/TableBody";
 import PropTypes from "prop-types";
 import ButtonRouter from "../../layout/ButtonRouter";
 import {valueConverter} from "./AdminValueConverter";
 import AdminLoadingErrorDisplay from "./AdminLoadingErrorDisplay";
 import AdminPager from "./AdminPager";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import {useDispatch} from "react-redux";
 import {hideLoader, showLoader} from "../../store/actions/loader.action";
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const useStyles = makeStyles({
     table: {

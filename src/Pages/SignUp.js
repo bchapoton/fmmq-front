@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
-import {makeStyles} from "@material-ui/styles";
-import Grid from "@material-ui/core/Grid";
+import {makeStyles} from "@mui/styles";
+import Grid from "@mui/material/Grid";
 import {useForm} from "react-hook-form";
-import {Card, CardActions, TextField} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+import {Card, CardActions, TextField} from "@mui/material";
+import Button from "@mui/material/Button";
 import {signUp} from "../services/NetworkService";
-import {Redirect} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {hideLoader, showLoader} from "../store/actions/loader.action";
 import ButtonRouter from "../layout/ButtonRouter";
-import Typography from "@material-ui/core/Typography";
-import {cyan} from "@material-ui/core/colors";
+import Typography from "@mui/material/Typography";
+import {cyan} from "@mui/material/colors";
 import {ROUTE_DASHBOARD, ROUTE_LOGIN} from "../router/routes";
 
 const useStyles = makeStyles({
@@ -48,7 +48,7 @@ function SignUp() {
 
     const loggedIn = useSelector(({context}) => context.loggedIN);
     if (loggedIn) {
-        return (<Redirect to={ROUTE_DASHBOARD}/>)
+        return (<Navigate to={ROUTE_DASHBOARD}/>)
     }
 
     const onSubmit = async (data) => {

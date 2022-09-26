@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {makeStyles} from "@material-ui/styles";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
+import {makeStyles} from "@mui/styles";
+import CardHeader from "@mui/material/CardHeader";
+import CardContent from "@mui/material/CardContent";
 import LocalLoader from "../layout/LocalLoader";
-import {Card, ListItemAvatar, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
+import {Card, ListItemAvatar, ListItemSecondaryAction, ListItemText} from "@mui/material";
 import {getCategories, getRoomsMusicCounter} from "../services/DashboardService";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Avatar from "@material-ui/core/Avatar";
-import AlbumIcon from '@material-ui/icons/Album';
-import PersonIcon from '@material-ui/icons/Person';
-import Chip from "@material-ui/core/Chip";
-import AudiotrackIcon from '@material-ui/icons/Audiotrack';
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Avatar from "@mui/material/Avatar";
+import AlbumIcon from '@mui/icons-material/Album';
+import PersonIcon from '@mui/icons-material/Person';
+import Chip from "@mui/material/Chip";
+import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import {generateRoute, ROUTE_PLAY} from "../router/routes";
 import ButtonRouter from "../layout/ButtonRouter";
 
