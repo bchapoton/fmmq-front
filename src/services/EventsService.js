@@ -19,12 +19,12 @@ export const onFailed = (playerId, sendMessage, payload) => {
         if (payload.accuracy >= 0.5) {
             sendMessage({
                 level: 'not-bad',
-                message: "C'est presque ça, continue sur cette voie"
+                message: "C'est presque ça, continue sur cette voie."
             });
         } else {
             sendMessage({
                 level: 'bad',
-                message: "T'es bête ou bien ?"
+                message: "Raté, ce n'est pas ça."
             });
         }
     }
@@ -96,7 +96,7 @@ export const onGuessed = (localPLayerId, gamePlayers, leaderBoardSummary, leader
 
         sendMessage({
             level: 'nice',
-            message: "Bien ouej pelo, le 69 la trik t'habite !"
+            message: "Bravo, tu as trouvé !"
         });
     }
 };
