@@ -39,7 +39,8 @@ const useStyles = makeStyles({
         marginLeft: '10px'
     },
     operatorMessage: {
-        margin: '0 0 10px 0',
+        width: 'calc(100% - 20px)',
+        margin: '0 10px 10px 10px',
         padding: '0',
         borderRadius: '10px',
         borderStyle: 'solid',
