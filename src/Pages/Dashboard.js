@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {makeStyles} from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
-import Tipeee from "../components/Tipeee";
 import Rooms from "../components/Rooms";
 import {listGames} from "../services/GameService";
 import GameSummaryCard from "./GameSummaryCard";
@@ -40,9 +39,6 @@ function Dashboard() {
                         </Grid>
                         <Grid item>
                             <Rooms/>
-                        </Grid>
-                        <Grid item>
-                            <Tipeee/>
                         </Grid>
                     </Grid>
                 </Grid>

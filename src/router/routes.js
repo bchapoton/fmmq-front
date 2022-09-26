@@ -1,6 +1,5 @@
 import React from 'react'
 import Login from "../Pages/Login";
-import CGU from "../Pages/CGU";
 import SignUp from "../Pages/SignUp";
 import GameRoom from "../Pages/GameRoom";
 import Dashboard from "../Pages/Dashboard";
@@ -31,7 +30,6 @@ import Home from "../Pages/Home";
 export const ROUTE_HOME = '/';
 export const ROUTE_DASHBOARD = '/dashboard';
 export const ROUTE_LOGIN = '/login';
-export const ROUTE_CGU = '/cgu';
 export const ROUTE_SIGN_UP = '/sign-up';
 export const ROUTE_PLAY = '/play/:categoryId';
 export const ROUTE_TIPEEE = '/tipeee';
@@ -98,10 +96,6 @@ export const routes = [
     {
         path: ROUTE_LOGIN,
         children: (<Login/>)
-    },
-    {
-        path: ROUTE_CGU,
-        children: (<CGU/>)
     },
     {
         path: ROUTE_SIGN_UP,

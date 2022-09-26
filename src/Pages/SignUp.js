@@ -2,17 +2,16 @@ import React, {useState} from 'react';
 import {makeStyles} from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import {useForm} from "react-hook-form";
-import {Card, CardActions, FormControlLabel, TextField} from "@material-ui/core";
+import {Card, CardActions, TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {signUp} from "../services/NetworkService";
-import {Link, Redirect} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {hideLoader, showLoader} from "../store/actions/loader.action";
 import ButtonRouter from "../layout/ButtonRouter";
 import Typography from "@material-ui/core/Typography";
-import Checkbox from "@material-ui/core/Checkbox";
 import {cyan} from "@material-ui/core/colors";
-import {ROUTE_CGU, ROUTE_DASHBOARD, ROUTE_LOGIN} from "../router/routes";
+import {ROUTE_DASHBOARD, ROUTE_LOGIN} from "../router/routes";
 
 const useStyles = makeStyles({
     root: {
@@ -167,17 +166,6 @@ function SignUp() {
                                 })}
                                 error={errors && errors.passwordConfirm ? true : false}
                                 helperText={errors && errors.passwordConfirm ? errors.passwordConfirm.message : ''}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <FormControlLabel
-                                control={(
-                                    <Checkbox
-                                        color="primary"
-                                    />
-                                )}
-                                label={(
-                                    <span>Accepter les <Link className={classes.cguLink} target='_blank' to={ROUTE_CGU}>conditions générales d'utilisation</Link></span>)}
                             />
                         </Grid>
                         <Grid item>
