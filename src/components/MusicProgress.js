@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { LinearProgress } from '@mui/material';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@mui/styles';
@@ -30,7 +30,7 @@ function MusicProgress(props) {
     const [audioObject, setAudioObject] = useState(new Audio());
     const [startedInternal, setStartedInternal] = useState(started);
     const [completed, setCompleted] = useState(0);
-    const maxCompleted = Math.round(duration / animationStepDuration);
+    const maxCompleted = useMemo(() => Math.round(duration / animationStepDuration), [duration]);
     const [displayPermissionModal, setDisplayPermissionModal] = useState(false);
     const classes = useStyle();
 

@@ -124,7 +124,9 @@ function GameRoom() {
             setCurrentMusicIndexDisplayed(roomInfoData.currentMusicIndex);
             setRoomInfo(roomInfoData);
             setGamePlayers(roomInfoData.leaderBoard);
-            setLeaderBoardSummary(Object.assign({}, leaderBoardSummary, { none: roomInfoData.leaderBoard.length }));
+            setLeaderBoardSummary(
+                Object.assign({}, leaderBoardSummaryInitialState, { none: roomInfoData.leaderBoard.length }),
+            );
             setPlayerToken(roomInfoData.playerToken);
             socket = getSocket(roomInfoData.socketNamespace);
             setSocket(socket);
@@ -143,7 +145,7 @@ function GameRoom() {
                 socket.disconnect();
             }
         };
-    }, [categoryId, leaderBoardSummary]);
+    }, [categoryId]);
 
     useEffect(() => {
         if (socket) {
