@@ -1,6 +1,6 @@
-import React from 'react'
-import {makeStyles} from "@mui/styles";
-import {useSelector} from "react-redux";
+import React from 'react';
+import { makeStyles } from '@mui/styles';
+import { useSelector } from 'react-redux';
 
 const useStyle = makeStyles({
     root: {
@@ -12,16 +12,16 @@ const useStyle = makeStyles({
         top: 0,
         bottom: 0,
         zIndex: 9999,
-    }
+    },
 });
 
 function GlobalLoader() {
     const classes = useStyle();
-    const loading = useSelector(({loader}) => loader.load);
+    const loading = useSelector(({ loader }) => loader.load);
 
     if (loading) {
-        return (<div className={classes.root}>&nbsp;</div>);
-    } else return (<React.Fragment/>);
+        return <div className={classes.root}>&nbsp;</div>;
+    } else return <React.Fragment />;
 }
 
 export default GlobalLoader;

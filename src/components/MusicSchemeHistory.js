@@ -1,27 +1,27 @@
 import React from 'react';
-import {makeStyles} from "@mui/styles";
-import clsx from 'clsx'
-import PropTypes from "prop-types";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import AudiotrackIcon from "@mui/icons-material/Audiotrack";
-import ListItemText from "@mui/material/ListItemText";
-import List from "@mui/material/List";
+import { makeStyles } from '@mui/styles';
+import clsx from 'clsx';
+import PropTypes from 'prop-types';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import AudiotrackIcon from '@mui/icons-material/Audiotrack';
+import ListItemText from '@mui/material/ListItemText';
+import List from '@mui/material/List';
 
 const useStyles = makeStyles({
     root: {
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     gameHistoryListReverse: {
         display: 'flex',
-        flexDirection: 'column-reverse'
+        flexDirection: 'column-reverse',
     },
 });
 
 function MusicSchemeHistory(props) {
-    const {values, reverse} = props;
+    const { values, reverse } = props;
     const classes = useStyles();
 
     if (!values || values.length === 0) {
@@ -35,13 +35,10 @@ function MusicSchemeHistory(props) {
                     <ListItem key={`${i}-${item.artist}`}>
                         <ListItemAvatar>
                             <Avatar>
-                                <AudiotrackIcon/>
+                                <AudiotrackIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText
-                            primary={item.artist}
-                            secondary={item.title}
-                        />
+                        <ListItemText primary={item.artist} secondary={item.title} />
                     </ListItem>
                 );
             })}
@@ -56,7 +53,7 @@ MusicSchemeHistory.propTypes = {
 
 MusicSchemeHistory.defaultProps = {
     values: [],
-    reverse: false
+    reverse: false,
 };
 
 export default MusicSchemeHistory;

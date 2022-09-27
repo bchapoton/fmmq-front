@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {LinearProgress} from "@mui/material";
-import PropTypes from "prop-types";
-import {makeStyles} from "@mui/styles";
-import {indigo} from "@mui/material/colors";
-import config from "../config/NetworkConfig";
-import NavigatorMusicPermissionModal from "./NavigatorMusicPermissionModal";
+import React, { useEffect, useState } from 'react';
+import { LinearProgress } from '@mui/material';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@mui/styles';
+import { indigo } from '@mui/material/colors';
+import config from '../config/NetworkConfig';
+import NavigatorMusicPermissionModal from './NavigatorMusicPermissionModal';
 
 const animationStepDuration = 250; // each step take 250ms for fluid animation
 
 const useStyle = makeStyles({
     container: {
-        height: '55px'
+        height: '55px',
     },
     text: {
         color: indigo[500],
@@ -26,7 +26,7 @@ const useStyle = makeStyles({
  * @constructor
  */
 function MusicProgress(props) {
-    const {duration, started, animationEnded, text, musicUrl, startPosition} = props;
+    const { duration, started, animationEnded, text, musicUrl, startPosition } = props;
     const [audioObject, setAudioObject] = useState(new Audio());
     const [startedInternal, setStartedInternal] = useState(started);
     const [completed, setCompleted] = useState(0);
@@ -40,9 +40,9 @@ function MusicProgress(props) {
     };
 
     HTMLAudioElement.prototype.wrappedPlay = function () {
-        this.play().catch(error => {
+        this.play().catch((error) => {
             console.log(error.name);
-            if(error && error.name && error.name.toLowerCase() === 'NotAllowedError'.toLowerCase()) {
+            if (error && error.name && error.name.toLowerCase() === 'NotAllowedError'.toLowerCase()) {
                 setDisplayPermissionModal(true);
             }
         });
@@ -57,7 +57,7 @@ function MusicProgress(props) {
             if (audioObject) {
                 audioObject.stop();
             }
-        }
+        };
     }, [audioObject]);
 
     useEffect(() => {
@@ -86,7 +86,7 @@ function MusicProgress(props) {
         let timer;
 
         function progress() {
-            setCompleted(oldCompleted => {
+            setCompleted((oldCompleted) => {
                 if (oldCompleted < maxCompleted) {
                     return oldCompleted + 1;
                 } else {
@@ -105,18 +105,12 @@ function MusicProgress(props) {
             });
         }
 
-        if (startedInternal)
-            timer = setInterval(progress, animationStepDuration);
+        if (startedInternal) timer = setInterval(progress, animationStepDuration);
 
         return () => {
-            if (timer)
-                clearInterval(timer);
+            if (timer) clearInterval(timer);
         };
-    }, [startedInternal,
-        setStartedInternal,
-        setCompleted,
-        animationEnded,
-        maxCompleted]);
+    }, [startedInternal, setStartedInternal, setCompleted, animationEnded, maxCompleted]);
 
     if (!startedInternal) {
         return <div className={classes.container}>&nbsp;</div>;
@@ -125,11 +119,13 @@ function MusicProgress(props) {
     return (
         <React.Fragment>
             <div className={classes.container}>
-                <LinearProgress variant="determinate" value={normalize(completed, maxCompleted)}/>
+                <LinearProgress variant="determinate" value={normalize(completed, maxCompleted)} />
                 <div className={classes.text}>{text}</div>
             </div>
-            <NavigatorMusicPermissionModal open={displayPermissionModal}
-                                           onClose={() => setDisplayPermissionModal(false)}/>
+            <NavigatorMusicPermissionModal
+                open={displayPermissionModal}
+                onClose={() => setDisplayPermissionModal(false)}
+            />
         </React.Fragment>
     );
 }
@@ -142,8 +138,7 @@ function MusicProgress(props) {
  * @return {number} the completed value on range 0-100
  */
 function normalize(value, maxCompleted) {
-    if (value)
-        return (value) * 100 / maxCompleted;
+    if (value) return (value * 100) / maxCompleted;
     else return 0;
 }
 
@@ -171,13 +166,13 @@ MusicProgress.propTypes = {
     musicUrl: PropTypes.string,
     text: PropTypes.string,
     duration: PropTypes.number,
-    animationEnded: PropTypes.func
+    animationEnded: PropTypes.func,
 };
 
 MusicProgress.defaultProps = {
     startPosition: 0,
     duration: 30000,
-    text: ''
+    text: '',
 };
 
 export default MusicProgress;

@@ -1,9 +1,9 @@
-import React from 'react'
-import AdminTable from "./AdminTable";
-import {countUsersAdmin, getUsersAdmin} from "../../services/AdminService";
-import {ROUTE_ADMIN_EDIT_USERS} from "../../router/routes";
-import FMMQPageContainer from "../commons/FMMQPageContainer";
-import EditIcon from "@mui/icons-material/Edit";
+import React from 'react';
+import AdminTable from './AdminTable';
+import { countUsersAdmin, getUsersAdmin } from '../../services/AdminService';
+import { ROUTE_ADMIN_EDIT_USERS } from '../../router/routes';
+import FMMQPageContainer from '../commons/FMMQPageContainer';
+import EditIcon from '@mui/icons-material/Edit';
 
 function AdminUsers() {
     const headers = [
@@ -14,24 +14,24 @@ function AdminUsers() {
         },
         {
             id: 'nickname',
-            label: 'Nickname'
+            label: 'Nickname',
         },
         {
             id: 'email',
-            label: 'Email'
+            label: 'Email',
         },
         {
             id: 'role',
-            label: 'Rôle'
-        }
+            label: 'Rôle',
+        },
     ];
 
     const actions = [
         {
             id: 'edit',
-            label: (<EditIcon/>),
-            url: ROUTE_ADMIN_EDIT_USERS
-        }
+            label: <EditIcon />,
+            url: ROUTE_ADMIN_EDIT_USERS,
+        },
     ];
 
     return (
@@ -44,7 +44,7 @@ function AdminUsers() {
                 actions={actions}
             />
         </FMMQPageContainer>
-    )
+    );
 }
 
 export default AdminUsers;

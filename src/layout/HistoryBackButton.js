@@ -1,12 +1,12 @@
-import React from 'react'
-import Button from "@mui/material/Button";
+import React from 'react';
+import Button from '@mui/material/Button';
 
 export default function HistoryBackButton(props) {
-    const {children} = props;
+    const { children } = props;
     return (
         <Button
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             {...props}
             onClick={(e) => {
                 e.preventDefault();

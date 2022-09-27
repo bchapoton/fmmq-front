@@ -1,19 +1,19 @@
 import React from 'react';
-import {makeStyles} from "@mui/styles";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import {Link, useNavigate} from "react-router-dom";
-import {ROUTE_TIPEEE} from "../router/routes";
-import {red} from "@mui/material/colors";
+import { makeStyles } from '@mui/styles';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import { Link, useNavigate } from 'react-router-dom';
+import { ROUTE_TIPEEE } from '../router/routes';
+import { red } from '@mui/material/colors';
 
 const useStyles = makeStyles({
     root: {
-        padding: '1rem'
+        padding: '1rem',
     },
     tipeeContainer: {
         display: 'flex',
         alignItems: 'center',
-        marginTop: '5px'
+        marginTop: '5px',
     },
     paperTipeeLogo: {
         fontFamily: 'ChunkFiveRegular',
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
         padding: '0 15px',
         verticalAlign: 'top',
         lineHeight: '21px',
-        cursor: 'pointer'
+        cursor: 'pointer',
     },
     paperTipeeBacker: {
         background: '#fff',
@@ -42,12 +42,12 @@ const useStyles = makeStyles({
     },
     link: {
         '&:hover': {
-            color: red[800]
+            color: red[800],
         },
         textDecoration: 'none',
         color: 'inherit',
-        fontWeight: 'bold'
-    }
+        fontWeight: 'bold',
+    },
 });
 
 function Tipeee() {
@@ -55,19 +55,18 @@ function Tipeee() {
     const navigate = useNavigate();
     return (
         <Paper className={classes.root}>
-            <Typography variant='h6'>Soutenez le projet</Typography>
-            <Typography variant='body2'>
-                Vous pouvez soutenir l’équipe bénévole de FMMQ via <Link to={ROUTE_TIPEEE}
-                                                                         className={classes.link}>tipeee.com/FMMQ</Link>
+            <Typography variant="h6">Soutenez le projet</Typography>
+            <Typography variant="body2">
+                Vous pouvez soutenir l’équipe bénévole de FMMQ via{' '}
+                <Link to={ROUTE_TIPEEE} className={classes.link}>
+                    tipeee.com/FMMQ
+                </Link>
             </Typography>
             <div className={classes.tipeeContainer}>
-                <span
-                    className={classes.paperTipeeLogo}
-                    onClick={e => navigate(ROUTE_TIPEEE)}
-                >
+                <span className={classes.paperTipeeLogo} onClick={(e) => navigate(ROUTE_TIPEEE)}>
                     Tip!
                 </span>
-                <Paper component='span' className={classes.paperTipeeBacker}>
+                <Paper component="span" className={classes.paperTipeeBacker}>
                     {Math.round(Math.random() * (7000 - 3) + 3)}
                 </Paper>
             </div>

@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react'
-import {makeStyles} from "@mui/styles";
-import {listGames} from "../services/GameService";
-import Grid from "@mui/material/Grid";
-import GameSummaryCard from "./GameSummaryCard";
-import Button from "@mui/material/Button";
-import {useDispatch} from "react-redux";
-import {hideLoader, showLoader} from "../store/actions/loader.action";
-import ButtonContainer from "../layout/ButtonContainer";
-import HistoryBackButton from "../layout/HistoryBackButton";
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from '@mui/styles';
+import { listGames } from '../services/GameService';
+import Grid from '@mui/material/Grid';
+import GameSummaryCard from './GameSummaryCard';
+import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux';
+import { hideLoader, showLoader } from '../store/actions/loader.action';
+import ButtonContainer from '../layout/ButtonContainer';
+import HistoryBackButton from '../layout/HistoryBackButton';
 
 const useStyle = makeStyles({
     root: {
-        padding: '1rem'
-    }
+        padding: '1rem',
+    },
 });
 
 const pagerSize = 9;
@@ -39,38 +39,38 @@ function AllGame() {
     return (
         <div className={classes.root}>
             <ButtonContainer>
-                <HistoryBackButton/>
+                <HistoryBackButton />
             </ButtonContainer>
             <h1>Historique des parties</h1>
-            <ButtonContainer justifyContent='space-between'>
+            <ButtonContainer justifyContent="space-between">
                 <Button
-                    variant='contained'
-                    color='primary'
+                    variant="contained"
+                    color="primary"
                     disabled={start === 0}
                     onClick={() => setStart(start - pagerSize)}
                 >
                     prev
                 </Button>
                 <Button
-                    variant='contained'
-                    color='primary'
+                    variant="contained"
+                    color="primary"
                     disabled={currentDataSize < pagerSize}
-                    onClick={() => setStart(start => start + pagerSize)}
+                    onClick={() => setStart((start) => start + pagerSize)}
                 >
                     next
                 </Button>
             </ButtonContainer>
             <Grid container spacing={2}>
-                {games.map(game => {
+                {games.map((game) => {
                     return (
                         <Grid item xs={6} md={4} key={'game-' + game.id}>
-                            <GameSummaryCard game={game} fullHeight={true}/>
+                            <GameSummaryCard game={game} fullHeight={true} />
                         </Grid>
                     );
                 })}
             </Grid>
         </div>
-    )
+    );
 }
 
 export default AllGame;

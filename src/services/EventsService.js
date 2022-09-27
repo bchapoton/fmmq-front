@@ -2,13 +2,13 @@ export const sendGuessEvent = (socket, playerId, playerToken, value) => {
     socket.emit('GUESS', {
         playerId,
         playerToken,
-        value
+        value,
     });
 };
 
 export const onEnter = (gamePlayers, leaderBoardSummary, payload) => {
     // check if player already here, in case of he leave the room and comeback or open 2 tabs
-    if (gamePlayers.findIndex(player => player.id === payload.id) === -1) {
+    if (gamePlayers.findIndex((player) => player.id === payload.id) === -1) {
         gamePlayers.push(payload);
         leaderBoardSummary['none'] = leaderBoardSummary['none'] + 1;
     }
@@ -19,25 +19,33 @@ export const onFailed = (playerId, sendMessage, payload) => {
         if (payload.accuracy >= 0.5) {
             sendMessage({
                 level: 'not-bad',
-                message: "C'est presque ça, continue sur cette voie."
+                message: "C'est presque ça, continue sur cette voie.",
             });
         } else {
             sendMessage({
                 level: 'bad',
-                message: "Raté, ce n'est pas ça."
+                message: "Raté, ce n'est pas ça.",
             });
         }
     }
 };
 
-export const onGuessed = (localPLayerId, gamePlayers, leaderBoardSummary, leaderBoardGuessed, currentMusicPodium, sendMessage, setArtist, setTitle, payload) => {
+export const onGuessed = (
+    localPLayerId,
+    gamePlayers,
+    leaderBoardSummary,
+    leaderBoardGuessed,
+    currentMusicPodium,
+    sendMessage,
+    setArtist,
+    setTitle,
+    payload,
+) => {
     // update player score
     const playerId = payload.playerId;
-    const playerObjectIndex = gamePlayers.findIndex(
-        (item) => {
-            return item.id === playerId;
-        }
-    );
+    const playerObjectIndex = gamePlayers.findIndex((item) => {
+        return item.id === playerId;
+    });
     gamePlayers[playerObjectIndex]['score'] = gamePlayers[playerObjectIndex]['score'] + payload.points;
 
     // leader board summary update
@@ -58,28 +66,25 @@ export const onGuessed = (localPLayerId, gamePlayers, leaderBoardSummary, leader
     }
 
     // Update leader board guessed object, handle user per user what he guessed on the current song and eventually the trophy
-    let leaderBoardGuessedIndex = leaderBoardGuessed.findIndex(
-        (item) => {
-            return item.playerId === playerId;
-        }
-    );
+    let leaderBoardGuessedIndex = leaderBoardGuessed.findIndex((item) => {
+        return item.playerId === playerId;
+    });
 
     if (leaderBoardGuessedIndex < 0) {
-        leaderBoardGuessedIndex = leaderBoardGuessed.push({playerId: playerId}) - 1;
+        leaderBoardGuessedIndex = leaderBoardGuessed.push({ playerId: playerId }) - 1;
     }
     leaderBoardGuessed[leaderBoardGuessedIndex].found = payload.found;
     if (payload.trophy) {
         leaderBoardGuessed[leaderBoardGuessedIndex].trophy = payload.trophy;
         let podiumKey;
         if (payload.trophy === 1) {
-            podiumKey = "first"
+            podiumKey = 'first';
         } else if (payload.trophy === 2) {
-            podiumKey = "second"
+            podiumKey = 'second';
         } else if (payload.trophy === 3) {
-            podiumKey = "third"
+            podiumKey = 'third';
         }
-        if (podiumKey)
-            currentMusicPodium[podiumKey] = gamePlayers[playerObjectIndex]['nickname'];
+        if (podiumKey) currentMusicPodium[podiumKey] = gamePlayers[playerObjectIndex]['nickname'];
     }
 
     // IHM feedback for the concerned user
@@ -96,7 +101,7 @@ export const onGuessed = (localPLayerId, gamePlayers, leaderBoardSummary, leader
 
         sendMessage({
             level: 'nice',
-            message: "Bravo, tu as trouvé !"
+            message: 'Bravo, tu as trouvé !',
         });
     }
 };
@@ -107,6 +112,6 @@ export const sendMessageOnChat = (socket, categoryId, playerId, playerToken, tim
         playerId,
         playerToken,
         time,
-        message
+        message,
     });
 };

@@ -3,7 +3,7 @@ const MusicServerBaseUrl = process.env.REACT_APP_MUSIC_SERVER_URL;
 
 const config = {
     ApiUrl: ApiUrl,
-    MusicServerBaseUrl: MusicServerBaseUrl
+    MusicServerBaseUrl: MusicServerBaseUrl,
 };
 
 export default config;

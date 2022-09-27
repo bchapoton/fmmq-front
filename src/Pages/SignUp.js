@@ -1,27 +1,27 @@
-import React, {useState} from 'react';
-import {makeStyles} from "@mui/styles";
-import Grid from "@mui/material/Grid";
-import {useForm} from "react-hook-form";
-import {Card, CardActions, TextField} from "@mui/material";
-import Button from "@mui/material/Button";
-import {signUp} from "../services/NetworkService";
-import {Navigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {hideLoader, showLoader} from "../store/actions/loader.action";
-import ButtonRouter from "../layout/ButtonRouter";
-import Typography from "@mui/material/Typography";
-import {cyan} from "@mui/material/colors";
-import {ROUTE_DASHBOARD, ROUTE_LOGIN} from "../router/routes";
+import React, { useState } from 'react';
+import { makeStyles } from '@mui/styles';
+import Grid from '@mui/material/Grid';
+import { useForm } from 'react-hook-form';
+import { Card, CardActions, TextField } from '@mui/material';
+import Button from '@mui/material/Button';
+import { signUp } from '../services/NetworkService';
+import { Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { hideLoader, showLoader } from '../store/actions/loader.action';
+import ButtonRouter from '../layout/ButtonRouter';
+import Typography from '@mui/material/Typography';
+import { cyan } from '@mui/material/colors';
+import { ROUTE_DASHBOARD, ROUTE_LOGIN } from '../router/routes';
 
 const useStyles = makeStyles({
     root: {
         display: 'flex',
         margin: '2rem 0',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     title: {
-        textAlign: 'center'
+        textAlign: 'center',
     },
     card: {
         width: '500px',
@@ -29,26 +29,28 @@ const useStyles = makeStyles({
     },
     registeredCard: {
         width: '400px',
-        padding: '1rem'
+        padding: '1rem',
     },
     registeredAction: {
         display: 'flex',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
     },
     cguLink: {
-        color: cyan[500]
-    }
+        color: cyan[500],
+    },
 });
 
 function SignUp() {
     const classes = useStyles();
-    const {handleSubmit, register, errors, clearError, triggerValidation, watch, setError} = useForm({mode: 'onBlur'});
+    const { handleSubmit, register, errors, clearError, triggerValidation, watch, setError } = useForm({
+        mode: 'onBlur',
+    });
     const dispatch = useDispatch();
     const [registered, setRegistered] = useState(false);
 
-    const loggedIn = useSelector(({context}) => context.loggedIN);
+    const loggedIn = useSelector(({ context }) => context.loggedIN);
     if (loggedIn) {
-        return (<Navigate to={ROUTE_DASHBOARD}/>)
+        return <Navigate to={ROUTE_DASHBOARD} />;
     }
 
     const onSubmit = async (data) => {
@@ -56,17 +58,20 @@ function SignUp() {
             console.log(data);
             clearError();
             dispatch(showLoader());
-            signUp(data, (response) => {
+            signUp(
+                data,
+                (response) => {
                     setRegistered(true);
                 },
-                error => {
+                (error) => {
                     console.log(error.response.data);
                     if (error.response.data && error.response.data.errors) {
                         error.response.data.errors.forEach(function (item) {
-                            setError(item.field, "duplicate", item.message);
+                            setError(item.field, 'duplicate', item.message);
                         });
                     }
-                }).then(() => dispatch(hideLoader()));
+                },
+            ).then(() => dispatch(hideLoader()));
         }
     };
 
@@ -75,11 +80,11 @@ function SignUp() {
             <div className={classes.root}>
                 <Card className={classes.registeredCard} elevation={3}>
                     <h3>Bienvenue sur FMMQ !</h3>
-                    <Typography>
-                        Tu peux dès à présent te connecter et venir jouer !
-                    </Typography>
+                    <Typography>Tu peux dès à présent te connecter et venir jouer !</Typography>
                     <CardActions className={classes.registeredAction}>
-                        <ButtonRouter to={ROUTE_LOGIN} color='primary' variant='contained'>Se connecter</ButtonRouter>
+                        <ButtonRouter to={ROUTE_LOGIN} color="primary" variant="contained">
+                            Se connecter
+                        </ButtonRouter>
                     </CardActions>
                 </Card>
             </div>
@@ -90,27 +95,27 @@ function SignUp() {
         <div className={classes.root}>
             <Card elevation={3} className={classes.card}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <Grid container spacing={2} direction='column'>
+                    <Grid container spacing={2} direction="column">
                         <Grid item>
                             <TextField
-                                id='nickname'
-                                name='nickname'
-                                type='text'
-                                label='Pseudo'
-                                variant='outlined'
+                                id="nickname"
+                                name="nickname"
+                                type="text"
+                                label="Pseudo"
+                                variant="outlined"
                                 error={errors && errors.nickname ? true : false}
                                 helperText={errors && errors.nickname ? errors.nickname.message : ''}
                                 fullWidth
-                                inputRef={register({required: "Le pseudo est obligatoire"})}
+                                inputRef={register({ required: 'Le pseudo est obligatoire' })}
                             />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id='email'
-                                name='email'
-                                type='text'
-                                label='Email'
-                                variant='outlined'
+                                id="email"
+                                name="email"
+                                type="text"
+                                label="Email"
+                                variant="outlined"
                                 error={errors && errors.email ? true : false}
                                 helperText={errors && errors.email ? errors.email.message : ''}
                                 fullWidth
@@ -118,63 +123,62 @@ function SignUp() {
                                     required: "L'email est obligatoire",
                                     pattern: {
                                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                                        message: "Le format de l'email est invalide"
-                                    }
+                                        message: "Le format de l'email est invalide",
+                                    },
                                 })}
                             />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id='emailConfirm'
-                                name='emailConfirm'
-                                type='text'
-                                label='Confirmer votre email'
-                                variant='outlined'
+                                id="emailConfirm"
+                                name="emailConfirm"
+                                type="text"
+                                label="Confirmer votre email"
+                                variant="outlined"
                                 error={errors && errors.emailConfirm ? true : false}
                                 helperText={errors && errors.emailConfirm ? errors.emailConfirm.message : ''}
                                 fullWidth
                                 inputRef={register({
-                                    required: "Vous devez confirmer votre email",
-                                    validate: (value) => value === watch("email") || "L'email' et la confirmation doivent être identique"
+                                    required: 'Vous devez confirmer votre email',
+                                    validate: (value) =>
+                                        value === watch('email') ||
+                                        "L'email' et la confirmation doivent être identique",
                                 })}
                             />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id='password'
-                                name='password'
-                                variant='outlined'
-                                type='password'
-                                label='Mot de passe'
+                                id="password"
+                                name="password"
+                                variant="outlined"
+                                type="password"
+                                label="Mot de passe"
                                 fullWidth
-                                inputRef={register({required: 'Le mot de passe est obligatoire'})}
+                                inputRef={register({ required: 'Le mot de passe est obligatoire' })}
                                 error={errors && errors.password ? true : false}
                                 helperText={errors && errors.password ? errors.password.message : ''}
                             />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id='passwordConfirm'
-                                name='passwordConfirm'
-                                variant='outlined'
-                                type='password'
-                                label='Confirmer votre mot de passe'
+                                id="passwordConfirm"
+                                name="passwordConfirm"
+                                variant="outlined"
+                                type="password"
+                                label="Confirmer votre mot de passe"
                                 fullWidth
                                 inputRef={register({
-                                    required: "Vous devez confirmer votre mot de passe",
-                                    validate: (value) => value === watch("password") || 'Le mot de passe et la confirmation doivent être identique'
+                                    required: 'Vous devez confirmer votre mot de passe',
+                                    validate: (value) =>
+                                        value === watch('password') ||
+                                        'Le mot de passe et la confirmation doivent être identique',
                                 })}
                                 error={errors && errors.passwordConfirm ? true : false}
                                 helperText={errors && errors.passwordConfirm ? errors.passwordConfirm.message : ''}
                             />
                         </Grid>
                         <Grid item>
-                            <Button
-                                variant='contained'
-                                color='primary'
-                                type='submit'
-                                fullWidth
-                            >
+                            <Button variant="contained" color="primary" type="submit" fullWidth>
                                 M'ENREGISTRER
                             </Button>
                         </Grid>

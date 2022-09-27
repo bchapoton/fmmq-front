@@ -1,25 +1,25 @@
-import React, {useState} from 'react'
-import {makeStyles} from "@mui/styles";
-import Button from "@mui/material/Button";
-import {useDispatch} from "react-redux";
-import {hideLoader, showLoader} from "../../store/actions/loader.action";
-import PropTypes from "prop-types";
-import JSONPretty from "react-json-pretty";
-import JSONPrettyMon from "react-json-pretty/themes/monikai.css";
+import React, { useState } from 'react';
+import { makeStyles } from '@mui/styles';
+import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux';
+import { hideLoader, showLoader } from '../../store/actions/loader.action';
+import PropTypes from 'prop-types';
+import JSONPretty from 'react-json-pretty';
+import JSONPrettyMon from 'react-json-pretty/themes/monikai.css';
 
 const useStyle = makeStyles({
     root: {
-        padding: '1rem'
+        padding: '1rem',
     },
     operatorContainer: {
         display: 'flex',
-        justifyContent: 'space-between'
-    }
+        justifyContent: 'space-between',
+    },
 });
 
 function AdminPageOperations(props) {
     const classes = useStyle();
-    const {operations} = props;
+    const { operations } = props;
     const dispatch = useDispatch();
     const [operationResult, setOperationResult] = useState();
 
@@ -39,32 +39,33 @@ function AdminPageOperations(props) {
         <div className={classes.root}>
             <h2>Opérations</h2>
             <div className={classes.operatorContainer}>
-                {operations.map(operation => {
+                {operations.map((operation) => {
                     return (
                         <Button
                             key={operation.label}
-                            variant='contained'
-                            color='primary'
+                            variant="contained"
+                            color="primary"
                             onClick={() => {
                                 dispatch(showLoader());
-                                operation.axiosPromise()
-                                    .then(response => {
-                                        setOperationResult((
+                                operation
+                                    .axiosPromise()
+                                    .then((response) => {
+                                        setOperationResult(
                                             <React.Fragment>
                                                 <h4>Opération terminée</h4>
                                                 <div>
-                                                    <JSONPretty data={response.data} theme={JSONPrettyMon}/>
+                                                    <JSONPretty data={response.data} theme={JSONPrettyMon} />
                                                 </div>
-                                            </React.Fragment>
-                                        ));
+                                            </React.Fragment>,
+                                        );
                                     })
-                                    .catch(error => {
-                                        setOperationResult((
+                                    .catch((error) => {
+                                        setOperationResult(
                                             <React.Fragment>
                                                 <h4>Error occured</h4>
                                                 <div>{error.message}</div>
-                                            </React.Fragment>
-                                        ));
+                                            </React.Fragment>,
+                                        );
                                     })
                                     .then(() => {
                                         dispatch(hideLoader());
@@ -76,23 +77,22 @@ function AdminPageOperations(props) {
                     );
                 })}
             </div>
-            {operationResult ?
-                (<div>
+            {operationResult ? (
+                <div>
                     <Button onClick={() => setOperationResult(null)}>clear</Button>
                     {operationResult}
-                </div>)
-                : null}
-
+                </div>
+            ) : null}
         </div>
     );
 }
 
 AdminPageOperations.propTypes = {
-    operations: PropTypes.array
+    operations: PropTypes.array,
 };
 
 AdminPageOperations.defaultProps = {
-    operations: []
+    operations: [],
 };
 
 export default AdminPageOperations;

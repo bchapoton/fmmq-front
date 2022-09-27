@@ -1,20 +1,20 @@
-import React, {useEffect, useState} from 'react'
-import {makeStyles} from "@mui/styles";
-import TableContainer from "@mui/material/TableContainer";
-import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import Paper from "@mui/material/Paper";
-import TableBody from "@mui/material/TableBody";
-import PropTypes from "prop-types";
-import ButtonRouter from "../../layout/ButtonRouter";
-import {valueConverter} from "./AdminValueConverter";
-import AdminLoadingErrorDisplay from "./AdminLoadingErrorDisplay";
-import AdminPager from "./AdminPager";
-import Button from "@mui/material/Button";
-import {useDispatch} from "react-redux";
-import {hideLoader, showLoader} from "../../store/actions/loader.action";
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from '@mui/styles';
+import TableContainer from '@mui/material/TableContainer';
+import Table from '@mui/material/Table';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import Paper from '@mui/material/Paper';
+import TableBody from '@mui/material/TableBody';
+import PropTypes from 'prop-types';
+import ButtonRouter from '../../layout/ButtonRouter';
+import { valueConverter } from './AdminValueConverter';
+import AdminLoadingErrorDisplay from './AdminLoadingErrorDisplay';
+import AdminPager from './AdminPager';
+import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux';
+import { hideLoader, showLoader } from '../../store/actions/loader.action';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const useStyles = makeStyles({
@@ -22,14 +22,14 @@ const useStyles = makeStyles({
         minWidth: 650,
     },
     header: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     buttonContainer: {
         display: 'flex',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        margin: '5px 0'
-    }
+        margin: '5px 0',
+    },
 });
 
 const pagerSize = 20;
@@ -37,7 +37,7 @@ const pagerInitialState = '0-' + pagerSize;
 
 function AdminTable(props) {
     const classes = useStyles();
-    const {headers, actions, getValuesCallback, countCallback, deleteCallback} = props;
+    const { headers, actions, getValuesCallback, countCallback, deleteCallback } = props;
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
     const [rows, setRows] = useState([]);
@@ -54,11 +54,11 @@ function AdminTable(props) {
             setError(null);
             setLoading(true);
             getValuesCallback(pager)
-                .then(response => {
+                .then((response) => {
                     setRows(response.data);
                     setCurrentDataSize(response.data.length);
                 })
-                .catch(error => {
+                .catch((error) => {
                     setError(error);
                 })
                 .then(() => setLoading(false));
@@ -68,19 +68,17 @@ function AdminTable(props) {
     useEffect(() => {
         loadData(pagerInitialState);
         countCallback()
-            .then(response => {
+            .then((response) => {
                 setFullSize(response.data.count);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log("can't count full size object : " + error.message);
             });
     }, []);
 
     return (
         <AdminLoadingErrorDisplay loading={loading} error={error}>
-            <div>
-                {deleteMessage}
-            </div>
+            <div>{deleteMessage}</div>
             <AdminPager
                 loadData={loadData}
                 setPager={setPager}
@@ -94,16 +92,15 @@ function AdminTable(props) {
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
-                            {headers.map(header => {
+                            {headers.map((header) => {
                                 return (
-                                    <TableCell key={`header-${header.id}`}><span
-                                        className={classes.header}>{header.label}</span></TableCell>
+                                    <TableCell key={`header-${header.id}`}>
+                                        <span className={classes.header}>{header.label}</span>
+                                    </TableCell>
                                 );
                             })}
-                            {actions.map(action => {
-                                return (
-                                    <TableCell key={`action-${action.label}`}>&nbsp;</TableCell>
-                                );
+                            {actions.map((action) => {
+                                return <TableCell key={`action-${action.label}`}>&nbsp;</TableCell>;
                             })}
                         </TableRow>
                     </TableHead>
@@ -118,62 +115,56 @@ function AdminTable(props) {
                                         const value = row[header.id];
                                         const cellKey = `${rowKey}-cell-${value}-${index}`;
 
-                                        return (
-                                            <TableCell key={cellKey}>{valueConverter(header, value)}</TableCell>
-                                        );
+                                        return <TableCell key={cellKey}>{valueConverter(header, value)}</TableCell>;
                                     })}
-                                    {actions.map(action => {
+                                    {actions.map((action) => {
                                         return (
                                             <TableCell key={`${rowKey}-action-${action.id}`}>
-                                                <ButtonRouter variant='outlined' to={generateActionUrl(action.url, idValue)}>
+                                                <ButtonRouter
+                                                    variant="outlined"
+                                                    to={generateActionUrl(action.url, idValue)}
+                                                >
                                                     {action.label}
                                                 </ButtonRouter>
                                             </TableCell>
                                         );
                                     })}
-                                    {deleteCallback ?
-                                        (
-                                            <TableCell key={`${rowKey}-deleteAction`}>
-                                                <Button
-                                                    variant='outlined'
-                                                    onClick={() => {
-                                                        dispatch(showLoader());
-                                                        deleteCallback(idValue)
-                                                            .then((response => {
-                                                                setDeleteMessage((
-                                                                    <span>Element supprimé</span>
-                                                                ));
-                                                                loadData(pager);
-                                                            }))
-                                                            .catch(error => {
-                                                                setDeleteMessage((
-                                                                    <span>L'élement n'a pas pu être supprimé</span>
-                                                                ));
-                                                            })
-                                                            .then(() => {
-                                                                dispatch(hideLoader());
-                                                                setTimeout(() => setDeleteMessage(null), 3000)
-                                                            })
-                                                    }}
-                                                >
-                                                    <DeleteIcon/>
-                                                </Button>
-                                            </TableCell>
-                                        )
-                                        : null}
+                                    {deleteCallback ? (
+                                        <TableCell key={`${rowKey}-deleteAction`}>
+                                            <Button
+                                                variant="outlined"
+                                                onClick={() => {
+                                                    dispatch(showLoader());
+                                                    deleteCallback(idValue)
+                                                        .then((response) => {
+                                                            setDeleteMessage(<span>Element supprimé</span>);
+                                                            loadData(pager);
+                                                        })
+                                                        .catch((error) => {
+                                                            setDeleteMessage(
+                                                                <span>L'élement n'a pas pu être supprimé</span>,
+                                                            );
+                                                        })
+                                                        .then(() => {
+                                                            dispatch(hideLoader());
+                                                            setTimeout(() => setDeleteMessage(null), 3000);
+                                                        });
+                                                }}
+                                            >
+                                                <DeleteIcon />
+                                            </Button>
+                                        </TableCell>
+                                    ) : null}
                                 </TableRow>
-                            )
+                            );
                         })}
-                        {rows.length === 0 ?
-                            (<TableRow>
-                                <TableCell
-                                    colSpan={headers.length + actions.length}
-                                    align='center'
-                                >
+                        {rows.length === 0 ? (
+                            <TableRow>
+                                <TableCell colSpan={headers.length + actions.length} align="center">
                                     Aucune donnée
                                 </TableCell>
-                            </TableRow>)
-                            : null}
+                            </TableRow>
+                        ) : null}
                     </TableBody>
                 </Table>
             </TableContainer>
@@ -187,7 +178,7 @@ function AdminTable(props) {
                 pagerSize={pagerSize}
             />
         </AdminLoadingErrorDisplay>
-    )
+    );
 }
 
 function findIdHeader(headers) {
@@ -213,7 +204,7 @@ AdminTable.propTypes = {
 
 AdminTable.defaultProps = {
     actions: [],
-    deleteCallback: null
+    deleteCallback: null,
 };
 
 export default AdminTable;

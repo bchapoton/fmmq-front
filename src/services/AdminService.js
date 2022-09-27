@@ -1,93 +1,75 @@
-import {getRestClient} from "./NetworkUtils";
+import { getRestClient } from './NetworkUtils';
 
 export const getUsersAdmin = (pager) => {
-    return getRestClient(true, {pager: pager})
-        .get('admin/users');
+    return getRestClient(true, { pager: pager }).get('admin/users');
 };
 
 export const countUsersAdmin = () => {
-    return getRestClient()
-        .get('admin/count/users');
+    return getRestClient().get('admin/count/users');
 };
 
 export const getGamesAdmin = (pager) => {
-    return getRestClient(true, {pager: pager})
-        .get('admin/games');
+    return getRestClient(true, { pager: pager }).get('admin/games');
 };
 
 export const countGamesAdmin = () => {
-    return getRestClient()
-        .get('admin/count/games');
+    return getRestClient().get('admin/count/games');
 };
 
 export const getCategoriesAdmin = (pager) => {
-    return getRestClient(true, {pager: pager})
-        .get('admin/categories');
+    return getRestClient(true, { pager: pager }).get('admin/categories');
 };
 
 export const createCategoriesAdmin = (payload) => {
-    return getRestClient()
-        .post('admin/categories', payload);
+    return getRestClient().post('admin/categories', payload);
 };
 
 export const putCategoriesAdmin = (id, payload) => {
-    return getRestClient()
-        .put(`admin/categories/${id}`, payload);
+    return getRestClient().put(`admin/categories/${id}`, payload);
 };
 
 export const getCategoryAdmin = (id) => {
-    return getRestClient()
-        .get(`admin/categories/${id}`);
+    return getRestClient().get(`admin/categories/${id}`);
 };
 
 export const deleteCategoryByIdAdmin = (id) => {
-    return getRestClient()
-        .delete(`admin/categories/${id}`);
+    return getRestClient().delete(`admin/categories/${id}`);
 };
 
 export const countCategoriesAdmin = () => {
-    return getRestClient()
-        .get('admin/count/categories');
+    return getRestClient().get('admin/count/categories');
 };
 
 export const getMusicsAdmin = (pager) => {
-    return getRestClient(true, {pager: pager})
-        .get('admin/musics');
+    return getRestClient(true, { pager: pager }).get('admin/musics');
 };
 
 export const countMusicsAdmin = () => {
-    return getRestClient()
-        .get('admin/count/musics');
+    return getRestClient().get('admin/count/musics');
 };
 
 export const getImportsAdmin = (pager) => {
-    return getRestClient(true, {pager: pager})
-        .get('admin/imports');
+    return getRestClient(true, { pager: pager }).get('admin/imports');
 };
 
 export const getImportByIdAdmin = (id) => {
-    return getRestClient()
-        .get(`admin/imports/${id}`);
+    return getRestClient().get(`admin/imports/${id}`);
 };
 
 export const doImportAdmin = (id) => {
-    return getRestClient()
-        .post(`admin/imports/${id}`);
+    return getRestClient().post(`admin/imports/${id}`);
 };
 
 export const createImportsAdmin = (payload) => {
-    return getRestClient()
-        .post('admin/imports', payload);
+    return getRestClient().post('admin/imports', payload);
 };
 
 export const deleteImportsAdmin = (id) => {
-    return getRestClient()
-        .delete(`admin/imports/${id}`);
+    return getRestClient().delete(`admin/imports/${id}`);
 };
 
 export const countImportsAdmin = () => {
-    return getRestClient()
-        .get('admin/count/imports');
+    return getRestClient().get('admin/count/imports');
 };
 
 export const getServerConfigAdmin = () => {

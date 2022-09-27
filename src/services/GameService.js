@@ -1,5 +1,5 @@
-import forge from "node-forge";
-import {getRestClient} from "./NetworkUtils";
+import forge from 'node-forge';
+import { getRestClient } from './NetworkUtils';
 
 export const sortPayersInRoom = (playersInRoom) => {
     if (!playersInRoom || playersInRoom.length === 0) {
@@ -22,16 +22,13 @@ export const decrypt = (data, key, iv) => {
 };
 
 export const getGame = (gameId) => {
-    return getRestClient()
-        .get(`games/over/${gameId}`);
+    return getRestClient().get(`games/over/${gameId}`);
 };
 
 export const listGames = (start, limit) => {
-    return getRestClient(true, {pager: `${start}-${limit}`})
-        .get('games/podiums');
+    return getRestClient(true, { pager: `${start}-${limit}` }).get('games/podiums');
 };
 
 export const joinChatEndGame = (categoryId) => {
-    return getRestClient()
-        .post(`chat/${categoryId}/join`, {});
+    return getRestClient().post(`chat/${categoryId}/join`, {});
 };

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react'
-import {useDispatch} from "react-redux";
-import {getUserDataFromJWT, hasJWT, isJWTExpired, refreshToken} from "../services/NetworkUtils";
-import {setUserData} from "../store/actions/context.action";
-import LocalLoader from "./LocalLoader";
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getUserDataFromJWT, hasJWT, isJWTExpired, refreshToken } from '../services/NetworkUtils';
+import { setUserData } from '../store/actions/context.action';
+import LocalLoader from './LocalLoader';
 
 function RestoreSessionProvider(props) {
-    const {children} = props;
+    const { children } = props;
     const dispatch = useDispatch();
     const [waiting, setWaiting] = useState(true);
 
@@ -17,7 +17,7 @@ function RestoreSessionProvider(props) {
                     .then(() => {
                         dispatch(setUserData(getUserDataFromJWT()));
                     })
-                    .catch(e => console.log('error ' + e))
+                    .catch((e) => console.log('error ' + e))
                     .then(() => {
                         setWaiting(false);
                     });
@@ -31,11 +31,7 @@ function RestoreSessionProvider(props) {
         }
     }, [dispatch, setWaiting]);
 
-    return (
-        <div>
-            {waiting ? <LocalLoader/> : children}
-        </div>
-    )
+    return <div>{waiting ? <LocalLoader /> : children}</div>;
 }
 
 export default RestoreSessionProvider;

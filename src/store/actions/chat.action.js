@@ -5,13 +5,13 @@ export function displayChatEndGame(categoryId) {
     return {
         type: DISPLAY_CHAT,
         payload: {
-            categoryId
-        }
-    }
+            categoryId,
+        },
+    };
 }
 
 export function hideChatEndGame() {
     return {
-        type: HIDE_CHAT
-    }
+        type: HIDE_CHAT,
+    };
 }

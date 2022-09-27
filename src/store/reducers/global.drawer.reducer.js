@@ -1,20 +1,20 @@
-import {HIDE_DRAWER, SHOW_DRAWER} from "../actions/global.drawer.action";
+import { HIDE_DRAWER, SHOW_DRAWER } from '../actions/global.drawer.action';
 
 const initialState = {
-    show: false
+    show: false,
 };
 
 const globalDrawer = function (state = initialState, action) {
     switch (action.type) {
         case HIDE_DRAWER: {
             return {
-                show: false
-            }
+                show: false,
+            };
         }
         case SHOW_DRAWER: {
             return {
-                show: true
-            }
+                show: true,
+            };
         }
         default: {
             return state;

@@ -1,19 +1,12 @@
-import React from 'react'
-import {getAdminMenu} from "../../layout/menus/FMMQMenus";
-import CommonsMenuPageWrapper from "../commons/CommonsMenuPageWrapper";
+import React from 'react';
+import { getAdminMenu } from '../../layout/menus/FMMQMenus';
+import CommonsMenuPageWrapper from '../commons/CommonsMenuPageWrapper';
 
 function AdminPageMenuWrapper(props) {
-    const {children} = props;
+    const { children } = props;
     const adminMenu = getAdminMenu();
-    return (
-        <CommonsMenuPageWrapper
-            menuArray={adminMenu}
-        >
-            {children}
-        </CommonsMenuPageWrapper>
-    )
+    return <CommonsMenuPageWrapper menuArray={adminMenu}>{children}</CommonsMenuPageWrapper>;
 }
-
 
 AdminPageMenuWrapper.propTypes = {};
 

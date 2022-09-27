@@ -1,8 +1,8 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import NetworkConfig from "../config/NetworkConfig";
-import {ROUTE_LOGIN} from "../router/routes";
-import Exception from "../exceptions/Exception";
+import NetworkConfig from '../config/NetworkConfig';
+import { ROUTE_LOGIN } from '../router/routes';
+import Exception from '../exceptions/Exception';
 
 export function getRestClient(authenticated = true, additionalHeaders = null) {
     let headers = {};
@@ -14,20 +14,19 @@ export function getRestClient(authenticated = true, additionalHeaders = null) {
             return;
         }
         headers = {
-            authorization: getJWT()
+            authorization: getJWT(),
         };
     }
 
-    if(additionalHeaders) {
+    if (additionalHeaders) {
         headers = Object.assign({}, headers, additionalHeaders);
     }
 
     const instance = axios.create({
         baseURL: NetworkConfig.ApiUrl,
         timeout: 0, // no timeout
-        headers: headers
+        headers: headers,
     });
-
 
     if (authenticated) {
         instance.interceptors.request.use(async (config) => {
@@ -89,7 +88,7 @@ export function isExpired(jwt) {
     } catch (e) {
         return true;
     }
-    return decoded.expire < (new Date()).getTime();
+    return decoded.expire < new Date().getTime();
 }
 
 export async function refreshToken() {
@@ -100,10 +99,12 @@ export async function refreshToken() {
     }
     console.log('refresh token');
     // token expired refresh it
-    const response = await axios.create({
-        baseURL: NetworkConfig.ApiUrl,
-        timeout: 0
-    }).post('auth/refresh', {refreshToken: getRefreshToken(), token: getJWT()});
+    const response = await axios
+        .create({
+            baseURL: NetworkConfig.ApiUrl,
+            timeout: 0,
+        })
+        .post('auth/refresh', { refreshToken: getRefreshToken(), token: getJWT() });
     if (response && response.status !== 200) {
         throw new Exception("can't refresh the token", 'REFRESH-TOKEN-FAILED');
     }

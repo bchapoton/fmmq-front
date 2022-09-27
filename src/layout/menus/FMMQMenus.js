@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
     ROUTE_ADMIN_CACHE_DISPLAY,
     ROUTE_ADMIN_CATEGORIES,
@@ -12,17 +12,17 @@ import {
     ROUTE_CONTRIBUTOR_MUSICS,
     ROUTE_DASHBOARD,
     ROUTE_LOGIN,
-    ROUTE_SIGN_UP
-} from "../../router/routes";
-import PersonIcon from "@mui/icons-material/Person";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
-import {clearUserData} from "../../store/actions/context.action";
-import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
-import CategoryIcon from "@mui/icons-material/Category";
-import AudiotrackIcon from "@mui/icons-material/Audiotrack";
+    ROUTE_SIGN_UP,
+} from '../../router/routes';
+import PersonIcon from '@mui/icons-material/Person';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import { clearUserData } from '../../store/actions/context.action';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import CategoryIcon from '@mui/icons-material/Category';
+import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import SortIcon from '@mui/icons-material/Sort';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -32,13 +32,13 @@ export function getAnonymousMenu() {
     return [
         {
             label: 'Connexion',
-            icon: (<PersonIcon/>),
-            url: ROUTE_LOGIN
+            icon: <PersonIcon />,
+            url: ROUTE_LOGIN,
         },
         {
             label: 'Créer un compte',
-            icon: (<AssignmentIcon/>),
-            url: ROUTE_SIGN_UP
+            icon: <AssignmentIcon />,
+            url: ROUTE_SIGN_UP,
         },
     ];
 }
@@ -47,22 +47,22 @@ export function getConnectedMenu(dispatch, navigate) {
     return [
         {
             label: 'Dashboard',
-            icon: (<DashboardIcon/>),
-            url: ROUTE_DASHBOARD
+            icon: <DashboardIcon />,
+            url: ROUTE_DASHBOARD,
         },
         {
             label: 'Historique',
-            icon: (<SortIcon/>),
-            url: ROUTE_ALL_GAME
+            icon: <SortIcon />,
+            url: ROUTE_ALL_GAME,
         },
         {
             label: 'Déconnexion',
-            icon: (<DirectionsRunIcon/>),
+            icon: <DirectionsRunIcon />,
             callback: () => {
                 dispatch(clearUserData());
                 navigate(ROUTE_LOGIN);
-            }
-        }
+            },
+        },
     ];
 }
 
@@ -70,38 +70,38 @@ export function getAdminMenu() {
     return [
         {
             label: 'Configuration serveur',
-            icon: (<SettingsIcon/>),
-            url: ROUTE_ADMIN_SERVER_CONFIG
+            icon: <SettingsIcon />,
+            url: ROUTE_ADMIN_SERVER_CONFIG,
         },
         {
             label: 'Cache serveur',
-            icon: (<CachedIcon/>),
-            url: ROUTE_ADMIN_CACHE_DISPLAY
+            icon: <CachedIcon />,
+            url: ROUTE_ADMIN_CACHE_DISPLAY,
         },
         {
             label: 'Imports',
-            icon: (<ImportExportIcon/>),
-            url: ROUTE_ADMIN_IMPORTS
+            icon: <ImportExportIcon />,
+            url: ROUTE_ADMIN_IMPORTS,
         },
         {
             label: 'Utilisateurs',
-            icon: (<SupervisorAccountIcon/>),
-            url: ROUTE_ADMIN_USERS
+            icon: <SupervisorAccountIcon />,
+            url: ROUTE_ADMIN_USERS,
         },
         {
             label: 'Parties jouées',
-            icon: (<SportsEsportsIcon/>),
-            url: ROUTE_ADMIN_GAMES
+            icon: <SportsEsportsIcon />,
+            url: ROUTE_ADMIN_GAMES,
         },
         {
             label: 'Catégories',
-            icon: (<CategoryIcon/>),
-            url: ROUTE_ADMIN_CATEGORIES
+            icon: <CategoryIcon />,
+            url: ROUTE_ADMIN_CATEGORIES,
         },
         {
             label: 'Musiques',
-            icon: (<AudiotrackIcon/>),
-            url: ROUTE_ADMIN_MUSICS
+            icon: <AudiotrackIcon />,
+            url: ROUTE_ADMIN_MUSICS,
         },
     ];
 }
@@ -110,13 +110,13 @@ export function getContributorMenu() {
     return [
         {
             label: 'Imports',
-            icon: (<ImportExportIcon/>),
-            url: ROUTE_CONTRIBUTOR_IMPORTS
+            icon: <ImportExportIcon />,
+            url: ROUTE_CONTRIBUTOR_IMPORTS,
         },
         {
             label: 'Musiques',
-            icon: (<AudiotrackIcon/>),
-            url: ROUTE_CONTRIBUTOR_MUSICS
+            icon: <AudiotrackIcon />,
+            url: ROUTE_CONTRIBUTOR_MUSICS,
         },
     ];
 }

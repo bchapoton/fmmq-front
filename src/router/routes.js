@@ -1,30 +1,34 @@
-import React from 'react'
-import Login from "../Pages/Login";
-import SignUp from "../Pages/SignUp";
-import GameRoom from "../Pages/GameRoom";
-import Dashboard from "../Pages/Dashboard";
-import {ROLE_ADMIN, ROLE_CONTRIBUTOR, ROLE_PLAYER} from "./roles";
-import EndGame from "../Pages/EndGame";
-import GameHistory from "../Pages/GameHistory";
-import AdminUsers from "../Pages/Admin/AdminUsers";
-import AdminGames from "../Pages/Admin/AdminGames";
-import AdminCategories from "../Pages/Admin/AdminCategories";
-import AdminMusics from "../Pages/Admin/AdminMusics";
-import AdminServerConfigs from "../Pages/Admin/AdminServerConfigs";
-import AdminImports from "../Pages/Admin/AdminImports";
-import CreateImportCommons from "../Pages/commons/CreateImportCommons";
-import EditImportCommons from "../Pages/commons/EditImportCommons";
-import AdminCreateCategory from "../Pages/Admin/AdminCreateCategory";
-import AdminEditCategory from "../Pages/Admin/AdminEditCategory";
-import AllGame from "../Pages/AllGames";
-import ContributorMusic from "../Pages/Contributor/ContributorMusic";
-import ContributorImports from "../Pages/Contributor/ContributorImports";
-import {createImportsAdmin, doImportAdmin, getImportByIdAdmin} from "../services/AdminService";
-import {createImportsContributor, doImportContributor, getImportByIdContributor} from "../services/ContributorService";
-import EditUserAdmin from "../Pages/Admin/EditUserAdmin";
-import AdminCacheDisplay from "../Pages/Admin/AdminCacheDisplay";
-import AdminRoomCacheDisplay from "../Pages/Admin/AdminRoomCacheDisplay";
-import Home from "../Pages/Home";
+import React from 'react';
+import Login from '../Pages/Login';
+import SignUp from '../Pages/SignUp';
+import GameRoom from '../Pages/GameRoom';
+import Dashboard from '../Pages/Dashboard';
+import { ROLE_ADMIN, ROLE_CONTRIBUTOR, ROLE_PLAYER } from './roles';
+import EndGame from '../Pages/EndGame';
+import GameHistory from '../Pages/GameHistory';
+import AdminUsers from '../Pages/Admin/AdminUsers';
+import AdminGames from '../Pages/Admin/AdminGames';
+import AdminCategories from '../Pages/Admin/AdminCategories';
+import AdminMusics from '../Pages/Admin/AdminMusics';
+import AdminServerConfigs from '../Pages/Admin/AdminServerConfigs';
+import AdminImports from '../Pages/Admin/AdminImports';
+import CreateImportCommons from '../Pages/commons/CreateImportCommons';
+import EditImportCommons from '../Pages/commons/EditImportCommons';
+import AdminCreateCategory from '../Pages/Admin/AdminCreateCategory';
+import AdminEditCategory from '../Pages/Admin/AdminEditCategory';
+import AllGame from '../Pages/AllGames';
+import ContributorMusic from '../Pages/Contributor/ContributorMusic';
+import ContributorImports from '../Pages/Contributor/ContributorImports';
+import { createImportsAdmin, doImportAdmin, getImportByIdAdmin } from '../services/AdminService';
+import {
+    createImportsContributor,
+    doImportContributor,
+    getImportByIdContributor,
+} from '../services/ContributorService';
+import EditUserAdmin from '../Pages/Admin/EditUserAdmin';
+import AdminCacheDisplay from '../Pages/Admin/AdminCacheDisplay';
+import AdminRoomCacheDisplay from '../Pages/Admin/AdminRoomCacheDisplay';
+import Home from '../Pages/Home';
 
 export const ROUTE_HOME = '/';
 export const ROUTE_DASHBOARD = '/dashboard';
@@ -58,7 +62,7 @@ export const ROUTE_ADMIN_CACHE_DISPLAY_ROOM = '/administration/cache/objects/:ro
 export const generateRoute = (path, params) => {
     let generatedPath = path;
     if (Array.isArray(params)) {
-        params.forEach(param => generatedPath = replaceParameter(generatedPath, param));
+        params.forEach((param) => (generatedPath = replaceParameter(generatedPath, param)));
     } else {
         generatedPath = replaceParameter(generatedPath, params);
     }
@@ -70,8 +74,7 @@ const replaceParameter = (path, param) => {
         return path.replace(param.name, param.value);
     }
     return path;
-}
-
+};
 
 /**
  * Route description
@@ -84,137 +87,138 @@ const replaceParameter = (path, param) => {
 export const routes = [
     {
         path: ROUTE_HOME,
-        children: (<Home/>)
+        children: <Home />,
     },
     {
         path: ROUTE_DASHBOARD,
         role: ROLE_PLAYER,
-        children: (<Dashboard/>)
+        children: <Dashboard />,
     },
     {
         path: ROUTE_LOGIN,
-        children: (<Login/>)
+        children: <Login />,
     },
     {
         path: ROUTE_SIGN_UP,
-        children: (<SignUp/>)
+        children: <SignUp />,
     },
     {
         path: ROUTE_PLAY,
         role: ROLE_PLAYER,
-        children: (<GameRoom/>)
+        children: <GameRoom />,
     },
     {
         path: ROUTE_END_GAME,
         role: ROLE_PLAYER,
-        children: (<EndGame/>)
+        children: <EndGame />,
     },
     {
         path: ROUTE_GAME_HISTORY,
         role: ROLE_PLAYER,
-        children: (<GameHistory/>)
+        children: <GameHistory />,
     },
     {
         path: ROUTE_ALL_GAME,
         role: ROLE_PLAYER,
-        children: (<AllGame/>)
+        children: <AllGame />,
     },
     // Contributor
     {
         path: ROUTE_CONTRIBUTOR_MUSICS,
         role: ROLE_CONTRIBUTOR,
-        children: (<ContributorMusic/>)
+        children: <ContributorMusic />,
     },
     {
         path: ROUTE_CONTRIBUTOR_IMPORTS,
         role: ROLE_CONTRIBUTOR,
-        children: (<ContributorImports/>)
+        children: <ContributorImports />,
     },
     {
         path: ROUTE_CONTRIBUTOR_IMPORTS_CREATE,
         role: ROLE_CONTRIBUTOR,
-        children: (<CreateImportCommons
-            createImportFunction={createImportsContributor}
-            previousUrlScreen={ROUTE_CONTRIBUTOR_IMPORTS}
-        />)
+        children: (
+            <CreateImportCommons
+                createImportFunction={createImportsContributor}
+                previousUrlScreen={ROUTE_CONTRIBUTOR_IMPORTS}
+            />
+        ),
     },
     {
         path: ROUTE_CONTRIBUTOR_IMPORTS_EDIT,
         role: ROLE_CONTRIBUTOR,
-        children: (<EditImportCommons
-            doImportFunction={doImportContributor}
-            getImportByIdFunction={getImportByIdContributor}
-        />)
+        children: (
+            <EditImportCommons
+                doImportFunction={doImportContributor}
+                getImportByIdFunction={getImportByIdContributor}
+            />
+        ),
     },
     // Administration
     {
         path: ROUTE_ADMIN_USERS,
         role: ROLE_ADMIN,
-        children: (<AdminUsers/>)
-    }, {
+        children: <AdminUsers />,
+    },
+    {
         path: ROUTE_ADMIN_GAMES,
         role: ROLE_ADMIN,
-        children: (<AdminGames/>)
+        children: <AdminGames />,
     },
     {
         path: ROUTE_ADMIN_CATEGORIES,
         role: ROLE_ADMIN,
-        children: (<AdminCategories/>)
+        children: <AdminCategories />,
     },
     {
         path: ROUTE_ADMIN_CREATE_CATEGORY,
         role: ROLE_ADMIN,
-        children: (<AdminCreateCategory/>)
+        children: <AdminCreateCategory />,
     },
     {
         path: ROUTE_ADMIN_EDIT_CATEGORY,
         role: ROLE_ADMIN,
-        children: (<AdminEditCategory/>)
+        children: <AdminEditCategory />,
     },
     {
         path: ROUTE_ADMIN_MUSICS,
         role: ROLE_ADMIN,
-        children: (<AdminMusics/>)
+        children: <AdminMusics />,
     },
     {
         path: ROUTE_ADMIN_SERVER_CONFIG,
         role: ROLE_ADMIN,
-        children: (<AdminServerConfigs/>)
+        children: <AdminServerConfigs />,
     },
     {
         path: ROUTE_ADMIN_IMPORTS,
         role: ROLE_ADMIN,
-        children: (<AdminImports/>)
+        children: <AdminImports />,
     },
     {
         path: ROUTE_ADMIN_IMPORTS_EDIT,
         role: ROLE_ADMIN,
-        children: (<EditImportCommons
-            doImportFunction={doImportAdmin}
-            getImportByIdFunction={getImportByIdAdmin}
-        />)
+        children: <EditImportCommons doImportFunction={doImportAdmin} getImportByIdFunction={getImportByIdAdmin} />,
     },
     {
         path: ROUTE_ADMIN_IMPORTS_CREATE,
         role: ROLE_ADMIN,
-        children: (<CreateImportCommons
-            createImportFunction={createImportsAdmin}
-            previousUrlScreen={ROUTE_ADMIN_IMPORTS}
-        />)
+        children: (
+            <CreateImportCommons createImportFunction={createImportsAdmin} previousUrlScreen={ROUTE_ADMIN_IMPORTS} />
+        ),
     },
     {
         path: ROUTE_ADMIN_EDIT_USERS,
         role: ROLE_ADMIN,
-        children: (<EditUserAdmin/>)
+        children: <EditUserAdmin />,
     },
     {
         path: ROUTE_ADMIN_CACHE_DISPLAY,
         role: ROLE_ADMIN,
-        children: (<AdminCacheDisplay/>)
+        children: <AdminCacheDisplay />,
     },
     {
         path: ROUTE_ADMIN_CACHE_DISPLAY_ROOM,
         role: ROLE_ADMIN,
-        children: (<AdminRoomCacheDisplay/>)
-    }
+        children: <AdminRoomCacheDisplay />,
+    },
 ];

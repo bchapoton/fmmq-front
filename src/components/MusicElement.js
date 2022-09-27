@@ -1,13 +1,13 @@
 import React from 'react';
-import {makeStyles} from "@mui/styles";
-import {Paper} from "@mui/material";
-import Typography from "@mui/material/Typography";
-import clsx from 'clsx'
-import PropTypes from "prop-types";
-import {blueGrey} from "@mui/material/colors";
+import { makeStyles } from '@mui/styles';
+import { Paper } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import clsx from 'clsx';
+import PropTypes from 'prop-types';
+import { blueGrey } from '@mui/material/colors';
 
 function MusicElement(props) {
-    const {value, label, icon, color} = props;
+    const { value, label, icon, color } = props;
     const useStyles = makeStyles({
         root: {
             display: 'flex',
@@ -18,15 +18,15 @@ function MusicElement(props) {
             color: blueGrey[400],
             borderWidth: '1px',
             borderColor: blueGrey[800],
-            borderStyle: 'solid'
+            borderStyle: 'solid',
         },
         iconContainer: {
-            margin: '5px'
+            margin: '5px',
         },
         found: {
             backgroundColor: color[700],
             color: color[100],
-        }
+        },
     });
 
     const classes = useStyles();
@@ -43,7 +43,7 @@ MusicElement.propTypes = {
     value: PropTypes.string,
     label: PropTypes.string.isRequired,
     icon: PropTypes.any.isRequired,
-    color: PropTypes.any.isRequired
+    color: PropTypes.any.isRequired,
 };
 
 MusicElement.defaultProps = {};

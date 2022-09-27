@@ -1,28 +1,28 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import {makeStyles} from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import Typography from '@mui/material/Typography';
-import theme from "../layout/MUITheme";
-import {DialogActions, DialogContent} from "@mui/material";
-import {generateRoute, ROUTE_PLAY} from "../router/routes";
-import {useNavigate} from "react-router-dom";
+import theme from '../layout/MUITheme';
+import { DialogActions, DialogContent } from '@mui/material';
+import { generateRoute, ROUTE_PLAY } from '../router/routes';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
     heading: {
         fontWeight: 'bold',
-        fontSize: theme.typography.pxToRem(20)
-    }
+        fontSize: theme.typography.pxToRem(20),
+    },
 });
 
 const redirectCounterValue = 4;
 
 export default function NewGameStartsModal(props) {
     const classes = useStyles();
-    const {onClose, open, nickname, categoryId} = props;
-    const roomUrl = generateRoute(ROUTE_PLAY, {name: ':categoryId', value: categoryId});
+    const { onClose, open, nickname, categoryId } = props;
+    const roomUrl = generateRoute(ROUTE_PLAY, { name: ':categoryId', value: categoryId });
     const [timeoutRef, setTimeoutRef] = useState();
     const [intervalRef, setIntervalRef] = useState();
     const [redirectCounter, setRedirectCounter] = useState(redirectCounterValue);
@@ -36,7 +36,7 @@ export default function NewGameStartsModal(props) {
     useEffect(() => {
         return () => {
             clearTimers(timeoutRef, setTimeoutRef, intervalRef, setIntervalRef);
-        }
+        };
     }, []);
 
     useEffect(() => {
@@ -44,7 +44,7 @@ export default function NewGameStartsModal(props) {
         let intervalRef = null;
         if (open) {
             intervalRef = setInterval(() => {
-                setRedirectCounter(previous => {
+                setRedirectCounter((previous) => {
                     return previous - 1;
                 });
             }, 1000);
@@ -60,14 +60,8 @@ export default function NewGameStartsModal(props) {
     }, [open]);
 
     return (
-        <Dialog
-            onClose={handleClose}
-            aria-labelledby="navigator-need-music-permission"
-            open={open}
-        >
-            <DialogTitle
-                id="navigator-need-music-permission"
-            >
+        <Dialog onClose={handleClose} aria-labelledby="navigator-need-music-permission" open={open}>
+            <DialogTitle id="navigator-need-music-permission">
                 <Typography className={classes.heading}>
                     {nickname ? `${nickname} a relancé une partie !` : 'Une partie a été relancée !'}
                 </Typography>
@@ -85,8 +79,8 @@ export default function NewGameStartsModal(props) {
                     Je vais m'arrêter la
                 </Button>
                 <Button
-                    variant='contained'
-                    color='primary'
+                    variant="contained"
+                    color="primary"
                     onClick={() => {
                         clearTimers(timeoutRef, setTimeoutRef, intervalRef, setIntervalRef);
                         navigate(roomUrl);
@@ -120,5 +114,5 @@ NewGameStartsModal.propTypes = {
 };
 
 NewGameStartsModal.defaultProps = {
-    open: false
+    open: false,
 };

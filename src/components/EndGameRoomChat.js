@@ -1,14 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import PropTypes from "prop-types";
-import RoomChat from "./RoomChat";
-import {getEndGameChatSocketNamespace} from "../services/ChatUtils";
-import {joinChatEndGame} from "../services/GameService";
-import {makeStyles} from "@mui/styles";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import RoomChat from './RoomChat';
+import { getEndGameChatSocketNamespace } from '../services/ChatUtils';
+import { joinChatEndGame } from '../services/GameService';
+import { makeStyles } from '@mui/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import IconButton from "@mui/material/IconButton";
-import clsx from "clsx";
-import {grey} from "@mui/material/colors";
-
+import IconButton from '@mui/material/IconButton';
+import clsx from 'clsx';
+import { grey } from '@mui/material/colors';
 
 const parentHeightOpen = 350;
 const parentHeightClose = 40;
@@ -27,19 +26,19 @@ const useStyle = makeStyles({
         right: '20px',
         borderTopLeftRadius: '10px',
         borderTopRightRadius: '10px',
-        transition: 'height 600ms, top 600ms'
+        transition: 'height 600ms, top 600ms',
     },
     chatContainerOpen: {
-        height: parentHeightOpen + 'px'
+        height: parentHeightOpen + 'px',
     },
     chatContainerClose: {
-        height: parentHeightClose + 'px'
+        height: parentHeightClose + 'px',
     },
     openTransform: {
-        transform: 'rotate(0deg)'
+        transform: 'rotate(0deg)',
     },
     closeTransform: {
-        transform: 'rotate(-180deg)'
+        transform: 'rotate(-180deg)',
     },
     chatHeader: {
         height: '30px',
@@ -50,15 +49,15 @@ const useStyle = makeStyles({
         borderTopLeftRadius: '10px',
         borderTopRightRadius: '10px',
         padding: '5px',
-        borderBottom: '1px solid #e0e0e0'
+        borderBottom: '1px solid #e0e0e0',
     },
     chatHeaderButton: {
-        transition: 'transform 400ms'
-    }
+        transition: 'transform 400ms',
+    },
 });
 
 export default function EndGameRoomChat(props) {
-    const {categoryId} = props;
+    const { categoryId } = props;
     const classes = useStyle();
     const [playerInfo, setPlayerInfo] = useState();
     const [chatTop, setChatTop] = useState(Math.round(window.scrollY));
@@ -66,10 +65,10 @@ export default function EndGameRoomChat(props) {
 
     useEffect(() => {
         joinChatEndGame(categoryId)
-            .then(response => {
+            .then((response) => {
                 setPlayerInfo(response.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
 
@@ -82,7 +81,7 @@ export default function EndGameRoomChat(props) {
         return () => {
             console.log('destroy');
             window.removeEventListener('scroll', scrollListenerCallback);
-        }
+        };
     }, [categoryId]);
 
     if (!playerInfo) {
@@ -90,9 +89,7 @@ export default function EndGameRoomChat(props) {
     }
 
     return (
-        <div
-            className={clsx(classes.chatContainer, open ? classes.chatContainerOpen : classes.chatContainerClose)}
-        >
+        <div className={clsx(classes.chatContainer, open ? classes.chatContainerOpen : classes.chatContainerClose)}>
             <RoomChat
                 categoryId={categoryId}
                 playerId={playerInfo.id}
@@ -100,7 +97,7 @@ export default function EndGameRoomChat(props) {
                 schemeSize={0} // No operator message no need for scheme size
                 socketNamespace={getEndGameChatSocketNamespace(categoryId)}
                 hideChatContent={!open}
-                text={(
+                text={
                     <div
                         className={classes.chatHeader}
                         onClick={() => {
@@ -108,16 +105,17 @@ export default function EndGameRoomChat(props) {
                         }}
                     >
                         <div>Un petit debrief</div>
-                        <IconButton
-                            size='small'
-                        >
+                        <IconButton size="small">
                             <ExpandMoreIcon
-                                className={clsx(classes.chatHeaderButton, open ? classes.openTransform : classes.closeTransform)}
-                                fontSize='small'
+                                className={clsx(
+                                    classes.chatHeaderButton,
+                                    open ? classes.openTransform : classes.closeTransform,
+                                )}
+                                fontSize="small"
                             />
                         </IconButton>
                     </div>
-                )}
+                }
                 parentHeight={parentHeightOpen - parentBorder}
             />
         </div>

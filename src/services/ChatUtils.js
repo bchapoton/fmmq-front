@@ -1,7 +1,7 @@
 export const getInGameChatSocketNamespace = (categoryId) => {
-    return categoryId + '-chat-in-game'
+    return categoryId + '-chat-in-game';
 };
 
 export const getEndGameChatSocketNamespace = (categoryId) => {
-    return categoryId + '-chat-end-game'
+    return categoryId + '-chat-end-game';
 };

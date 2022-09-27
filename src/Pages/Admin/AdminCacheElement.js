@@ -1,33 +1,30 @@
 import React from 'react';
-import {makeStyles} from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import PropTypes from "prop-types";
-import {generateRoute, ROUTE_ADMIN_CACHE_DISPLAY_ROOM} from "../../router/routes";
-import {useNavigate} from "react-router-dom";
+import PropTypes from 'prop-types';
+import { generateRoute, ROUTE_ADMIN_CACHE_DISPLAY_ROOM } from '../../router/routes';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {},
     button: {
-        marginLeft: 'auto'
-    }
+        marginLeft: 'auto',
+    },
 }));
 
 export default function AdminCacheElement(props) {
     const classes = useStyles();
-    const {cacheElement} = props;
+    const { cacheElement } = props;
     const navigate = useNavigate();
 
     return (
         <Card className={classes.root}>
-            <CardHeader
-                title={cacheElement.categoryLabel}
-                subheader={cacheElement.categoryId}
-            />
+            <CardHeader title={cacheElement.categoryLabel} subheader={cacheElement.categoryId} />
             <CardContent>
                 <div>{cacheElement.players + ' joueurs'}</div>
                 <div>Musiques en cours : {cacheElement.currentMusicIndex + '/' + cacheElement.musicSchemeLength}</div>
@@ -36,19 +33,24 @@ export default function AdminCacheElement(props) {
                 <IconButton
                     className={classes.button}
                     onClick={() => {
-                        navigate(generateRoute(ROUTE_ADMIN_CACHE_DISPLAY_ROOM, {name: ':roomId', value: cacheElement.categoryId}))
+                        navigate(
+                            generateRoute(ROUTE_ADMIN_CACHE_DISPLAY_ROOM, {
+                                name: ':roomId',
+                                value: cacheElement.categoryId,
+                            }),
+                        );
                     }}
-                    size="large">
-                    <ExpandMoreIcon/>
+                    size="large"
+                >
+                    <ExpandMoreIcon />
                 </IconButton>
             </CardActions>
         </Card>
     );
 }
 
-
 AdminCacheElement.propTypes = {
-    cacheElement: PropTypes.object.isRequired
+    cacheElement: PropTypes.object.isRequired,
 };
 
 AdminCacheElement.defaultProps = {};

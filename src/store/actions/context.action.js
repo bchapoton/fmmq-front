@@ -6,12 +6,12 @@ export const CLEAR_USER_DATA = '[FFMQContext] CLEAR USER DATA';
 export function setUserData(userData) {
     return {
         type: SET_USER_DATA,
-        payload: userData
-    }
+        payload: userData,
+    };
 }
 
 export function clearUserData() {
     return {
-        type: CLEAR_USER_DATA
-    }
+        type: CLEAR_USER_DATA,
+    };
 }

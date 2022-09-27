@@ -1,8 +1,8 @@
-import React from 'react'
-import {countMusicsContributor, getMusicsContributor} from "../../services/ContributorService";
-import {TYPE_FMMQ_MUSIC} from "../Admin/AdminValueConverter";
-import AdminTable from "../Admin/AdminTable";
-import FMMQPageContainer from "../commons/FMMQPageContainer";
+import React from 'react';
+import { countMusicsContributor, getMusicsContributor } from '../../services/ContributorService';
+import { TYPE_FMMQ_MUSIC } from '../Admin/AdminValueConverter';
+import AdminTable from '../Admin/AdminTable';
+import FMMQPageContainer from '../commons/FMMQPageContainer';
 
 function ContributorMusic() {
     const headers = [
@@ -13,37 +13,37 @@ function ContributorMusic() {
         },
         {
             id: 'artist',
-            label: 'Artiste'
+            label: 'Artiste',
         },
         {
             id: 'artistSanitized',
-            label: 'Artiste nettoyé'
+            label: 'Artiste nettoyé',
         },
         {
             id: 'title',
-            label: 'Titre'
+            label: 'Titre',
         },
         {
             id: 'titleSanitized',
-            label: 'Titre nettoyé'
+            label: 'Titre nettoyé',
         },
         {
             id: 'file',
             label: 'Fichier',
-            type: TYPE_FMMQ_MUSIC
+            type: TYPE_FMMQ_MUSIC,
         },
         {
             id: 'randomInt',
-            label: 'randomInt'
+            label: 'randomInt',
         },
         {
             id: 'importObjectId',
-            label: "Créé par l'import"
+            label: "Créé par l'import",
         },
         {
             id: 'ownerNickname',
-            label: "Owner"
-        }
+            label: 'Owner',
+        },
     ];
 
     return (

@@ -1,11 +1,11 @@
-import React from 'react'
-import AdminTable from "./AdminTable";
-import {countCategoriesAdmin, deleteCategoryByIdAdmin, getCategoriesAdmin} from "../../services/AdminService";
-import ButtonRouter from "../../layout/ButtonRouter";
-import {ROUTE_ADMIN_CREATE_CATEGORY, ROUTE_ADMIN_EDIT_CATEGORY} from "../../router/routes";
-import FMMQPageContainer from "../commons/FMMQPageContainer";
+import React from 'react';
+import AdminTable from './AdminTable';
+import { countCategoriesAdmin, deleteCategoryByIdAdmin, getCategoriesAdmin } from '../../services/AdminService';
+import ButtonRouter from '../../layout/ButtonRouter';
+import { ROUTE_ADMIN_CREATE_CATEGORY, ROUTE_ADMIN_EDIT_CATEGORY } from '../../router/routes';
+import FMMQPageContainer from '../commons/FMMQPageContainer';
 import EditIcon from '@mui/icons-material/Edit';
-import {TYPE_BOOLEAN} from "./AdminValueConverter";
+import { TYPE_BOOLEAN } from './AdminValueConverter';
 
 function AdminCategories() {
     const headers = [
@@ -16,36 +16,36 @@ function AdminCategories() {
         },
         {
             id: 'label',
-            label: 'Libellé'
+            label: 'Libellé',
         },
         {
             id: 'description',
-            label: 'Description'
+            label: 'Description',
         },
         {
             id: 'order',
-            label: 'Ordre'
+            label: 'Ordre',
         },
         {
             id: 'allMusicsOnServer',
             label: 'Tout le serveur',
-            type: TYPE_BOOLEAN
-        }
+            type: TYPE_BOOLEAN,
+        },
     ];
 
     const actions = [
         {
             id: 'edit',
-            label: (<EditIcon/>),
-            url: ROUTE_ADMIN_EDIT_CATEGORY
-        }
+            label: <EditIcon />,
+            url: ROUTE_ADMIN_EDIT_CATEGORY,
+        },
     ];
 
     return (
         <FMMQPageContainer>
             <h1>Catégories</h1>
             <div>
-                <ButtonRouter variant='contained' color='primary' to={ROUTE_ADMIN_CREATE_CATEGORY}>
+                <ButtonRouter variant="contained" color="primary" to={ROUTE_ADMIN_CREATE_CATEGORY}>
                     Créer
                 </ButtonRouter>
             </div>
@@ -57,7 +57,7 @@ function AdminCategories() {
                 actions={actions}
             />
         </FMMQPageContainer>
-    )
+    );
 }
 
 export default AdminCategories;

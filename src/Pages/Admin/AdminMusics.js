@@ -1,16 +1,16 @@
-import React from 'react'
-import AdminTable from "./AdminTable";
+import React from 'react';
+import AdminTable from './AdminTable';
 import {
     countMusicsAdmin,
     delDuplicateMusics,
     dropAllMusics,
     getDuplicateMusics,
     getMusicsAdmin,
-    postReSanitizeAllDB
-} from "../../services/AdminService";
-import {TYPE_FMMQ_MUSIC} from "./AdminValueConverter";
-import AdminPageOperations from "./AdminPageOperations";
-import FMMQPageContainer from "../commons/FMMQPageContainer";
+    postReSanitizeAllDB,
+} from '../../services/AdminService';
+import { TYPE_FMMQ_MUSIC } from './AdminValueConverter';
+import AdminPageOperations from './AdminPageOperations';
+import FMMQPageContainer from '../commons/FMMQPageContainer';
 
 function AdminMusics() {
     const headers = [
@@ -21,37 +21,37 @@ function AdminMusics() {
         },
         {
             id: 'artist',
-            label: 'Artiste'
+            label: 'Artiste',
         },
         {
             id: 'artistSanitized',
-            label: 'Artiste nettoyé'
+            label: 'Artiste nettoyé',
         },
         {
             id: 'title',
-            label: 'Titre'
+            label: 'Titre',
         },
         {
             id: 'titleSanitized',
-            label: 'Titre nettoyé'
+            label: 'Titre nettoyé',
         },
         {
             id: 'file',
             label: 'Fichier',
-            type: TYPE_FMMQ_MUSIC
+            type: TYPE_FMMQ_MUSIC,
         },
         {
             id: 'randomInt',
-            label: 'randomInt'
+            label: 'randomInt',
         },
         {
             id: 'importObjectId',
-            label: "Créé par l'import"
+            label: "Créé par l'import",
         },
         {
             id: 'ownerNickname',
-            label: "Owner"
-        }
+            label: 'Owner',
+        },
     ];
 
     const actions = [];
@@ -59,26 +59,26 @@ function AdminMusics() {
     const operations = [
         {
             axiosPromise: postReSanitizeAllDB,
-            label: 'Sanitize all musics'
+            label: 'Sanitize all musics',
         },
         {
             axiosPromise: getDuplicateMusics,
-            label: 'Check duplicates'
+            label: 'Check duplicates',
         },
         {
             axiosPromise: delDuplicateMusics,
-            label: 'Delete duplicates'
+            label: 'Delete duplicates',
         },
         {
             axiosPromise: dropAllMusics,
-            label: 'Drop all musics'
-        }
+            label: 'Drop all musics',
+        },
     ];
 
     return (
         <FMMQPageContainer>
             <h1>Musiques</h1>
-            <AdminPageOperations operations={operations}/>
+            <AdminPageOperations operations={operations} />
             <AdminTable
                 headers={headers}
                 getValuesCallback={(pager) => getMusicsAdmin(pager)}

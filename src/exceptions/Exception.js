@@ -1,10 +1,8 @@
 export default class Exception {
-
     constructor(message, code = 'GENERIC') {
         this._message = message;
         this._code = code;
     }
-
 
     get message() {
         return this._message;

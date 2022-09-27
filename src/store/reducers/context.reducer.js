@@ -1,20 +1,17 @@
-import {CLEAR_USER_DATA, LOGGED_IN, LOGGED_OUT, SET_USER_DATA} from "../actions/context.action";
-import {clearAuthentication} from "../../services/NetworkUtils";
+import { CLEAR_USER_DATA, LOGGED_IN, LOGGED_OUT, SET_USER_DATA } from '../actions/context.action';
+import { clearAuthentication } from '../../services/NetworkUtils';
 
 const initialState = {
     loggedIN: false,
-    user: null
+    user: null,
 };
 
 const context = function (state = initialState, action) {
     switch (action.type) {
         case LOGGED_IN: {
-            return Object.assign(
-                state,
-                {
-                    loggedIN: true
-                }
-            );
+            return Object.assign(state, {
+                loggedIN: true,
+            });
         }
         case LOGGED_OUT: {
             return Object.assign({}, initialState);
@@ -22,7 +19,7 @@ const context = function (state = initialState, action) {
         case SET_USER_DATA: {
             return {
                 loggedIN: true,
-                user: action.payload
+                user: action.payload,
             };
         }
         case CLEAR_USER_DATA: {

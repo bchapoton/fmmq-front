@@ -1,8 +1,8 @@
-import React from 'react'
-import AdminTable from "./AdminTable";
-import {countGamesAdmin, getGamesAdmin} from "../../services/AdminService";
-import {TYPE_DATE, TYPE_JSON} from "./AdminValueConverter";
-import FMMQPageContainer from "../commons/FMMQPageContainer";
+import React from 'react';
+import AdminTable from './AdminTable';
+import { countGamesAdmin, getGamesAdmin } from '../../services/AdminService';
+import { TYPE_DATE, TYPE_JSON } from './AdminValueConverter';
+import FMMQPageContainer from '../commons/FMMQPageContainer';
 
 function AdminGames() {
     const headers = [
@@ -13,28 +13,28 @@ function AdminGames() {
         },
         {
             id: 'categoryLabel',
-            label: 'Catégorie'
+            label: 'Catégorie',
         },
         {
             id: 'podium',
             label: 'Podium',
-            type: TYPE_JSON
+            type: TYPE_JSON,
         },
         {
             id: 'leaderBoard',
             label: 'Classement',
-            type: TYPE_JSON
+            type: TYPE_JSON,
         },
         {
             id: 'musicScheme',
             label: 'Musiques',
-            type: TYPE_JSON
+            type: TYPE_JSON,
         },
         {
             id: 'date',
             label: 'Date',
-            type: TYPE_DATE
-        }
+            type: TYPE_DATE,
+        },
     ];
 
     return (
@@ -46,7 +46,7 @@ function AdminGames() {
                 countCallback={countGamesAdmin}
             />
         </FMMQPageContainer>
-    )
+    );
 }
 
 export default AdminGames;

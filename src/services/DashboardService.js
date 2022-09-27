@@ -1,15 +1,11 @@
-import {getRestClient} from "./NetworkUtils";
+import { getRestClient } from './NetworkUtils';
 
 export const getCategories = (onSuccess, onError) => {
-    return getRestClient()
-        .get('rooms/categories')
-        .then(onSuccess)
-        .catch(onError);
+    return getRestClient().get('rooms/categories').then(onSuccess).catch(onError);
 };
 
 export const getRoomsMusicCounter = (categoryId) => {
-    return getRestClient()
-        .get(`rooms/${categoryId}/musics/count`);
+    return getRestClient().get(`rooms/${categoryId}/musics/count`);
 };
 
 export const joinRoom = (categoryId, onSuccess) => {
