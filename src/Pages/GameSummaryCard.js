@@ -10,7 +10,7 @@ import {generateRoute, ROUTE_GAME_HISTORY} from "../router/routes";
 import {Card} from "@mui/material";
 import React from "react";
 import PropTypes from "prop-types";
-import {makeStyles} from "@mui/material/styles";
+import {makeStyles} from "@mui/styles";
 import clsx from "clsx";
 import {grey} from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
@@ -43,8 +43,7 @@ function GameSummaryCard(props) {
                         onClick={() => {
                             navigate(generateRoute(ROUTE_GAME_HISTORY, {name: ':gameId', value: game.id}))
                         }}
-
-                    >
+                        size="large">
                         <AddIcon/>
                     </IconButton>
                 }

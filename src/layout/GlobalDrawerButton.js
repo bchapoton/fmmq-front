@@ -17,7 +17,7 @@ function GlobalDrawerButton() {
             aria-label="Ouvrir le menu"
             onClick={handleDrawerOpen}
             edge="start"
-        >
+            size="large">
             <MenuIcon/>
         </IconButton>
     );

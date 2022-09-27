@@ -77,7 +77,6 @@ const replaceParameter = (path, param) => {
  * Route description
  *
  * path : String : route path cf Route react-dom-router for syntax
- * notExact : true|false : exact path or not if not present the route will be exact
  * role : String(role value) : value from ./router/roles : anonymous if not set
  * children : any : Children to render
  */

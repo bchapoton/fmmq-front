@@ -1,5 +1,5 @@
 import React from 'react'
-import {makeStyles} from "@mui/material/styles";
+import {makeStyles} from "@mui/styles";
 import {useForm} from "react-hook-form";
 import {hideLoader, showLoader} from "../../store/actions/loader.action";
 import {useDispatch} from "react-redux";

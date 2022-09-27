@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {makeStyles} from "@mui/material/styles";
+import {makeStyles} from "@mui/styles";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";

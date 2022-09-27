@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import PropTypes from "prop-types";
 import LocalLoader from "../../layout/LocalLoader";
-import {makeStyles} from "@mui/material/styles";
+import {makeStyles} from "@mui/styles";
 import {useDispatch} from "react-redux";
 import {hideLoader, showLoader} from "../../store/actions/loader.action";
 

@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {makeStyles} from "@mui/styles";
-import {Slide} from "@mui/material";
-import {green, red} from "@mui/material/colors";
+import {green} from "@mui/material/colors";
 import {Link} from "react-router-dom";
 import {ROUTE_DASHBOARD, ROUTE_LOGIN} from "../router/routes";
 import {useSelector} from "react-redux";

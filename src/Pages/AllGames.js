@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {makeStyles} from "@mui/material/styles";
+import {makeStyles} from "@mui/styles";
 import {listGames} from "../services/GameService";
 import Grid from "@mui/material/Grid";
 import GameSummaryCard from "./GameSummaryCard";

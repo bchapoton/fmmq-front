@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {makeStyles} from '@mui/material/styles';
+import {makeStyles} from '@mui/styles';
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import theme from "../layout/MUITheme";
 import {DialogActions, DialogContent} from "@mui/material";
 import {generateRoute, ROUTE_PLAY} from "../router/routes";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const useStyles = makeStyles({
     heading: {

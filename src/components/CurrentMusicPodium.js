@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles} from "@mui/material/styles";
+import {makeStyles} from "@mui/styles";
 import {PlayerIconFirstFound, PlayerIconSecondFound, PlayerIconThirdFound} from "./LeaderBoardPlayerIcon";
 import PropTypes from "prop-types";
 import clsx from "clsx";

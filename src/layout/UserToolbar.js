@@ -1,6 +1,6 @@
 import React from 'react';
 import {makeStyles} from "@mui/styles";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
@@ -54,7 +54,7 @@ function UserToolbar() {
                             dispatch(clearUserData());
                             navigate(ROUTE_LOGIN);
                         }}
-                    >
+                        size="large">
                         <DirectionsRunIcon/>
                     </IconButton>
                 </Tooltip>
@@ -64,12 +64,18 @@ function UserToolbar() {
         return (
             <div className={classes.buttonContainer}>
                 <Tooltip title='Connexion'>
-                    <IconButton className={classes.button} onClick={() => navigate(ROUTE_LOGIN)}>
+                    <IconButton
+                        className={classes.button}
+                        onClick={() => navigate(ROUTE_LOGIN)}
+                        size="large">
                         <PersonIcon/>
                     </IconButton>
                 </Tooltip>
                 <Tooltip title='Créer un compte'>
-                    <IconButton className={classes.button} onClick={() => navigate(ROUTE_SIGN_UP)}>
+                    <IconButton
+                        className={classes.button}
+                        onClick={() => navigate(ROUTE_SIGN_UP)}
+                        size="large">
                         <AssignmentIcon/>
                     </IconButton>
                 </Tooltip>

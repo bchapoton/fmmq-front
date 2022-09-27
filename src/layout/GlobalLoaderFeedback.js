@@ -4,7 +4,9 @@ import {LinearProgress} from "@mui/material";
 
 function GlobalLoaderFeedback() {
     const loading = useSelector(({loader}) => loader.load);
-    return (<LinearProgress hidden={!loading} variant="query" color="secondary"/>);
+    if(loading === true)
+        return (<LinearProgress variant="query" color="secondary"/>);
+    else return ( <React.Fragment />);
 }
 
 export default GlobalLoaderFeedback;

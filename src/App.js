@@ -1,8 +1,8 @@
 import React from 'react';
 import {makeStyles} from "@mui/styles";
 import {AppBar, Toolbar} from "@mui/material";
-import { ThemeProvider } from '@mui/material/styles';
-import {Router} from "react-router-dom";
+import {StyledEngineProvider, ThemeProvider} from '@mui/material/styles';
+import {BrowserRouter} from "react-router-dom";
 import theme from "./layout/MUITheme";
 import Logo from "./layout/Logo";
 import GlobalLoader from "./layout/GlobalLoader";
@@ -43,34 +43,36 @@ const useStyles = makeStyles({
 function App() {
     const classes = useStyles();
     return (
-        <ThemeProvider theme={theme}>
-            <MyStoreProvider>
-                <RestoreSessionProvider>
-                    <div className={classes.root}>
-                        <Router>
-                            <AppBar position='static' className={classes.appBar}>
-                                <Toolbar>
-                                    <GlobalDrawerButton/>
-                                    <div className={classes.logoContainer}>
-                                        <Logo/>
-                                    </div>
-                                    <div className={classes.toolIconsMenu}>
-                                    </div>
-                                    <UserToolbar/>
-                                </Toolbar>
-                            </AppBar>
-                            <GlobalLoaderFeedback/>
-                            <div className={classes.container}>
-                                <RouterHandler/>
+        <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme}>
+                <MyStoreProvider>
+                    <RestoreSessionProvider>
+                        <BrowserRouter>
+                            <div className={classes.root}>
+                                <AppBar position='static' className={classes.appBar}>
+                                    <Toolbar>
+                                        <GlobalDrawerButton/>
+                                        <div className={classes.logoContainer}>
+                                            <Logo/>
+                                        </div>
+                                        <div className={classes.toolIconsMenu}>
+                                        </div>
+                                        <UserToolbar/>
+                                    </Toolbar>
+                                </AppBar>
+                                <GlobalLoaderFeedback/>
+                                <div className={classes.container}>
+                                    <RouterHandler/>
+                                </div>
+                                <GlobalLoader/>
                             </div>
-                        </Router>
-                        <GlobalLoader/>
-                    </div>
-                    <GlobalDrawer/>
-                    <GlobalChatContainer/>
-                </RestoreSessionProvider>
-            </MyStoreProvider>
-        </ThemeProvider>
+                            <GlobalDrawer/>
+                            <GlobalChatContainer/>
+                        </BrowserRouter>
+                    </RestoreSessionProvider>
+                </MyStoreProvider>
+            </ThemeProvider>
+        </StyledEngineProvider>
     );
 }
 

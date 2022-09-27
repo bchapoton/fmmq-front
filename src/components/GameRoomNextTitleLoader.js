@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import {CircularProgress} from "@mui/material";
-import {makeStyles} from "@mui/material/styles";
+import {makeStyles} from "@mui/styles";
 import {indigo} from "@mui/material/colors";
 
 

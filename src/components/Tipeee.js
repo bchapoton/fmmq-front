@@ -2,9 +2,8 @@ import React from 'react';
 import {makeStyles} from "@mui/styles";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {ROUTE_TIPEEE} from "../router/routes";
-import {Link} from "react-router-dom";
 import {red} from "@mui/material/colors";
 
 const useStyles = makeStyles({

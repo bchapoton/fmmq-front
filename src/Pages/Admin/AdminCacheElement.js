@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles} from '@mui/material/styles';
+import {makeStyles} from '@mui/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -38,7 +38,7 @@ export default function AdminCacheElement(props) {
                     onClick={() => {
                         navigate(generateRoute(ROUTE_ADMIN_CACHE_DISPLAY_ROOM, {name: ':roomId', value: cacheElement.categoryId}))
                     }}
-                >
+                    size="large">
                     <ExpandMoreIcon/>
                 </IconButton>
             </CardActions>

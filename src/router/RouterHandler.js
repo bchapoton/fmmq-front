@@ -5,38 +5,33 @@ import {ROUTE_DASHBOARD, ROUTE_LOGIN, routes} from './routes';
 import {rolesHierarchy} from './roles';
 import {useSelector} from "react-redux";
 import RestoreSessionProvider from "../layout/RestoreSessionProvider";
-import {makeStyles} from "@mui/material/styles";
+import {makeStyles} from "@mui/styles";
 import {getHeaderHeight} from "../App";
 import {Scrollbar} from "react-scrollbars-custom";
 
-const useStyle = makeStyles({
-    scrollContent: {
-        height: `calc(100vh - ${getHeaderHeight()}px)`,
-        overflow: 'auto',
-    }
-});
-
 function RouterHandler() {
-    const classes = useStyle();
-    const renderedRoutes = routes.map(route => {
-        return (
-            <Route path={route.path} exact={!route.notExact} key={route.path}>
-                <SecureChildrenRender route={route}>
-                    <Scrollbar style={{height: `calc(100vh - ${getHeaderHeight()}px)`}}>
-                        <RestoreSessionProvider>
-                            {route.children}
-                        </RestoreSessionProvider>
-                    </Scrollbar>
-                </SecureChildrenRender>
-            </Route>
-        );
-    });
-
     return (
         <Routes>
-            {renderedRoutes}
-            <Route path='*'>
-                <NotFound/>
+            {routes.map(route =>
+                <Route
+                    path={route.path}
+                    key={route.path}
+                    element={
+                        <SecureChildrenRender route={route}>
+                            <Scrollbar style={{height: `calc(100vh - ${getHeaderHeight()}px)`}}>
+                                <RestoreSessionProvider>
+                                    {route.children}
+                                </RestoreSessionProvider>
+                            </Scrollbar>
+                        </SecureChildrenRender>
+                    }
+                >
+                </Route>
+            )}
+            <Route
+                path='*'
+                element={<NotFound />}
+            >
             </Route>
         </Routes>
     )

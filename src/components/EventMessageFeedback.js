@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import PropTypes from "prop-types";
 import LeaderBoardIcon from "./LeaderBoardIcon";
 import Paper from "@mui/material/Paper";
-import {makeStyles} from "@mui/material/styles";
+import {makeStyles} from "@mui/styles";
 import {deepOrange, lightGreen, red} from "@mui/material/colors";
 import clsx from "clsx";
 

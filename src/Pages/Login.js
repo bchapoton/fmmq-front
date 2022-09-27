@@ -9,7 +9,7 @@ import {login} from "../services/NetworkService";
 import {Navigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {hideLoader, showLoader} from "../store/actions/loader.action";
-import {Alert, AlertTitle} from '@mui/lab';
+import {Alert, AlertTitle} from '@mui/material';
 import ButtonRouter from "../layout/ButtonRouter";
 import {getUserDataFromJWT, storeJWT, storeRefreshToken} from "../services/NetworkUtils";
 import {setUserData} from "../store/actions/context.action";

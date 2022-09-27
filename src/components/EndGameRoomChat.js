@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import RoomChat from "./RoomChat";
 import {getEndGameChatSocketNamespace} from "../services/ChatUtils";
 import {joinChatEndGame} from "../services/GameService";
-import {makeStyles} from "@mui/material/styles";
+import {makeStyles} from "@mui/styles";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton from "@mui/material/IconButton";
 import clsx from "clsx";
-import {blue, grey} from "@mui/material/colors";
+import {grey} from "@mui/material/colors";
 
 
 const parentHeightOpen = 350;

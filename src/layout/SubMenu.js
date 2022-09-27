@@ -2,12 +2,12 @@ import React from "react";
 import List from "@mui/material/List";
 import ListSubheader from "@mui/material/ListSubheader";
 import ListItem from "@mui/material/ListItem";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import PropTypes from "prop-types";
-import {makeStyles} from "@mui/material/styles";
+import {makeStyles} from "@mui/styles";
 
 const useStyle = makeStyles({
    subHeader: {

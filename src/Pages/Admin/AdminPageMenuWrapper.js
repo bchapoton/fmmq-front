@@ -1,6 +1,5 @@
 import React from 'react'
 import {getAdminMenu} from "../../layout/menus/FMMQMenus";
-import {makeStyles} from "@mui/material/styles";
 import CommonsMenuPageWrapper from "../commons/CommonsMenuPageWrapper";
 
 function AdminPageMenuWrapper(props) {

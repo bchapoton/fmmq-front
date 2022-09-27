@@ -55,8 +55,7 @@ function Dashboard() {
                                             onClick={() => {
                                                 navigate(generateRoute(ROUTE_ALL_GAME));
                                             }}
-
-                                        >
+                                            size="large">
                                             <SortIcon/>
                                         </IconButton>
                                     )}

@@ -21,7 +21,6 @@ import {getSocket} from "../services/SocketUtils";
 import NewGameStartsModal from "./NewGameStartsModal";
 import HistoryBackButton from "../layout/HistoryBackButton";
 import ButtonContainer from "../layout/ButtonContainer";
-import EndGameRoomChat from "./EndGameRoomChat";
 import {displayChatEndGame, hideChatEndGame} from "../store/actions/chat.action";
 
 const useStyles = makeStyles({

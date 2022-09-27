@@ -1,7 +1,7 @@
 import {grey} from "@mui/material/colors";
-import {createTheme} from "@mui/material/styles";
+import {adaptV4Theme, createTheme} from "@mui/material/styles";
 
-const theme = createTheme({
+const theme = createTheme(adaptV4Theme({
     typography: {
         fontFamily: [
             'pt_sansregular',
@@ -16,6 +16,6 @@ const theme = createTheme({
             color: grey[400]
         }
     }
-});
+}));
 
 export default theme;
