@@ -9,9 +9,7 @@ import NavigatorMusicPermissionModal from './NavigatorMusicPermissionModal';
 const animationStepDuration = 250; // each step take 250ms for fluid animation
 
 const useStyle = makeStyles({
-    container: {
-        height: '55px',
-    },
+    container: {},
     text: {
         color: indigo[500],
         fontWeight: 'bold',
@@ -113,7 +111,7 @@ function MusicProgress(props) {
     }, [startedInternal, setStartedInternal, setCompleted, animationEnded, maxCompleted, audioObject]);
 
     if (!startedInternal) {
-        return <div className={classes.container}>&nbsp;</div>;
+        return <React.Fragment />;
     }
 
     return (

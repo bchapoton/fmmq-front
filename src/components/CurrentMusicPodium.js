@@ -7,25 +7,26 @@ import { cyan } from '@mui/material/colors';
 
 const useStyle = makeStyles({
     root: {
-        width: '94%',
-        margin: '0 3%',
         display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        minHeight: '40px',
     },
     title: {
         color: cyan[50],
         textAlign: 'center',
+        margin: '5px 0',
     },
-    podiumItem: {
-        display: 'flex',
-        margin: '10px 0',
-    },
+    podiumItem: {},
     podiumItemPlayer: {
+        maxWidth: '200px',
         flexGrow: 1,
         marginLeft: '20px',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        color: cyan[50],
     },
     hidden: {
         display: 'none',
@@ -37,12 +38,12 @@ function CurrentMusicPodium(props) {
     const classes = useStyle();
 
     if (!displayed) {
-        return null;
+        return <div className={classes.root} />;
     }
 
     return (
         <div className={classes.root}>
-            <h4 className={classes.title}>Morceau en cours</h4>
+            <h4 className={classes.title}>Podium morceau en cours</h4>
             <div className={clsx(classes.podiumItem, currentMusicPodium.first ? null : classes.hidden)}>
                 <PlayerIconFirstFound />
                 <span className={classes.podiumItemPlayer}>{currentMusicPodium.first}</span>

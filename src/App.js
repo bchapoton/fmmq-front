@@ -51,12 +51,12 @@ function App() {
                             <div className={classes.root}>
                                 <AppBar position="static" className={classes.appBar}>
                                     <Toolbar>
-                                        <GlobalDrawerButton />
                                         <div className={classes.logoContainer}>
                                             <Logo />
                                         </div>
                                         <div className={classes.toolIconsMenu}></div>
                                         <UserToolbar />
+                                        <GlobalDrawerButton />
                                     </Toolbar>
                                 </AppBar>
                                 <GlobalLoaderFeedback />

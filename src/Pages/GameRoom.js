@@ -80,6 +80,7 @@ const useStyles = makeStyles({
     feedbackContainer: {
         minHeight: '40px',
     },
+    musicProgressAndLoaderContainer: { minHeight: '50px' },
 });
 
 const leaderBoardSummaryInitialState = {
@@ -253,10 +254,8 @@ function GameRoom() {
         <div>
             <div className={classes.gameContainer}>
                 <Grid container>
-                    <Grid item xs={2}>
-                        <GameRoomNextTitleLoader displayed={!musicInProgress} />
-                    </Grid>
-                    <Grid item xs={8}>
+                    <Grid item xs={0} md={2}></Grid>
+                    <Grid item xs={12} md={8}>
                         <Grid container direction="column" spacing={1}>
                             <Grid item xs={12}>
                                 <div className={classes.roomTitleContainer}>
@@ -266,13 +265,16 @@ function GameRoom() {
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
-                                <MusicProgress
-                                    startPosition={musicStartPosition}
-                                    started={musicInProgress}
-                                    musicUrl={musicInProgressUrl}
-                                    animationEnded={animationEnded}
-                                    text={'Extrait ' + currentMusicIndexDisplayed + '/' + roomInfo.musicsLength}
-                                />
+                                <div className={classes.musicProgressAndLoaderContainer}>
+                                    <MusicProgress
+                                        startPosition={musicStartPosition}
+                                        started={musicInProgress}
+                                        musicUrl={musicInProgressUrl}
+                                        animationEnded={animationEnded}
+                                        text={'Extrait ' + currentMusicIndexDisplayed + '/' + roomInfo.musicsLength}
+                                    />
+                                    <GameRoomNextTitleLoader displayed={!musicInProgress} />
+                                </div>
                                 <div className={classes.musicElementContainer}>
                                     <MusicElement
                                         value={currentArtist}
@@ -310,11 +312,15 @@ function GameRoom() {
                             <Grid className={classes.feedbackContainer} item xs={12}>
                                 <EventMessageFeedback payload={feedback} />
                             </Grid>
+                            <Grid className={classes.feedbackContainer} item xs={12}>
+                                <CurrentMusicPodium
+                                    displayed={musicInProgress}
+                                    currentMusicPodium={currentMusicPodium}
+                                />
+                            </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item xs={2}>
-                        <CurrentMusicPodium displayed={musicInProgress} currentMusicPodium={currentMusicPodium} />
-                    </Grid>
+                    <Grid item xs={0} md={2}></Grid>
                 </Grid>
             </div>
             <div className={classes.gridSpacingWorkaround}>

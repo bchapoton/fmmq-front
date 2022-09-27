@@ -24,7 +24,7 @@ export default function InGameRoomChat(props) {
             socketNamespace={getInGameChatSocketNamespace(categoryId)}
             text={
                 <Typography variant="subtitle1" gutterBottom className={classes.root}>
-                    Envie d'insulter les autres joueurs ? C'est par ici
+                    Chat éphémère c'est par ici
                 </Typography>
             }
         />

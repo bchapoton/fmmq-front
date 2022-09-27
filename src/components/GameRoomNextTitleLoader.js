@@ -5,15 +5,20 @@ import { makeStyles } from '@mui/styles';
 import { indigo } from '@mui/material/colors';
 
 const useStyle = makeStyles({
-    root: {},
+    root: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     textWrapper: {
-        margin: '80px 0 20px 0',
         textAlign: 'center',
         color: indigo[500],
         fontWeight: 'bold',
     },
     loaderWrapper: {
         textAlign: 'center',
+        marginRight: 10,
     },
 });
 
@@ -25,10 +30,10 @@ function GameRoomNextTitleLoader(props) {
 
     return (
         <div className={classes.root}>
-            <div className={classes.textWrapper}>Prépare toi pour le prochain morceau !</div>
             <div className={classes.loaderWrapper}>
-                <CircularProgress size={70} />
+                <CircularProgress size={30} />
             </div>
+            <div className={classes.textWrapper}>Prépare toi pour le prochain morceau !</div>
         </div>
     );
 }

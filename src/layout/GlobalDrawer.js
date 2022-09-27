@@ -30,7 +30,7 @@ function GlobalDrawer() {
     const contributorMenu = isContributor ? getContributorMenu() : [];
 
     return (
-        <Drawer anchor="left" open={show} onClose={() => dispatch(hideGlobalDrawer())}>
+        <Drawer anchor="right" open={show} onClose={() => dispatch(hideGlobalDrawer())}>
             <div
                 className={classes.menuContainer}
                 role="presentation"
