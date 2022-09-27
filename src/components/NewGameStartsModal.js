@@ -37,7 +37,7 @@ export default function NewGameStartsModal(props) {
         return () => {
             clearTimers(timeoutRef, setTimeoutRef, intervalRef, setIntervalRef);
         };
-    }, []);
+    }, [timeoutRef, intervalRef]);
 
     useEffect(() => {
         let timeoutRef = null;
@@ -57,7 +57,7 @@ export default function NewGameStartsModal(props) {
         } else {
             clearTimers(timeoutRef, setTimeoutRef, intervalRef, setIntervalRef);
         }
-    }, [open]);
+    }, [open, navigate, roomUrl]);
 
     return (
         <Dialog onClose={handleClose} aria-labelledby="navigator-need-music-permission" open={open}>

@@ -30,7 +30,7 @@ function EditImportCommons(props) {
     useEffect(() => {
         dispatch(showLoader());
         loadData(id, dispatch, setData, getImportByIdFunction);
-    }, []);
+    }, [id, dispatch, getImportByIdFunction]);
 
     if (!data) {
         return null;

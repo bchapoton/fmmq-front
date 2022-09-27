@@ -42,7 +42,7 @@ function EditUserAdmin() {
             .then(() => {
                 dispatch(hideLoader());
             });
-    }, []);
+    }, [dispatch, id, setValue]);
 
     const onSubmit = (data) => {
         console.log(data);

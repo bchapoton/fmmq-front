@@ -143,7 +143,7 @@ function GameRoom() {
                 socket.disconnect();
             }
         };
-    }, []);
+    }, [categoryId, leaderBoardSummary]);
 
     useEffect(() => {
         if (socket) {
@@ -217,7 +217,16 @@ function GameRoom() {
                 navigate(generateRoute(ROUTE_END_GAME, { name: ':gameId', value: payload.gameId }));
             });
         }
-    }, [socket, gamePlayers, leaderBoardGuessed, leaderBoardSummary, currentMusicPodium, playerId]);
+    }, [
+        socket,
+        gamePlayers,
+        leaderBoardGuessed,
+        leaderBoardSummary,
+        currentMusicPodium,
+        playerId,
+        gameHistory,
+        navigate,
+    ]);
 
     useEffect(() => {
         setLeaderBoard(sortPayersInRoom(gamePlayers));

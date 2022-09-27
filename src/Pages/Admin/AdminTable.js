@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
@@ -48,22 +48,25 @@ function AdminTable(props) {
     const [deleteMessage, setDeleteMessage] = useState();
     const dispatch = useDispatch();
 
-    const loadData = (pager) => {
-        console.log('pager to load : ' + pager);
-        if (getValuesCallback) {
-            setError(null);
-            setLoading(true);
-            getValuesCallback(pager)
-                .then((response) => {
-                    setRows(response.data);
-                    setCurrentDataSize(response.data.length);
-                })
-                .catch((error) => {
-                    setError(error);
-                })
-                .then(() => setLoading(false));
-        }
-    };
+    const loadData = useCallback(
+        (pager) => {
+            console.log('pager to load : ' + pager);
+            if (getValuesCallback) {
+                setError(null);
+                setLoading(true);
+                getValuesCallback(pager)
+                    .then((response) => {
+                        setRows(response.data);
+                        setCurrentDataSize(response.data.length);
+                    })
+                    .catch((error) => {
+                        setError(error);
+                    })
+                    .then(() => setLoading(false));
+            }
+        },
+        [getValuesCallback],
+    );
 
     useEffect(() => {
         loadData(pagerInitialState);
@@ -74,7 +77,7 @@ function AdminTable(props) {
             .catch((error) => {
                 console.log("can't count full size object : " + error.message);
             });
-    }, []);
+    }, [countCallback, loadData]);
 
     return (
         <AdminLoadingErrorDisplay loading={loading} error={error}>
@@ -187,7 +190,7 @@ function findIdHeader(headers) {
             return headers[index].id;
         }
     }
-    throw 'Table header need and id column !';
+    throw new Error('Table header need and id column !');
 }
 
 function generateActionUrl(url, objectId) {

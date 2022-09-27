@@ -13,7 +13,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Link from '@mui/material/Link';
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({
     heading: {
         fontWeight: 'bold',

@@ -110,7 +110,7 @@ function MusicProgress(props) {
         return () => {
             if (timer) clearInterval(timer);
         };
-    }, [startedInternal, setStartedInternal, setCompleted, animationEnded, maxCompleted]);
+    }, [startedInternal, setStartedInternal, setCompleted, animationEnded, maxCompleted, audioObject]);
 
     if (!startedInternal) {
         return <div className={classes.container}>&nbsp;</div>;

@@ -22,7 +22,7 @@ function AdminLoadingErrorDisplay(props) {
         } else {
             dispatch(hideLoader());
         }
-    }, [loading]);
+    }, [loading, dispatch]);
 
     if (loading) {
         return (

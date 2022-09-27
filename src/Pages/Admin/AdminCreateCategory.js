@@ -29,7 +29,7 @@ function AdminCreateCategory() {
     const classes = useStyle();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { handleSubmit, register, errors, clearError, triggerValidation, setError } = useForm({ mode: 'onBlur' });
+    const { handleSubmit, register, errors, clearError, triggerValidation } = useForm({ mode: 'onBlur' });
 
     const onSubmit = async (data) => {
         if (await triggerValidation()) {

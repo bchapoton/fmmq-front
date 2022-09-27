@@ -26,12 +26,12 @@ function AdminCacheDisplay() {
 
     const counters = [];
     if (cacheData && cacheData.categoryMusicsCounters) {
-        Object.keys(cacheData.categoryMusicsCounters).map((key) => {
+        Object.keys(cacheData.categoryMusicsCounters).map((key) =>
             counters.push({
                 id: key,
                 count: cacheData.categoryMusicsCounters[key],
-            });
-        });
+            }),
+        );
     }
 
     /*

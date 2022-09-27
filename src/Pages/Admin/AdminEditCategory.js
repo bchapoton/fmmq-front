@@ -50,7 +50,7 @@ function AdminEditCategory() {
             .then(() => {
                 dispatch(hideLoader());
             });
-    }, []);
+    }, [dispatch, id, setValue]);
 
     const onSubmit = async (data) => {
         if (await triggerValidation()) {

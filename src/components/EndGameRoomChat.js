@@ -60,7 +60,6 @@ export default function EndGameRoomChat(props) {
     const { categoryId } = props;
     const classes = useStyle();
     const [playerInfo, setPlayerInfo] = useState();
-    const [chatTop, setChatTop] = useState(Math.round(window.scrollY));
     const [open, setOpen] = useState(true);
 
     useEffect(() => {
@@ -71,17 +70,7 @@ export default function EndGameRoomChat(props) {
             .catch((error) => {
                 console.log(error);
             });
-
-        const scrollListenerCallback = () => {
-            setChatTop(Math.round(window.scrollY));
-        };
-
-        window.addEventListener('scroll', scrollListenerCallback);
-
-        return () => {
-            console.log('destroy');
-            window.removeEventListener('scroll', scrollListenerCallback);
-        };
+        return () => {};
     }, [categoryId]);
 
     if (!playerInfo) {

@@ -34,7 +34,7 @@ function AllGame() {
                 })
                 .then(() => dispatch(hideLoader()));
         }
-    }, [start]);
+    }, [start, dispatch]);
 
     return (
         <div className={classes.root}>

@@ -17,7 +17,7 @@ export default function AdminRoomCacheDisplay(props) {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+    }, [roomId, setRoomCache]);
 
     return (
         <FMMQPageContainer>
